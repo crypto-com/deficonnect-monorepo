@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-yarn add "git+https://github.com/Andy-Bin-Crypto/ncw-wallet-connector.git#main"
+yarn add "git+https://github.com/monacohq/ncw-wallet-connector#main"
 ```
 
 ## Usage
