@@ -108,7 +108,7 @@ export class CryptoWalletConnector extends AbstractConnector {
             qrcodeModal: InstallExtensionQRCodeModal,
           },
           new SessionStorage()
-        ),
+        ).connector,
       })
     }
     // ensure that the uri is going to be available, and emit an event if there's a new uri
