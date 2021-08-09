@@ -1,7 +1,7 @@
 import { CryptoWalletConnector, CryptoWalletConnectorArguments } from './lib/CryptoWalletConnector'
 import { SessionStorage } from './lib/SessionStorage'
 import { InstallExtensionModal } from './lib/InstallExtensionModal'
-import { formatToCWEURI, formatToWCURI, addUrlParams, formatUriAddUrlParams } from './lib/tools'
+import { formatToCWEURI, formatToWCURI, addUrlParams, formatUriAddUrlParams, removeAllUrlParams } from './lib/tools'
 import SocketTransport from './socket-transport'
 import { walletConnectorGenerator } from './lib/WalletConnect'
 
@@ -14,6 +14,7 @@ export {
   formatToWCURI,
   addUrlParams,
   formatUriAddUrlParams,
+  removeAllUrlParams,
   SocketTransport,
   walletConnectorGenerator,
 }
