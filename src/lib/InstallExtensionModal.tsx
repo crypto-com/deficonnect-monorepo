@@ -124,7 +124,7 @@ export const InstallExtensionModal = ({
           </button>
         </div>
         <div style={styles.containerRight}>
-          <img style={styles.rightQRcode} src={qrcodeImageURL} alt="cryptolink" />
+          <img style={styles.rightQRcode} src={qrcodeImageURL} alt="qrcode" />
           <span style={styles.rightTitle}>Scan to connect</span>
           <div style={styles.rightStep.container}>
             {/* <div style={styles.rightStep.dot} /> */}

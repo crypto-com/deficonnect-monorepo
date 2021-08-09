@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { CryptoWalletConnector, InstallExtensionModal } from 'cryptolink'
-import 'cryptolink/dist/index.css'
+import { CryptoWalletConnector, InstallExtensionModal } from 'defilink'
+import 'defilink/dist/index.css'
 
 export enum SupportedChainId {
   MAINNET = 1,

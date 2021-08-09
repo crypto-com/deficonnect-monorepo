@@ -1,8 +1,8 @@
-# cryptolink
+# defilink
 
 > Made with create-react-library
 
-[![NPM](https://img.shields.io/npm/v/cryptolink.svg)](https://www.npmjs.com/package/cryptolink) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/defilink.svg)](https://www.npmjs.com/package/defilink) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -13,7 +13,7 @@ yarn add "git+https://github.com/monacohq/ncw-wallet-connector#main"
 ## Usage
 
 ```tsx
-import { CryptoWalletConnector } from 'cryptolink'
+import { CryptoWalletConnector } from 'defilink'
 
 const cryptoWallet = new CryptoWalletConnector({
     supportedChainIds: SUPPORTED_CHAIN_IDS,
