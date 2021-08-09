@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CryptoWalletConnector, InstallExtensionModal } from 'defilink'
+import { DeFiLinkConnector, InstallExtensionModal } from 'defilink'
 import 'defilink/dist/index.css'
 
 export enum SupportedChainId {
@@ -50,14 +50,14 @@ const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
 const App = () => {
   return (<div>
     <button onClick={() => {
-      const cryptoWallet = new CryptoWalletConnector({
+      const connector = new DeFiLinkConnector({
         supportedChainIds: SUPPORTED_CHAIN_IDS,
         rpc: NETWORK_URLS,
         bridge: 'https://uniswap.bridge.walletconnect.org',//'http://localhost:5555',
         qrcode: true,
         pollingInterval: 15000,
       })
-      cryptoWallet.activate()
+      connector.activate()
     }}>Connect Test</button>
   </div>)
 }

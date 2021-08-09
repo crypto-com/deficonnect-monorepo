@@ -4,7 +4,7 @@ import * as cryptoLib from '@walletconnect/iso-crypto'
 import SocketTransport from '../socket-transport'
 import { parseWalletConnectUri } from '@walletconnect/utils'
 
-export const walletConnectorGenerator = (
+export const DeFiLinkConnectorGenerator = (
   connectorOpts: IWalletConnectOptions,
   sessionStorage: ISessionStorage
 ): { connector: Connector; transport: SocketTransport } => {

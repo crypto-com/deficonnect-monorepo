@@ -1,13 +1,13 @@
-import { CryptoWalletConnector, CryptoWalletConnectorArguments } from './lib/CryptoWalletConnector'
+import { DeFiLinkConnector, DeFiLinkConnectorArguments } from './lib/DeFiLinkConnector'
 import { SessionStorage } from './lib/SessionStorage'
 import { InstallExtensionModal } from './lib/InstallExtensionModal'
 import { formatToCWEURI, formatToWCURI, addUrlParams, formatUriAddUrlParams, removeAllUrlParams } from './lib/tools'
 import SocketTransport from './socket-transport'
-import { walletConnectorGenerator } from './lib/WalletConnect'
+import { DeFiLinkConnectorGenerator } from './lib/WalletConnect'
 
 export {
-  CryptoWalletConnector,
-  CryptoWalletConnectorArguments,
+  DeFiLinkConnector,
+  DeFiLinkConnectorArguments,
   SessionStorage,
   InstallExtensionModal,
   formatToCWEURI,
@@ -16,5 +16,5 @@ export {
   formatUriAddUrlParams,
   removeAllUrlParams,
   SocketTransport,
-  walletConnectorGenerator,
+  DeFiLinkConnectorGenerator,
 }

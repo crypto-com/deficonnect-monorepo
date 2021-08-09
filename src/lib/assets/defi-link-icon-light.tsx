@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-function CryptoWalletIconLight(props: any) {
+function DeFiLinkIconLight(props: any) {
   return (
     <svg width={60} height={60} viewBox="5 5 66 66" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g filter="url(#prefix__filter0_d)">
@@ -85,4 +85,4 @@ function CryptoWalletIconLight(props: any) {
   )
 }
 
-export default CryptoWalletIconLight
+export default DeFiLinkIconLight

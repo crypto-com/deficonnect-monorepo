@@ -13,16 +13,16 @@ yarn add "git+https://github.com/monacohq/ncw-wallet-connector#main"
 ## Usage
 
 ```tsx
-import { CryptoWalletConnector } from 'defilink'
+import { DeFiLinkConnector } from 'defilink'
 
-const cryptoWallet = new CryptoWalletConnector({
+const connector = new DeFiLinkConnector({
     supportedChainIds: SUPPORTED_CHAIN_IDS,
     rpc: NETWORK_URLS,
     bridge: 'http://localhost:5555',//Replace it with your own brige host
     qrcode: true,
     pollingInterval: 15000,
   })
-cryptoWallet.activate()
+connector.activate()
 ```
 
 ## License

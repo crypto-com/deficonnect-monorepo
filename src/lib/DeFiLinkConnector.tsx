@@ -3,7 +3,7 @@ import { ConnectorUpdate } from '@web3-react/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { IWalletConnectProviderOptions } from '@walletconnect/types'
 import { SessionStorage } from './SessionStorage'
-import { walletConnectorGenerator } from './WalletConnect'
+import { DeFiLinkConnectorGenerator } from './WalletConnect'
 import { InstallExtensionQRCodeModal } from './InstallExtensionModal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { addUrlParams } from './tools'
@@ -11,7 +11,7 @@ import { getClientMeta } from '@walletconnect/utils'
 
 export const URI_AVAILABLE = 'URI_AVAILABLE'
 
-export interface CryptoWalletConnectorArguments extends IWalletConnectProviderOptions {
+export interface DeFiLinkConnectorArguments extends IWalletConnectProviderOptions {
   supportedChainIds?: number[]
 }
 
@@ -23,20 +23,20 @@ export class UserRejectedRequestError extends Error {
   }
 }
 
-function getSupportedChains({ supportedChainIds, rpc }: CryptoWalletConnectorArguments): number[] | undefined {
+function getSupportedChains({ supportedChainIds, rpc }: DeFiLinkConnectorArguments): number[] | undefined {
   if (supportedChainIds) {
     return supportedChainIds
   }
   return rpc ? Object.keys(rpc).map((k) => Number(k)) : undefined
 }
 
-export class CryptoWalletConnector extends AbstractConnector {
-  private readonly config: CryptoWalletConnectorArguments
+export class DeFiLinkConnector extends AbstractConnector {
+  private readonly config: DeFiLinkConnectorArguments
 
   public walletConnectProvider?: any
   public cryptoExtentionProvider?: any
 
-  constructor(config: CryptoWalletConnectorArguments) {
+  constructor(config: DeFiLinkConnectorArguments) {
     super({ supportedChainIds: getSupportedChains(config) })
     const clientMeta = config.clientMeta || getClientMeta() || undefined
     this.config = {
@@ -101,7 +101,7 @@ export class CryptoWalletConnector extends AbstractConnector {
         bridge,
         qrcode: true,
         qrcodeModal: InstallExtensionQRCodeModal,
-        connector: walletConnectorGenerator(
+        connector: DeFiLinkConnectorGenerator(
           {
             ...this.config,
             bridge,

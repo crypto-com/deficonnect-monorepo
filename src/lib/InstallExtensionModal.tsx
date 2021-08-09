@@ -1,8 +1,8 @@
 import React, { MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react'
 import ReactModal from 'react-modal'
-import CryptoWalletIconLight from './assets/crypto-wallet-icon-light'
+import DeFiLinkIconLight from './assets/defi-link-icon-light'
 import ConnectStepCameraIcon from './assets/connect-step-camera-icon'
-import LogoIcon from './assets/crypto-wallet-icon'
+import LogoIcon from './assets/defi-link-icon'
 import FeatureGlobeIcon from './assets/feature-globe-icon'
 import FeatureLinkIcon from './assets/feature-link-icon'
 import FeatureLockIcon from './assets/feature-lock-icon'
@@ -171,7 +171,7 @@ export const InstallExtensionModal = ({
 const DownloadAppBanner = ({ onDownloadClick }: { onDownloadClick: MouseEventHandler }) => {
   return (
     <div style={BannerStyles.container}>
-      <CryptoWalletIconLight />
+      <DeFiLinkIconLight />
       <div style={BannerStyles.textContainer}>
         <div style={BannerStyles.title}>Crypto.com Wallet Extension</div>
         <div style={BannerStyles.desc}>Your Keys, Your Crypto.</div>
