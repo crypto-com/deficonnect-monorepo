@@ -98,18 +98,18 @@ export const InstallExtensionModal = ({
             <div style={styles.headerTextDivide} />
             <div style={styles.headerText}>WALLET EXTENSION</div>
           </div>
-          <div style={styles.title}>Connect your DeFi Wallet app with the Wallet Extension to access the DApps</div>
+          <div style={styles.title}>Access DApps on desktop by connecting DeFi Wallet to Wallet Extension</div>
           <div style={styles.feature}>
             <FeatureLinkIcon />
-            <div style={styles.featureText}>Stable connection with the DApps</div>
+            <div style={styles.featureText}>Stable connection to DApps</div>
           </div>
           <div style={styles.feature}>
             <FeatureLockIcon />
-            <div style={styles.featureText}>Secure signing on the DeFi Wallet</div>
+            <div style={styles.featureText}>Secure signing via DeFi Wallet</div>
           </div>
           <div style={styles.feature}>
             <FeatureGlobeIcon />
-            <div style={styles.featureText}>Smooth app navigation with DApp connection</div>
+            <div style={styles.featureText}>Smooth App navigation with DApp connection</div>
           </div>
           <button style={styles.installButton} onClick={junpToInstallExtenson}>
             Install DeFi Wallet Extension
@@ -117,20 +117,20 @@ export const InstallExtensionModal = ({
         </div>
         <div style={styles.containerRight}>
           <img style={styles.rightQRcode} src={qrcodeImageURL} alt="qrcode" />
-          <span style={styles.rightTitle}>Scan to connect</span>
+          <span style={styles.rightTitle}>Scan to Connect</span>
           <div style={styles.rightStep.container}>
             {/* <div style={styles.rightStep.dot} /> */}
-            <div style={styles.rightStep.desc}>• Open DeFi Wallet mobile app</div>
+            <div style={styles.rightStep.desc}>• Open DeFi Wallet Mobile App</div>
           </div>
           <div style={styles.rightStep.container}>
             {/* <div style={styles.rightStep.dot} /> */}
-            <div style={styles.rightStep.desc}>• Find the</div>
+            <div style={styles.rightStep.desc}>• Tap</div>
             <ConnectStepCameraIcon style={styles.rightStep.camera} />
-            <div style={styles.rightStep.desc}>to open the camera</div>
+            <div style={styles.rightStep.desc}>to switch on the camera</div>
           </div>
           <div style={styles.rightStep.container}>
             {/* <div style={styles.rightStep.dot} /> */}
-            <div style={styles.rightStep.desc}>• Scan the above QR code</div>
+            <div style={styles.rightStep.desc}>• Scan the QR code above</div>
           </div>
           <div style={styles.stretchContainer} />
           <div style={styles.terms.container}>
@@ -169,7 +169,7 @@ const DownloadAppBanner = ({ onDownloadClick }: { onDownloadClick: MouseEventHan
     <div style={BannerStyles.container}>
       <DeFiLinkIconLight />
       <div style={BannerStyles.textContainer}>
-        <div style={BannerStyles.title}>Crypto.com Wallet Extension</div>
+        <div style={BannerStyles.title}>Crypto.com DeFi Wallet</div>
         <div style={BannerStyles.desc}>Your Keys, Your Crypto.</div>
       </div>
       <button style={BannerStyles.button} onClick={onDownloadClick}>
