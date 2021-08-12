@@ -57,14 +57,6 @@ export const InstallExtensionModal = ({
       window.removeEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
     }
   }, [closeModal])
-  const overlayRef = useCallback(
-    (instance: HTMLDivElement) => {
-      if (instance) {
-        // instance.onclick = closeModal
-      }
-    },
-    [appElement]
-  )
   useMemo(() => {
     const dappQRCode = formatToCWEURI(uri) + '&role=dapp'
     QRCode.toDataURL(dappQRCode, (_err: any, url: string) => {
@@ -161,7 +153,11 @@ export const InstallExtensionModal = ({
               Privacy Notice
             </div>
           </div>
-          <DownloadAppBanner onDownloadClick={junpToInstallExtenson} />
+          <DownloadAppBanner
+            onDownloadClick={() => {
+              window.open('https://crypto.com/defi-wallet')
+            }}
+          />
         </div>
       </div>
     </ReactModal>
