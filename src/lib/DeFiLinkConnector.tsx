@@ -67,6 +67,7 @@ export class DeFiLinkConnector extends AbstractConnector {
       this.walletConnectProvider.removeListener('accountsChanged', this.handleAccountsChanged)
       this.walletConnectProvider = undefined
     }
+    this.emitDeactivate()
   }
 
   getDocument(): Document {
