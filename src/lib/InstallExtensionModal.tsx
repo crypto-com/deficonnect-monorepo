@@ -42,15 +42,6 @@ export const InstallExtensionModal = ({
     appElement.parentElement?.removeChild(appElement)
     setisOpen(false)
   }, [appElement])
-  const junpToInstallExtenson = useCallback(
-    (event) => {
-      event.stopPropagation()
-      event.nativeEvent.stopImmediatePropagation()
-      // appElement.parentElement?.removeChild(appElement)
-      // setisOpen(false)
-    },
-    [appElement]
-  )
   useEffect(() => {
     window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
     return () => {
@@ -111,7 +102,12 @@ export const InstallExtensionModal = ({
             <FeatureGlobeIcon />
             <div style={styles.featureText}>Smooth App navigation with DApp connection</div>
           </div>
-          <button style={styles.installButton} onClick={junpToInstallExtenson}>
+          <button
+            style={styles.installButton}
+            onClick={() => {
+              window.open('https://chrome.google.com/webstore/detail/hifafgmccdpekplomjjkcfgodnhcellj')
+            }}
+          >
             Install DeFi Wallet Extension
           </button>
         </div>
