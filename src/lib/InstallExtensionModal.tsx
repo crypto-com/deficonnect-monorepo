@@ -38,10 +38,13 @@ export const InstallExtensionModal = ({
   const [qrcodeImageURL, setQRCodeImageURL] = useState('')
   ReactModal.setAppElement(appElement)
   const closeModal = useCallback(() => {
-    closeCallback()
     appElement.parentElement?.removeChild(appElement)
     setisOpen(false)
   }, [appElement])
+  const closeModalClick = useCallback(() => {
+    closeCallback()
+    closeModal()
+  }, [appElement, closeModal])
   useEffect(() => {
     window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
     return () => {
@@ -79,7 +82,7 @@ export const InstallExtensionModal = ({
           zIndex: 1000,
         },
       }}
-      onRequestClose={closeModal}
+      onRequestClose={closeModalClick}
     >
       <div style={styles.container}>
         <div style={styles.containerLeft}>
