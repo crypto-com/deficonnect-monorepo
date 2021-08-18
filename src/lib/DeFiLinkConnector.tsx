@@ -1,7 +1,7 @@
 import React from 'react'
 import { ConnectorUpdate } from '@web3-react/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { IWalletConnectProviderOptions } from '@walletconnect/types'
+import { IClientMeta, IRPCMap, IWalletConnectProviderOptions } from '@walletconnect/types'
 import { SessionStorage } from './SessionStorage'
 import { DeFiLinkConnectorGenerator } from './WalletConnect'
 import { InstallExtensionQRCodeModal } from './InstallExtensionModal'
@@ -11,8 +11,13 @@ import { getClientMeta } from '@walletconnect/utils'
 
 export const URI_AVAILABLE = 'URI_AVAILABLE'
 
-export interface DeFiLinkConnectorArguments extends IWalletConnectProviderOptions {
+export interface DeFiLinkConnectorArguments {
   supportedChainIds?: number[]
+  rpc?: IRPCMap
+  infuraId?: string
+  bridge?: string
+  chainId?: number
+  clientMeta?: IClientMeta
 }
 
 export class UserRejectedRequestError extends Error {
@@ -31,7 +36,7 @@ function getSupportedChains({ supportedChainIds, rpc }: DeFiLinkConnectorArgumen
 }
 
 export class DeFiLinkConnector extends AbstractConnector {
-  private readonly config: DeFiLinkConnectorArguments
+  private readonly config: IWalletConnectProviderOptions
 
   public walletConnectProvider?: any
   public cryptoExtentionProvider?: any
@@ -43,6 +48,7 @@ export class DeFiLinkConnector extends AbstractConnector {
       ...config,
       qrcode: false,
       clientMeta,
+      bridge: 'https://asta-ncw-wallet-connect.3ona.co/api/v1/ncwconnect/relay/ws',
     }
 
     this.handleChainChanged = this.handleChainChanged.bind(this)
