@@ -89,7 +89,6 @@ workflows:
   version: 2.1
   continuous-deployment:
     jobs:
-      - lint-and-test
       - build-js-library
       - hold-npm-publish:
           type: approval
@@ -99,6 +98,5 @@ workflows:
               - develop
       - npm-publish-library:
           requires:
-            - lint-and-test
             - build-js-library
             - hold-npm-publish
