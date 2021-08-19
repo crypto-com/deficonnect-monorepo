@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DeFiLinkConnector, InstallExtensionModal } from 'defilink'
+import { DeFiLinkConnector } from 'defilink'
 import 'defilink/dist/index.css'
 
 export enum SupportedChainId {

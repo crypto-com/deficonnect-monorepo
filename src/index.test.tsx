@@ -1,7 +1,7 @@
-// import { ExampleComponent } from '.'
+import { InstallExtensionModal } from './index'
 
-// describe('ExampleComponent', () => {
-//   it('is truthy', () => {
-//     expect(ExampleComponent).toBeTruthy()
-//   })
-// })
+describe('ExampleComponent', () => {
+  it('is truthy', () => {
+    expect(InstallExtensionModal).toBeTruthy()
+  })
+})

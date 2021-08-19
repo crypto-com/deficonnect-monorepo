@@ -63,7 +63,7 @@ jobs:
       - yarn_install
       - run:
           name: Lint
-          command: yarn lint
+          command: yarn test
       # - run:
       #     name: Unit Test
       #     command: yarn test

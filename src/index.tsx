@@ -7,7 +7,6 @@ import { DeFiLinkConnectorGenerator } from './lib/WalletConnect'
 
 export {
   DeFiLinkConnector,
-  DeFiLinkConnectorArguments,
   SessionStorage,
   InstallExtensionModal,
   formatToCWEURI,
@@ -18,3 +17,5 @@ export {
   SocketTransport,
   DeFiLinkConnectorGenerator,
 }
+
+export type { DeFiLinkConnectorArguments }
