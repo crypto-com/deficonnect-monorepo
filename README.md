@@ -18,8 +18,6 @@ import { DeFiLinkConnector } from 'defilink'
 const connector = new DeFiLinkConnector({
     supportedChainIds: SUPPORTED_CHAIN_IDS,
     rpc: NETWORK_URLS,
-    bridge: 'http://localhost:5555',//Replace it with your own brige host
-    qrcode: true,
     pollingInterval: 15000,
   })
 connector.activate()
