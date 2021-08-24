@@ -48,7 +48,7 @@ export class DeFiLinkConnector extends AbstractConnector {
       ...config,
       qrcode: false,
       clientMeta,
-      bridge: 'https://asta-ncw-wallet-connect.3ona.co/api/v1/ncwconnect/relay/ws',
+      bridge: 'https://wallet-connect.crypto.com/api/v1/ncwconnect/relay/ws',
     }
 
     this.handleChainChanged = this.handleChainChanged.bind(this)
