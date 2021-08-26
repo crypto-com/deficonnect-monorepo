@@ -10,7 +10,7 @@ yarn add "defilink"
 
 ## Usage
 
-## 1. for `web3-react`
+### for `web3-react`
 if you use `web3-react`, it is easy to integrat:
 
 > `DeFiLinkConnector` has implement `AbstractConnector` from `web3-react`
@@ -26,7 +26,7 @@ const connector = new DeFiLinkConnector({
 connector.activate()
 ```
 
-## 2. normally
+### normally
 
 ```tsx
 import { DeFiLinkConnector } from 'defilink'
