@@ -154,7 +154,7 @@ export const InstallExtensionModal = ({
           </div>
           <DownloadAppBanner
             onDownloadClick={() => {
-              window.open('https://crypto.com/defi-wallet')
+              window.open('https://bit.ly/3Bk4wzE')
             }}
           />
         </div>
