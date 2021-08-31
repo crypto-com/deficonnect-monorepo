@@ -1,0 +1,102 @@
+version: 2.1
+
+executors:
+  js-executor:
+    docker:
+      - image: circleci/node:15.3.0
+    working_directory: ~/app
+
+commands:
+  restore_js_cache:
+    description: 'restore js cache'
+    parameters:
+      cache_version:
+        type: string
+    steps:
+      - restore_cache:
+          keys:
+            - <<parameters.cache_version>>-js-cache-{{ .Branch }}-{{ checksum "~/app/package.json" }}
+            - <<parameters.cache_version>>-js-cache-{{ .Branch }}-
+            - <<parameters.cache_version>>-js-cache-
+  persist_js_cache:
+    description: 'persist js cache'
+    parameters:
+      cache_version:
+        type: string
+    steps:
+      - save_cache:
+          key: <<parameters.cache_version>>-js-cache-{{ .Branch }}-{{ checksum "~/app/package.json" }}
+          paths:
+            - ~/app/node_modules
+
+  yarn_install:
+    description: 'Setup Dependencies'
+    parameters:
+      cache_version:
+        type: string
+        default: 'build-v5'
+    steps:
+      - restore_js_cache:
+          cache_version: <<parameters.cache_version>>
+      - run:
+          name: Yarn Install
+          command: yarn install --network-concurrency 1
+      - persist_js_cache:
+          cache_version: <<parameters.cache_version>>
+
+  js_build:
+    description: 'Build DefiLink'
+    steps:
+      - run:
+          name: Yarn Build
+          command: yarn build
+      - persist_to_workspace:
+          root: ~/app
+          paths: 
+            - .
+
+jobs:
+  lint-and-test:
+    executor: js-executor
+    steps:
+      - checkout
+      - yarn_install
+      - run:
+          name: Lint
+          command: yarn test
+      # - run:
+      #     name: Unit Test
+      #     command: yarn test
+  build-js-library:
+    executor: js-executor
+    steps:
+      - checkout
+      - yarn_install
+      - js_build
+  npm-publish-library:
+    executor: js-executor
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/app/.npmrc
+      - run:
+          name: Publish package
+          command: yarn publish --access private
+
+workflows:
+  version: 2.1
+  continuous-deployment:
+    jobs:
+      - build-js-library
+      - hold-npm-publish:
+          type: approval
+          branches:
+            only:
+              - main
+              - develop
+      - npm-publish-library:
+          requires:
+            - build-js-library
+            - hold-npm-publish
