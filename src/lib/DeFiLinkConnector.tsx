@@ -87,7 +87,7 @@ export class DeFiLinkConnector extends AbstractConnector {
     return document
   }
 
-  public hasLocalStoragedSession(): Boolean {
+  public hasLocalStoragedSession(): boolean {
     const storage = new SessionStorage()
     if (storage.getSession()) {
       return true
@@ -102,6 +102,7 @@ export class DeFiLinkConnector extends AbstractConnector {
     }
     if (!walletConnectProvider) {
       const { clientMeta: { name: dappName = '' } = {} } = this.config
+      // eslint-disable-next-line @typescript-eslint/camelcase
       const bridge = this.config.bridge && addUrlParams(this.config.bridge || '', { role: 'dapp', dapp_name: dappName })
       walletConnectProvider = new WalletConnectProvider({
         ...this.config,
