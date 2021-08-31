@@ -103,7 +103,8 @@ export class DeFiLinkConnector extends AbstractConnector {
     if (!walletConnectProvider) {
       const { clientMeta: { name: dappName = '' } = {} } = this.config
       // eslint-disable-next-line @typescript-eslint/camelcase
-      const bridge = this.config.bridge && addUrlParams(this.config.bridge || '', { role: 'dapp', dapp_name: dappName })
+      const params = { role: 'dapp', dapp_name: dappName, isDirect: true }
+      const bridge = this.config.bridge && addUrlParams(this.config.bridge || '', params)
       walletConnectProvider = new WalletConnectProvider({
         ...this.config,
         bridge,
