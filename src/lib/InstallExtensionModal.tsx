@@ -118,17 +118,14 @@ export const InstallExtensionModal = ({
           <img style={styles.rightQRcode} src={qrcodeImageURL} alt="qrcode" />
           <span style={styles.rightTitle}>Scan to Connect</span>
           <div style={styles.rightStep.container}>
-            {/* <div style={styles.rightStep.dot} /> */}
             <div style={styles.rightStep.desc}>• Open DeFi Wallet Mobile App</div>
           </div>
           <div style={styles.rightStep.container}>
-            {/* <div style={styles.rightStep.dot} /> */}
             <div style={styles.rightStep.desc}>• Tap</div>
             <ConnectStepCameraIcon style={styles.rightStep.camera} />
             <div style={styles.rightStep.desc}>to switch on the camera</div>
           </div>
           <div style={styles.rightStep.container}>
-            {/* <div style={styles.rightStep.dot} /> */}
             <div style={styles.rightStep.desc}>• Scan the QR code above</div>
           </div>
           <div style={styles.stretchContainer} />
