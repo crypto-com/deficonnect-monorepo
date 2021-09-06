@@ -4,7 +4,7 @@
   "description": "Made with create-react-library",
   "author": "Crypto.com",
   "license": "MIT",
-  "repository": "Crypto.com/@deficonnect/defi-link",
+  "repository": "https://github.com/crypto-com/defi-connector",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
