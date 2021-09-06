@@ -1,13 +1,13 @@
 import React from 'react'
 import { ConnectorUpdate } from '@web3-react/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { IClientMeta, IRPCMap, IWalletConnectProviderOptions } from '@walletconnect/types'
+import { IClientMeta, IRPCMap, IWalletConnectProviderOptions } from '@deficonnect/types'
 import { SessionStorage } from './SessionStorage'
 import { DeFiLinkConnectorGenerator } from './WalletConnect'
 import { InstallExtensionQRCodeModal } from './InstallExtensionModal'
-import WalletConnectProvider from '@walletconnect/web3-provider'
+import WalletConnectProvider from '@deficonnect/web3-provider'
 import { addUrlParams } from './tools'
-import { getClientMeta } from '@walletconnect/utils'
+import { getClientMeta } from '@deficonnect/utils'
 
 export const URI_AVAILABLE = 'URI_AVAILABLE'
 
@@ -66,7 +66,7 @@ export class DeFiLinkConnector extends AbstractConnector {
 
   private handleDisconnect(): void {
     this.emitDeactivate()
-    // we have to do this because of a @walletconnect/web3-provider bug
+    // we have to do this because of a @deficonnect/web3-provider bug
     if (this.walletConnectProvider) {
       this.walletConnectProvider.stop()
       this.walletConnectProvider.removeListener('chainChanged', this.handleChainChanged)

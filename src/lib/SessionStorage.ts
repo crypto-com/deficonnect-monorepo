@@ -1,5 +1,5 @@
-import { ISessionStorage, IWalletConnectSession } from '@walletconnect/types'
-import { isWalletConnectSession, getLocal, setLocal, removeLocal } from '@walletconnect/utils'
+import { ISessionStorage, IWalletConnectSession } from '@deficonnect/types'
+import { isWalletConnectSession, getLocal, setLocal, removeLocal } from '@deficonnect/utils'
 
 const defaultKey = 'DeFiLink_session_storage_dapp'
 
