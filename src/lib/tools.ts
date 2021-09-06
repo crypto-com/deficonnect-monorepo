@@ -1,5 +1,5 @@
-import { IParseURIResult } from '@walletconnect/types'
-import { appendToQueryString, getQueryString, parseWalletConnectUri } from '@walletconnect/utils'
+import { IParseURIResult } from '@deficonnect/types'
+import { appendToQueryString, getQueryString, parseWalletConnectUri } from '@deficonnect/utils'
 
 export const formatToCWEURI = (uri: string) => {
   const result: IParseURIResult = parseWalletConnectUri(uri)

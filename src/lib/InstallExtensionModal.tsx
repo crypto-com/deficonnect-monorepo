@@ -9,7 +9,7 @@ import FeatureLockIcon from './assets/feature-lock-icon'
 import { formatToCWEURI } from './tools'
 import QRCode from 'qrcode'
 import { styles, BannerStyles } from './InstallExtensionModal.styles'
-import { IQRCodeModal } from '@walletconnect/types'
+import { IQRCodeModal } from '@deficonnect/types'
 import ReactDOM from 'react-dom'
 
 export const InstallExtensionQRCodeModal: IQRCodeModal = {

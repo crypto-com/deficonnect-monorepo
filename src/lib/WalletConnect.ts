@@ -1,8 +1,8 @@
-import Connector from '@walletconnect/core'
-import { IWalletConnectOptions, ISessionStorage } from '@walletconnect/types'
-import * as cryptoLib from '@walletconnect/iso-crypto'
+import Connector from '@deficonnect/core'
+import { IWalletConnectOptions, ISessionStorage } from '@deficonnect/types'
+import * as cryptoLib from '@deficonnect/iso-crypto'
 import SocketTransport from '../socket-transport'
-import { parseWalletConnectUri } from '@walletconnect/utils'
+import { parseWalletConnectUri } from '@deficonnect/utils'
 
 export const DeFiLinkConnectorGenerator = (
   connectorOpts: IWalletConnectOptions,

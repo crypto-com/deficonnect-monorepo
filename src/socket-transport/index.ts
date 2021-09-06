@@ -4,8 +4,8 @@ import {
   INetworkMonitor,
   ITransportLib,
   ISocketTransportOptions,
-} from '@walletconnect/types'
-import { isBrowser, getLocation, getQueryString, detectEnv, appendToQueryString } from '@walletconnect/utils'
+} from '@deficonnect/types'
+import { isBrowser, getLocation, getQueryString, detectEnv, appendToQueryString } from '@deficonnect/utils'
 
 import NetworkMonitor from './network'
 
