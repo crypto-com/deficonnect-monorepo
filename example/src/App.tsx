@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { DeFiLinkConnector } from 'defilink'
-import 'defilink/dist/index.css'
+import { DeFiLinkConnector } from '@deficonnect/defi-link'
+import '@deficonnect/defi-link/dist/index.css'
 
 export enum SupportedChainId {
   MAINNET = 1,

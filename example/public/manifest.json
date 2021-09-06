@@ -1,6 +1,6 @@
 {
-  "short_name": "defilink",
-  "name": "defilink",
+  "short_name": "@deficonnect/defi-link",
+  "name": "@deficonnect/defi-link",
   "icons": [
     {
       "src": "favicon.ico",

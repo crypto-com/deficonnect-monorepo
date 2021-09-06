@@ -1,11 +1,11 @@
-# defilink
+# @deficonnect/defi-link
 
 > This is a preview doc, we have not publish to npm yet. will coming soon!
 
 ## Install
 
 ```bash
-yarn add "defilink"
+yarn add "@deficonnect/defi-link"
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ if you use `web3-react`, it is easy to integrat:
 > `DeFiLinkConnector` has implement `AbstractConnector` from `web3-react`
 
 ```tsx
-import { DeFiLinkConnector } from 'defilink'
+import { DeFiLinkConnector } from '@deficonnect/defi-link'
 
 const connector = new DeFiLinkConnector({
   supportedChainIds: [1],
@@ -29,7 +29,7 @@ connector.activate()
 ### normally
 
 ```tsx
-import { DeFiLinkConnector } from 'defilink'
+import { DeFiLinkConnector } from '@deficonnect/defi-link'
 import Web3 from "web3"
 
 const connector = new DeFiLinkConnector({

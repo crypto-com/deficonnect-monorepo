@@ -45,7 +45,7 @@ commands:
           cache_version: <<parameters.cache_version>>
 
   js_build:
-    description: 'Build DefiLink'
+    description: 'Build @deficonnect/defi-link'
     steps:
       - run:
           name: Yarn Build
