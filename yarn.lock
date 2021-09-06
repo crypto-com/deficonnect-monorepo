@@ -1276,7 +1276,7 @@
     "@walletconnect/window-metadata" "1.0.0"
     detect-browser "5.2.0"
 
-"@deficonnect/client@^1.4.1", "@deficonnect/client@^1.6.5":
+"@deficonnect/client@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@deficonnect/client/-/client-1.6.5.tgz#324879cf1f059dc81b7cbdad2074ce0f6493d66b"
   integrity sha512-isr3PYv0xslQ8znJvDOytNgu9tJvMabmGrEp0AfI5cjgWC4C/NUBS7uP7/S6XfVUY8pEONrj9YC1ixkgncpMBg==
@@ -1286,7 +1286,7 @@
     "@deficonnect/types" "^1.6.5"
     "@deficonnect/utils" "^1.6.5"
 
-"@deficonnect/core@^1.4.1", "@deficonnect/core@^1.6.5":
+"@deficonnect/core@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@deficonnect/core/-/core-1.6.5.tgz#4e5e0a8b2904574b833f313f76a332ad7ee519fa"
   integrity sha512-y/03v/Ba1brzYb+ozTTCqGt3aOP+6w7DkEy2LzIPSMwmnHpjfXk51BnR+f1SMYMJaL+skC9LrhfBM566aWU6KQ==
@@ -1305,7 +1305,7 @@
     eventemitter3 "4.0.7"
     xhr2-cookies "1.1.0"
 
-"@deficonnect/iso-crypto@^1.4.1", "@deficonnect/iso-crypto@^1.6.5":
+"@deficonnect/iso-crypto@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@deficonnect/iso-crypto/-/iso-crypto-1.6.5.tgz#c0af4b16828429551161f04d498c2ae4deaf55f3"
   integrity sha512-ryGrHSdRYrkkwIH/hUJu7NWihIWFpTRl6fY0jJ4ausQHo8Ty7k49LT77J8nNNMS3J4Pyp6a07WgQQy2+/VoLLw==
@@ -1335,12 +1335,12 @@
     "@deficonnect/utils" "^1.6.5"
     ws "7.5.3"
 
-"@deficonnect/types@^1.4.1", "@deficonnect/types@^1.6.5":
+"@deficonnect/types@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@deficonnect/types/-/types-1.6.5.tgz#a0a72313d8199c814f1155387d04f1e2e6ff0534"
   integrity sha512-wsE2eugLEO11YPF/ow0z+Hoi57qqLU/F4QxXBxQlAUlaoQvoQrPauUAy67Qap4xcNuXbpk8LMTOwGlTKK7sUuA==
 
-"@deficonnect/utils@^1.4.1", "@deficonnect/utils@^1.6.5":
+"@deficonnect/utils@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@deficonnect/utils/-/utils-1.6.5.tgz#f0ff6170977ff6d2fc94619e4a544d31dd097900"
   integrity sha512-UMVgevJ+icyoSGW3zeOssx/m5Ti1ggGakjmb61aR5zKFsg2fhkoog/JZgYzto39I0PIlNITSL78volv/w5X46g==
@@ -1353,7 +1353,7 @@
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
-"@deficonnect/web3-provider@^1.4.1":
+"@deficonnect/web3-provider@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@deficonnect/web3-provider/-/web3-provider-1.6.5.tgz#db3ea2aa9b951897e1c000478b3f958cecb62696"
   integrity sha512-vcK7wjWB9LPzYR10FRRnn3ZYAwOOholpz++YWrZt/OPRjflVRpslj3qOnu5cffvkHDXGOjyaNrvfwVAk4K+9Zg==
