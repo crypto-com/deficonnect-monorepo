@@ -83,7 +83,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/app/.npmrc
       - run:
           name: Publish package
-          command: yarn publish --access private
+          command: yarn publish --access public
 
 workflows:
   version: 2.1
