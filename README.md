@@ -1,7 +1,5 @@
 # @deficonnect/defi-link
 
-> This is a preview doc, we have not publish to npm yet. will coming soon!
-
 ## Install
 
 ```bash
