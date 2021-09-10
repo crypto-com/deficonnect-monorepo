@@ -24,12 +24,6 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "@deficonnect/client": "^1.6.5",
-    "@deficonnect/core": "^1.6.5",
-    "@deficonnect/iso-crypto": "^1.6.5",
-    "@deficonnect/types": "^1.6.5",
-    "@deficonnect/utils": "^1.6.5",
-    "@deficonnect/web3-provider": "^1.6.5",
     "@web3-react/core": "^6.0.9",
     "react": "^16.0.0",
     "ws": "7.3.0"
@@ -38,17 +32,18 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/chai": "4.2.14",
     "@types/chrome": "^0.0.145",
     "@types/jest": "^25.1.4",
+    "@types/mocha": "8.0.4",
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "@web3-react/core": "^6.0.9",
-    "@types/chai": "4.2.14",
-    "@types/mocha": "8.0.4",
     "babel-eslint": "^10.0.3",
+    "chai": "4.2.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.7.0",
@@ -62,14 +57,11 @@
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
     "microbundle-crl": "^0.13.11",
+    "mocha": "8.2.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "react-scripts": "^4.0.3",
-    "typescript": "^4.3.5",
-    "chai": "4.2.0",
-    "mocha": "8.2.1"
+    "typescript": "^4.3.5"
   },
   "files": [
     "dist"
@@ -84,7 +76,10 @@
     "@types/qrcode": "^1.4.1",
     "@types/react-modal": "^3.12.0",
     "qrcode": "^1.4.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-modal": "^3.14.3",
+    "regenerator-runtime": "^0.13.9",
     "ws": "7.3.0"
   }
 }

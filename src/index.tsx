@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'
 import { DeFiLinkConnector, DeFiLinkConnectorArguments } from './lib/DeFiLinkConnector'
 import { SessionStorage } from './lib/SessionStorage'
 import { InstallExtensionModal } from './lib/InstallExtensionModal'
