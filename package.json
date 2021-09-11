@@ -1,7 +1,7 @@
 {
   "name": "@deficonnect/defi-link",
-  "version": "1.0.8",
-  "description": "Made with create-react-library",
+  "version": "1.0.9",
+  "description": "defilink SDK for Crypto.com DeFi Wallet Extension",
   "author": "Crypto.com",
   "license": "MIT",
   "repository": "https://github.com/crypto-com/defi-connector",
