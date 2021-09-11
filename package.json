@@ -25,7 +25,8 @@
   },
   "peerDependencies": {
     "@web3-react/core": "^6.0.9",
-    "react": "^16.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "ws": "7.3.0"
   },
   "devDependencies": {
