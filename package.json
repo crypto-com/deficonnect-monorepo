@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/defi-link",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "defilink SDK for Crypto.com DeFi Wallet Extension",
   "author": "Crypto.com",
   "license": "MIT",

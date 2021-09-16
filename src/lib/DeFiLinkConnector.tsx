@@ -18,6 +18,7 @@ export interface DeFiLinkConnectorArguments {
   chainId?: number
   clientMeta?: IClientMeta
   pollingInterval?: number
+  bridge?: string
 }
 
 export class UserRejectedRequestError extends Error {
