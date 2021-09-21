@@ -40,13 +40,12 @@ export interface DeFiConnectorUpdate {
 export class DeFiConnector {
   config: DeFiConnectorArguments
   eventEmitters: EventEmitter[] = []
-  connectorClient: DeFiConnectorClient
+  connectorClient?: DeFiConnectorClient
 
   private _provider: any
 
   constructor(config: DeFiConnectorArguments) {
     this.config = config
-    this.connectorClient = this.generateClient()
   }
 
   generateClient(): DeFiConnectorClient {
@@ -70,47 +69,58 @@ export class DeFiConnector {
         account: connectorClient.connector.session.accounts[0],
         networkId: this.networkId,
         chainId: this.chainId,
-        provider: '',
+        provider: this.provider,
       })
     })
     return connectorClient
   }
 
   async activate(): Promise<DeFiConnectorUpdate> {
-    let chainId = 1
-    let networkId = 'eth'
-    if (this.config.eth) {
-      chainId = this.config.eth.chainId ?? 1
-      networkId = 'eth'
-      this.provider = new Web3Provider({
-        pollingInterval: 1500,
-        connector: this.connectorClient.connector,
-      })
-    }
-    await this.connectorClient.connector.connect({ chainId, networkId })
-    await this.provider.enable()
-    return {
-      account: this.account,
-      networkId: this.networkId,
-      chainId: this.chainId,
-      provider: this.provider,
+    try {
+      if (!this.connectorClient) {
+        this.connectorClient = this.generateClient()
+      }
+      let chainId = 1
+      let networkId = 'eth'
+      if (this.config.eth) {
+        chainId = this.config.eth.chainId ?? 1
+        networkId = 'eth'
+        this.provider = new Web3Provider({
+          ...this.config.eth,
+          connector: this.connectorClient.connector,
+        })
+      }
+      await this.connectorClient.connector.connect({ chainId, networkId })
+      await this.provider.enable()
+      return {
+        account: this.account,
+        networkId: this.networkId,
+        chainId: this.chainId,
+        provider: this.provider,
+      }
+    } catch (error) {
+      console.error('DeFiConnector activate error:', error)
+      throw error
     }
   }
 
-  deactivate(): Promise<void> {
-    return this.connectorClient.connector.killSession()
+  async deactivate(): Promise<void> {
+    if (!this.connectorClient) {
+      return
+    }
+    return this.connectorClient?.connector.killSession()
   }
 
   get chainId(): string {
-    return `${this.connectorClient.connector.session.chainId}`
+    return `${this.connectorClient?.connector.session.chainId ?? ''}`
   }
 
   get networkId(): string {
-    return `${this.connectorClient.connector.session.networkId}`
+    return `${this.connectorClient?.connector.session.networkId ?? ''}`
   }
 
   get account(): string {
-    return this.connectorClient.connector.session.accounts[0]
+    return this.connectorClient?.connector.session.accounts[0] ?? ''
   }
 
   get provider(): any {

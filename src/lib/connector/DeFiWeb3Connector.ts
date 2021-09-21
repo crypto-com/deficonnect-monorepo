@@ -44,7 +44,6 @@ export class DeFiWeb3Connector extends AbstractConnector {
       bridge: config.bridge,
       eth: config,
     })
-
     this.defiConnector.on(DeFiConnectorUpdateEvent.Update, (params) => {
       if (!params) {
         return
