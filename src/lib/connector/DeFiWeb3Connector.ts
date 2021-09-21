@@ -75,6 +75,10 @@ export class DeFiWeb3Connector extends AbstractConnector {
     return provider.send('eth_accounts').then((accounts: string[]): string => accounts[0])
   }
 
+  public close(): Promise<void> {
+    return this.defiConnector.deactivate()
+  }
+
   public deactivate(): void {
     this.defiConnector.deactivate()
   }

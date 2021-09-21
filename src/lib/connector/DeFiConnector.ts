@@ -77,8 +77,9 @@ export class DeFiConnector {
 
   async activate(): Promise<DeFiConnectorUpdate> {
     try {
-      if (!this.connectorClient) {
-        this.connectorClient = this.generateClient()
+      let connectorClient = this.connectorClient
+      if (!connectorClient) {
+        connectorClient = this.generateClient()
       }
       let chainId = 1
       let networkId = 'eth'
@@ -87,11 +88,12 @@ export class DeFiConnector {
         networkId = 'eth'
         this.provider = new Web3Provider({
           ...this.config.eth,
-          connector: this.connectorClient.connector,
+          connector: connectorClient.connector,
         })
       }
-      await this.connectorClient.connector.connect({ chainId, networkId })
+      await connectorClient.connector.connect({ chainId, networkId })
       await this.provider.enable()
+      this.connectorClient = connectorClient
       return {
         account: this.account,
         networkId: this.networkId,
@@ -108,7 +110,9 @@ export class DeFiConnector {
     if (!this.connectorClient) {
       return
     }
-    return this.connectorClient?.connector.killSession()
+    await this.connectorClient?.connector.killSession()
+    this.emitDeactivate()
+    return
   }
 
   get chainId(): string {
@@ -160,6 +164,6 @@ export class DeFiConnector {
         emitter.callback(undefined, undefined)
       }
     })
-    this.connectorClient = this.generateClient()
+    this.connectorClient = undefined
   }
 }
