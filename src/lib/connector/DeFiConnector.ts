@@ -112,7 +112,6 @@ export class DeFiConnector {
     }
     await this.connectorClient?.connector.killSession()
     this.emitDeactivate()
-    return
   }
 
   get chainId(): string {

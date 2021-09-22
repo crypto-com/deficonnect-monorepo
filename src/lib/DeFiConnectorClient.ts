@@ -9,10 +9,7 @@ export class DeFiConnectorClient {
   transport: SocketTransport
   constructor(connectorOpts: IWalletConnectOptions, sessionStorage: ISessionStorage) {
     const session = connectorOpts.session || sessionStorage.getSession()
-    let bridge = connectorOpts.bridge
-    if (!bridge && session && session.bridge) {
-      bridge = session.bridge
-    }
+    let bridge = connectorOpts.bridge ?? session?.bridge
     if (!bridge && connectorOpts.uri) {
       bridge = parseWalletConnectUri(connectorOpts.uri).bridge
     }
