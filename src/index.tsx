@@ -1,13 +1,15 @@
 import 'regenerator-runtime/runtime'
-import { DeFiLinkConnector, DeFiLinkConnectorArguments } from './lib/DeFiLinkConnector'
+import { DeFiWeb3Connector, DeFiWeb3ConnectorArguments } from './lib/connector/DeFiWeb3Connector'
+import { DeFiConnector, DeFiConnectorArguments } from './lib/connector/DeFiConnector'
 import { SessionStorage } from './lib/SessionStorage'
 import { InstallExtensionModal } from './lib/InstallExtensionModal'
 import { formatToCWEURI, formatToWCURI, addUrlParams, formatUriAddUrlParams, removeAllUrlParams } from './lib/tools'
 import SocketTransport from '@deficonnect/socket-transport'
-import { DeFiLinkConnectorGenerator } from './lib/WalletConnect'
+import { DeFiConnectorClient } from './lib/DeFiConnectorClient'
 
 export {
-  DeFiLinkConnector,
+  DeFiConnector,
+  DeFiWeb3Connector,
   SessionStorage,
   InstallExtensionModal,
   formatToCWEURI,
@@ -16,7 +18,7 @@ export {
   formatUriAddUrlParams,
   removeAllUrlParams,
   SocketTransport,
-  DeFiLinkConnectorGenerator,
+  DeFiConnectorClient,
 }
 
-export type { DeFiLinkConnectorArguments }
+export type { DeFiConnectorArguments, DeFiWeb3ConnectorArguments }
