@@ -20,6 +20,7 @@ declare global {
   interface Window {
     ethereum?: any
     cryptoconnectProviderGenerator?: (any: any) => Promise<WalletConnectProvider>
+    deficonnectProviderGenerator?: (any: any) => Promise<WalletConnectProvider | DeFiCosmosProvider>
     cryptoconnectExtensionProvider?: any
   }
 }

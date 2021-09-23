@@ -6,7 +6,7 @@ import { InstallExtensionModal } from './lib/InstallExtensionModal'
 import { formatToCWEURI, formatToWCURI, addUrlParams, formatUriAddUrlParams, removeAllUrlParams } from './lib/tools'
 import SocketTransport from '@deficonnect/socket-transport'
 import { DeFiConnectorClient } from './lib/DeFiConnectorClient'
-
+import { DeFiCosmosConnectorArguments } from './lib/connector/DeFiCosmosProvider'
 export {
   DeFiConnector,
   DeFiWeb3Connector,
@@ -21,4 +21,4 @@ export {
   DeFiConnectorClient,
 }
 
-export type { DeFiConnectorArguments, DeFiWeb3ConnectorArguments }
+export type { DeFiConnectorArguments, DeFiWeb3ConnectorArguments, DeFiCosmosConnectorArguments }

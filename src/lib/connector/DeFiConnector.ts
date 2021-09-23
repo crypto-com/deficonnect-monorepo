@@ -6,6 +6,7 @@ import { addUrlParams } from '../tools'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
 import { DeFiWeb3ConnectorArguments } from './DeFiWeb3Connector'
 import { InstallExtensionQRCodeModal } from '../InstallExtensionModal'
+import { DeFiCosmosProvider } from './DeFiCosmosProvider'
 
 export interface DeFiConnectorArguments {
   name: string
@@ -81,16 +82,23 @@ export class DeFiConnector {
       if (!connectorClient) {
         connectorClient = this.generateClient()
       }
-      let chainId = 1
-      let networkId = 'eth'
-      if (this.config.eth) {
-        chainId = this.config.eth.chainId ?? 1
-        networkId = 'eth'
-        this.provider = new Web3Provider({
-          ...this.config.eth,
-          connector: connectorClient.connector,
-        })
+      const { chainId = '1', networkId = 'eth' } = connectorClient.connector.session
+      if (window.deficonnectProviderGenerator) {
+        this.provider = await window.deficonnectProviderGenerator({ chainId, networkId, config: this.config })
+      } else {
+        if (networkId === 'eth') {
+          this.provider = new Web3Provider({
+            ...this.config.eth,
+            connector: connectorClient.connector,
+          })
+        }
+        if (networkId === 'cosmos') {
+          this.provider = new DeFiCosmosProvider({
+            client: connectorClient,
+          })
+        }
       }
+
       await connectorClient.connector.connect({ chainId, networkId })
       await this.provider.enable()
       this.connectorClient = connectorClient
@@ -110,8 +118,6 @@ export class DeFiConnector {
     if (!this.connectorClient) {
       return
     }
-    await this.connectorClient?.connector.killSession()
-    this.emitDeactivate()
   }
 
   get chainId(): string {
