@@ -43,6 +43,12 @@ export interface DeFiConnectorUpdate {
   provider?: DeFiConnectorProvider
 }
 
+export type DeFiAddressType = 'eth' | 'cro' | 'tcro'
+export interface DeFiAddressTuple {
+  type: DeFiAddressType
+  address: string
+}
+
 export type DeFiConnectorProvider = DeFiCosmosProvider | Web3Provider
 
 const GLOBAL_DEFILINK_BRIDGE_URL = 'https://wallet-connect.crypto.com/api/v1/ncwconnect/relay/ws'
@@ -160,6 +166,19 @@ export class DeFiConnector {
       console.error('DeFiConnector activate error:', error)
       throw error
     }
+  }
+
+  getAddressList(addressTypes: DeFiAddressType[]): DeFiAddressTuple[] {
+    const connectorClient = this.connectorClient
+    if (!connectorClient) {
+      throw new Error('you has not active this connector')
+    }
+    return addressTypes.map((type) => {
+      return {
+        type,
+        address: connectorClient.connector.session.wallets[0].address[type],
+      }
+    })
   }
 
   async deactivate(): Promise<void> {
