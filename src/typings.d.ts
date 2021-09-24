@@ -16,11 +16,15 @@ declare module '*.svg' {
   export default svgUrl
   export { svgComponent as ReactComponent }
 }
+
 declare global {
   interface Window {
     ethereum?: any
-    cryptoconnectProviderGenerator?: (any: any) => Promise<WalletConnectProvider>
-    deficonnectProviderGenerator?: (any: any) => Promise<WalletConnectProvider | DeFiCosmosProvider>
-    cryptoconnectExtensionProvider?: any
+    deficonnectClientGenerator?: (config: DeFiConnectorArguments) => Promise<DeFiConnectorClient>
+    deficonnectProviderGenerator?: (params: {
+      chainId: string | number
+      networkId: string | number
+      config: DeFiConnectorArguments
+    }) => Promise<WalletConnectProvider | DeFiCosmosProvider>
   }
 }

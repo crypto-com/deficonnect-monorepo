@@ -7,11 +7,8 @@ import { DeFiConnector, DeFiConnectorUpdateEvent } from './DeFiConnector'
 export const URI_AVAILABLE = 'URI_AVAILABLE'
 
 export interface DeFiWeb3ConnectorArguments {
-  supportedChainIds?: number[]
-  rpc?: IRPCMap
-  infuraId?: string
-  chainId?: number
-  clientMeta?: IClientMeta
+  supportedChainIds: number[]
+  rpc: IRPCMap
   pollingInterval?: number
   bridge?: string
 }
@@ -36,7 +33,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
 
   constructor(config: DeFiWeb3ConnectorArguments) {
     super({ supportedChainIds: getSupportedChains(config) })
-    const clientMeta = config.clientMeta || getClientMeta() || undefined
+    const clientMeta = getClientMeta() || undefined
 
     this.defiConnector = new DeFiConnector({
       name: clientMeta?.name ?? '',

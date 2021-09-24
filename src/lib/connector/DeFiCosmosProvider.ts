@@ -12,13 +12,27 @@ export function isDeFiCosmosProvider(object: any): object is DeFiCosmosProvider 
   return typeof object.isDeFiCosmosProvider !== 'undefined'
 }
 
+const CroChainInfo = [
+  {
+    chainId: 'crypto-org-chain-mainnet-1',
+    addressType: 'cro',
+  },
+  {
+    chainId: 'testnet-croeseid-4',
+    addressType: 'tcro',
+  },
+]
 export class DeFiCosmosProvider {
   protected isDeFiCosmosProvider = true
-
   public client: DeFiConnectorClient
   constructor(config: DeFiCosmosProviderArguments) {
     const { client } = config
     this.client = client
+  }
+  get account(): string {
+    const addressType =
+      CroChainInfo.find((item) => item.chainId === this.client.connector.chainId)?.addressType ?? 'cro'
+    return this.client.connector.session.wallets[0].address[addressType] ?? ''
   }
   get signer(): OfflineDirectSigner {
     const account = this.client.connector.session.accounts[0]
