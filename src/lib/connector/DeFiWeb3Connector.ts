@@ -40,7 +40,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
 
     this.defiConnector = new DeFiConnector({
       name: clientMeta?.name ?? '',
-      logo: clientMeta?.icons[0] ?? '',
+      supprtedNetworks: ['eth'],
       bridge: config.bridge,
       eth: config,
     })

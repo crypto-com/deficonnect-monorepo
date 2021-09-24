@@ -1,24 +1,7 @@
-import 'regenerator-runtime/runtime'
-import { DeFiWeb3Connector, DeFiWeb3ConnectorArguments } from './lib/connector/DeFiWeb3Connector'
-import { DeFiConnector, DeFiConnectorArguments } from './lib/connector/DeFiConnector'
-import { SessionStorage } from './lib/SessionStorage'
-import { InstallExtensionModal } from './lib/InstallExtensionModal'
-import { formatToCWEURI, formatToWCURI, addUrlParams, formatUriAddUrlParams, removeAllUrlParams } from './lib/tools'
-import SocketTransport from '@deficonnect/socket-transport'
-import { DeFiConnectorClient } from './lib/DeFiConnectorClient'
-import { DeFiCosmosConnectorArguments } from './lib/connector/DeFiCosmosProvider'
-export {
-  DeFiConnector,
-  DeFiWeb3Connector,
-  SessionStorage,
-  InstallExtensionModal,
-  formatToCWEURI,
-  formatToWCURI,
-  addUrlParams,
-  formatUriAddUrlParams,
-  removeAllUrlParams,
-  SocketTransport,
-  DeFiConnectorClient,
-}
-
-export type { DeFiConnectorArguments, DeFiWeb3ConnectorArguments, DeFiCosmosConnectorArguments }
+export * from './lib/connector/DeFiWeb3Connector'
+export * from './lib/SessionStorage'
+export * from './lib/InstallExtensionModal'
+export * from './lib/tools'
+export * from './lib/connector/DeFiConnector'
+export * from './lib/DeFiConnectorClient'
+export * from './lib/connector/DeFiCosmosProvider'

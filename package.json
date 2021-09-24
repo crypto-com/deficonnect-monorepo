@@ -1,6 +1,6 @@
 {
   "name": "deficonnect",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "defilink SDK for Crypto.com DeFi Wallet Extension",
   "author": "Crypto.com",
   "license": "MIT",
@@ -68,12 +68,14 @@
     "dist"
   ],
   "dependencies": {
-    "@deficonnect/client": "^1.6.7-alpha.4",
-    "@deficonnect/core": "^1.6.7-alpha.4",
-    "@deficonnect/iso-crypto": "^1.6.7-alpha.4",
-    "@deficonnect/types": "^1.6.7-alpha.4",
-    "@deficonnect/utils": "^1.6.7-alpha.4",
-    "@deficonnect/web3-provider": "^1.6.7-alpha.4",
+    "@cosmjs/amino": "^0.26.0",
+    "@cosmjs/proto-signing": "^0.26.0",
+    "@deficonnect/client": "^1.6.7-alpha.12",
+    "@deficonnect/core": "^1.6.7-alpha.12",
+    "@deficonnect/iso-crypto": "^1.6.7-alpha.12",
+    "@deficonnect/types": "^1.6.7-alpha.12",
+    "@deficonnect/utils": "^1.6.7-alpha.12",
+    "@deficonnect/web3-provider": "^1.6.7-alpha.12",
     "@types/qrcode": "^1.4.1",
     "@types/react-modal": "^3.12.0",
     "qrcode": "^1.4.4",
