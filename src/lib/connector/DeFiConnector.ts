@@ -101,7 +101,7 @@ export class DeFiConnector {
         return
       }
       this.emitUpdate({
-        account: connectorClient.connector.session.accounts[0],
+        account: this.account,
         networkId: this.networkId,
         chainId: this.chainId,
         provider: this.provider,

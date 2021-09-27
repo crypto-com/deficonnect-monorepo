@@ -69,6 +69,7 @@
   ],
   "dependencies": {
     "@cosmjs/amino": "^0.26.0",
+    "@cosmjs/encoding": "^0.26.0",
     "@cosmjs/proto-signing": "^0.26.0",
     "@deficonnect/client": "^1.6.7-alpha.12",
     "@deficonnect/core": "^1.6.7-alpha.12",

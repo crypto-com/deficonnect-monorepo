@@ -1290,6 +1290,15 @@
     bech32 "^1.1.4"
     readonly-date "^1.0.0"
 
+"@cosmjs/encoding@^0.26.0":
+  version "0.26.0"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/encoding/-/encoding-0.26.0.tgz#b486331d1f640327df5b21bd88c7d67c265e1dfe"
+  integrity sha1-tIYzHR9kAyffWyG9iMfWfCZeHf4=
+  dependencies:
+    base64-js "^1.3.0"
+    bech32 "^1.1.4"
+    readonly-date "^1.0.0"
+
 "@cosmjs/math@0.26.0":
   version "0.26.0"
   resolved "http://localhost:4873/@cosmjs/math/-/math-0.26.0.tgz#7b027732965e7a408c4be6bbf1d415cd04fd6031"
