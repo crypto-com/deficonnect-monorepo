@@ -21,10 +21,8 @@ declare global {
   interface Window {
     ethereum?: any
     deficonnectClientGenerator?: (config: DeFiConnectorArguments) => Promise<DeFiConnectorClient>
-    deficonnectProviderGenerator?: (params: {
-      chainId: string | number
-      networkId: string | number
-      config: DeFiConnectorArguments
-    }) => Promise<WalletConnectProvider | DeFiCosmosProvider>
+    deficonnectProviderGenerator?: (
+      params: DeFiConnectorProviderGenerateArguments
+    ) => Promise<WalletConnectProvider | DeFiCosmosProvider>
   }
 }
