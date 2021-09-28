@@ -11,7 +11,7 @@ import { DeFiCosmosProvider, isDeFiCosmosProvider } from './DeFiCosmosProvider'
 
 export interface DeFiConnectorArguments {
   name: string
-  supprtedNetworks: DeFiConnectorNetwork[]
+  supprtedChainTypes: DeFiConnectorChainType[]
   bridge?: string
   eth?: DeFiWeb3ConnectorArguments
   cosmos?: DeFiCosmosConnectorArguments
@@ -23,7 +23,7 @@ export interface DeFiCosmosConnectorArguments {
 
 export interface DeFiConnectorProviderGenerateArguments {
   chainId: string
-  networkId: string
+  chainType: string
   config: DeFiConnectorArguments
   connectorClient: DeFiConnectorClient
 }
@@ -42,9 +42,9 @@ interface EventEmitter {
   callback: DeFiConnectorEventCallback
 }
 
-export type DeFiConnectorNetwork = 'eth' | 'cosmos'
+export type DeFiConnectorChainType = 'eth' | 'cosmos'
 export interface DeFiConnectorUpdate {
-  networkId?: DeFiConnectorNetwork
+  chainType?: DeFiConnectorChainType
   chainId?: string
   account?: string
   provider?: DeFiConnectorProvider
@@ -60,7 +60,7 @@ export type DeFiConnectorProvider = DeFiCosmosProvider | Web3Provider
 
 const GLOBAL_DEFILINK_BRIDGE_URL = 'https://wallet-connect.crypto.com/api/v1/ncwconnect/relay/ws'
 
-const formatNetworkId = (value: any): DeFiConnectorNetwork => {
+const formaChainType = (value: any): DeFiConnectorChainType => {
   if (value === 'eth' || value === 'cosmos') {
     return value
   }
@@ -102,7 +102,7 @@ export class DeFiConnector {
       }
       this.emitUpdate({
         account: this.account,
-        networkId: this.networkId,
+        chainType: this.chainType,
         chainId: this.chainId,
         provider: this.provider,
       })
@@ -111,17 +111,17 @@ export class DeFiConnector {
   }
 
   async generateProvider(params: DeFiConnectorProviderGenerateArguments): Promise<DeFiConnectorProvider> {
-    const { chainId, networkId, connectorClient } = params
+    const { chainId, chainType, connectorClient } = params
     if (typeof window.deficonnectProviderGenerator === 'function') {
-      return await window.deficonnectProviderGenerator({ chainId, networkId, config: this.config, connectorClient })
+      return await window.deficonnectProviderGenerator({ chainId, chainType, config: this.config, connectorClient })
     } else {
-      if (networkId === 'eth') {
+      if (chainType === 'eth') {
         return new Web3Provider({
           ...this.config.eth,
           connector: connectorClient.connector,
         })
       }
-      if (networkId === 'cosmos') {
+      if (chainType === 'cosmos') {
         return new DeFiCosmosProvider({
           supportedChainIds: this.config.cosmos?.supportedChainIds ?? [],
           client: connectorClient,
@@ -137,31 +137,31 @@ export class DeFiConnector {
       if (!connectorClient) {
         connectorClient = await this.generateClient()
       }
-      if (this.config.supprtedNetworks.length == 0) {
+      if (this.config.supprtedChainTypes.length == 0) {
         throw new Error('must provider supprtedNetworks')
       }
-      const networkId = this.config.supprtedNetworks[0]
+      const chainType = this.config.supprtedChainTypes[0]
       let chainId = '1'
-      if (networkId === 'eth') {
+      if (chainType === 'eth') {
         if (this.config.eth == undefined) {
           throw new Error('must provider eth config')
         }
         chainId = `${this.config.eth.supportedChainIds[0] ?? 1}`
       }
-      if (networkId === 'cosmos') {
+      if (chainType === 'cosmos') {
         if (this.config.cosmos == undefined) {
           throw new Error('must provider eth config')
         }
         chainId = `${this.config.cosmos.supportedChainIds[0] ?? 1}`
       }
-      this.provider = await this.generateProvider({ chainId, networkId, connectorClient, config: this.config })
+      this.provider = await this.generateProvider({ chainId, chainType, connectorClient, config: this.config })
 
-      await connectorClient.connector.connect({ chainId, networkId })
+      await connectorClient.connector.connect({ chainId, chainType })
       await this.provider?.enable()
       this.connectorClient = connectorClient
       return {
         account: this.account,
-        networkId: this.networkId,
+        chainType: this.chainType,
         chainId: this.chainId,
         provider: this.provider,
       }
@@ -194,12 +194,12 @@ export class DeFiConnector {
     return `${this.connectorClient?.connector.session.chainId ?? ''}`
   }
 
-  get networkId(): DeFiConnectorNetwork {
-    return formatNetworkId(this.connectorClient?.connector.session.networkId)
+  get chainType(): DeFiConnectorChainType {
+    return formaChainType(this.connectorClient?.connector.session.chainType)
   }
 
   get account(): string {
-    switch (this.networkId) {
+    switch (this.chainType) {
       case 'eth':
         return this.connectorClient?.connector.session.accounts[0] ?? ''
       case 'cosmos':
