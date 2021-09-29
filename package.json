@@ -79,6 +79,7 @@
     "@deficonnect/web3-provider": "^1.6.7-alpha.14",
     "@types/qrcode": "^1.4.1",
     "@types/react-modal": "^3.12.0",
+    "cosmjs-types": "^0.2.0",
     "qrcode": "^1.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

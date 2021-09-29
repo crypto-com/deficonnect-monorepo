@@ -13,16 +13,6 @@ export function isDeFiCosmosProvider(object: any): object is DeFiCosmosProvider 
   return typeof object.isDeFiCosmosProvider !== 'undefined'
 }
 
-const CroChainInfo = [
-  {
-    chainId: 'crypto-org-chain-mainnet-1',
-    addressType: 'cro',
-  },
-  {
-    chainId: 'testnet-croeseid-4',
-    addressType: 'tcro',
-  },
-]
 export class DeFiCosmosProvider {
   protected isDeFiCosmosProvider = true
   public client: DeFiConnectorClient
@@ -31,12 +21,7 @@ export class DeFiCosmosProvider {
     this.client = client
   }
   get account(): string {
-    console.info('get account:')
-    const addressType =
-      CroChainInfo.find((item) => item.chainId === this.client.connector.chainId)?.addressType ?? 'cro'
-    console.info('get account addressType:', addressType)
-    console.info('get account:', this.client.connector.session.wallets[0].address[addressType])
-    return this.client.connector.session.wallets[0].address[addressType] ?? ''
+    return this.client.connector.session.accounts[0] ?? ''
   }
   get signer(): OfflineDirectSigner {
     const account = this.account
