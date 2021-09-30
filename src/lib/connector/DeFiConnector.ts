@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime'
 import { IWalletConnectOptions } from '@deficonnect/types'
 import Web3Provider from '@deficonnect/web3-provider'
 import { SessionStorage } from '../SessionStorage'
-import { addUrlParams } from '../tools'
+import { addUrlParams } from '../tools/url-tools'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
 import { DeFiWeb3ConnectorArguments } from './DeFiWeb3Connector'
 import { InstallExtensionQRCodeModal } from '../InstallExtensionModal'
@@ -50,9 +50,9 @@ export interface DeFiConnectorUpdate {
   provider?: DeFiConnectorProvider
 }
 
-export type DeFiAddressType = 'eth' | 'cro' | 'tcro'
+// export type DeFiAddressType = 'eth' | 'cro' | 'tcro'
 export interface DeFiAddressTuple {
-  type: DeFiAddressType
+  type: string
   address: string
 }
 
@@ -140,23 +140,31 @@ export class DeFiConnector {
       if (this.config.supprtedChainTypes.length == 0) {
         throw new Error('must provider supprtedNetworks')
       }
-      const chainType = this.config.supprtedChainTypes[0]
-      let chainId = '1'
-      if (chainType === 'eth') {
+      const expectChainType = this.config.supprtedChainTypes[0]
+      let expectChainId = '1'
+      if (expectChainType === 'eth') {
         if (this.config.eth == undefined) {
           throw new Error('must provider eth config')
         }
-        chainId = `${this.config.eth.supportedChainIds[0] ?? 1}`
+        expectChainId = `${this.config.eth.supportedChainIds[0] ?? 1}`
       }
-      if (chainType === 'cosmos') {
+      if (expectChainType === 'cosmos') {
         if (this.config.cosmos == undefined) {
-          throw new Error('must provider eth config')
+          throw new Error('must provider cosmos config')
         }
-        chainId = `${this.config.cosmos.supportedChainIds[0] ?? 1}`
+        expectChainId = `${this.config.cosmos.supportedChainIds[0] ?? 1}`
       }
+      const { chainId, chainType } = await connectorClient.connector.connect({
+        chainId: expectChainId,
+        chainType: expectChainType,
+      })
+      this.provider = await this.generateProvider({
+        chainId,
+        chainType,
+        connectorClient,
+        config: this.config,
+      })
       this.provider = await this.generateProvider({ chainId, chainType, connectorClient, config: this.config })
-
-      await connectorClient.connector.connect({ chainId, chainType })
       await this.provider?.enable()
       this.connectorClient = connectorClient
       return {
@@ -171,7 +179,7 @@ export class DeFiConnector {
     }
   }
 
-  getAddressList(addressTypes: DeFiAddressType[]): DeFiAddressTuple[] {
+  getAddressList(addressTypes: string[]): DeFiAddressTuple[] {
     const connectorClient = this.connectorClient
     if (!connectorClient) {
       throw new Error('you has not active this connector')
@@ -179,7 +187,7 @@ export class DeFiConnector {
     return addressTypes.map((type) => {
       return {
         type,
-        address: connectorClient.connector.session.wallets[0].address[type],
+        address: connectorClient.connector.session.wallets[0].addresses[type].address,
       }
     })
   }
@@ -191,11 +199,11 @@ export class DeFiConnector {
   }
 
   get chainId(): string {
-    return `${this.connectorClient?.connector.session.chainId ?? ''}`
+    return `${this.connectorClient?.connector.chainId ?? ''}`
   }
 
   get chainType(): DeFiConnectorChainType {
-    return formaChainType(this.connectorClient?.connector.session.chainType)
+    return formaChainType(this.connectorClient?.connector.chainType)
   }
 
   get account(): string {

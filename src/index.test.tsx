@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { encodeAminoPubkey, encodeSecp256k1Pubkey, Pubkey } from '@cosmjs/amino'
 import { fromBase64, fromHex, toBase64 } from '@cosmjs/encoding'
-import { TxBody, AuthInfo } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
+import { TxBody, AuthInfo, SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { MsgTransfer } from 'cosmjs-types/ibc/applications/transfer/v1/tx'
+import { decodeToSignRequestJSON, encodeJSONToSignResponse } from './lib/tools/cosmos-msg-tool'
 
 describe('ExampleComponent', () => {
   it('is truthy', () => {
@@ -44,5 +46,26 @@ describe('ExampleComponent', () => {
     )
     const authInfo = AuthInfo.decode(authInfoBase64)
     console.info('authInfo:' + authInfo.fee?.gasLimit, JSON.stringify(authInfo))
+  })
+  it('cosmos JSON decode', () => {
+    const siginJSONstring = `{"bodyBytes":"CsABCikvaWJjLmFwcGxpY2F0aW9ucy50cmFuc2Zlci52MS5Nc2dUcmFuc2ZlchKSAQoIdHJhbnNmZXISC2NoYW5uZWwtMTI1GhYKCGJhc2V0Y3JvEgoxMDAwMDAwMDAwIit0Y3JvMTl5Z2FodmNmaHJ1OGtmd3l4M2VqbGxqeng2dDdyY2d3ZWVzcnQ0KipldGgxbjBxOXMwMjZtYzM0d2RhZjI2czAyY2Z4MDNqazJlNzR0YWRwdzM4gMTuz+CentUW","authInfoBytes":"ClAKRgofL2Nvc21vcy5jcnlwdG8uc2VjcDI1NmsxLlB1YktleRIjCiEDYYToBTdYWFoiCn48H2/Pn6MWFgkWWMmw74ZWfASQlQYSBAoCCAEYARIEEMCpBw==","chainId":"testnet-croeseid-4","accountNumber":"1338"}`
+    const signDoc = SignDoc.fromJSON(JSON.parse(siginJSONstring))
+    const decodeR = decodeToSignRequestJSON('tcro19ygahvcfhru8kfwyx3ejlljzx6t7rcgweesrt4', signDoc)
+    console.info('decodeR:', JSON.stringify(decodeR, null, 2))
+    const encodeR = encodeJSONToSignResponse({
+      signDoc: decodeR.signDoc,
+      signature: {
+        pub_key: {
+          type: 'pub_key123',
+          value: 'pub_key123',
+        },
+        signature: 'signature',
+      },
+    })
+    // console.info('encodeR:', JSON.stringify(encodeR, null, 2))
+    console.info(
+      'encodeR2:',
+      JSON.stringify(decodeToSignRequestJSON('tcro19ygahvcfhru8kfwyx3ejlljzx6t7rcgweesrt4', encodeR.signed), null, 2)
+    )
   })
 })

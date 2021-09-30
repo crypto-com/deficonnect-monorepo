@@ -1,8 +1,9 @@
-import { decodeBech32Pubkey, encodeBech32Pubkey } from '@cosmjs/amino'
-import { Bech32 } from '@cosmjs/encoding'
+import { fromBase64 } from '@cosmjs/encoding'
 import { AccountData, DirectSignResponse, OfflineDirectSigner } from '@cosmjs/proto-signing'
+import { IWalletConnectSessionWalletAdress } from '@deficonnect/types'
 import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
+import { decodeToSignRequestJSON, encodeJSONToSignResponse } from '../tools/cosmos-msg-tool'
 import { DeFiCosmosConnectorArguments } from './DeFiConnector'
 
 export interface DeFiCosmosProviderArguments extends DeFiCosmosConnectorArguments {
@@ -23,20 +24,33 @@ export class DeFiCosmosProvider {
   get account(): string {
     return this.client.connector.session.accounts[0] ?? ''
   }
+  get currentAccountInfo(): IWalletConnectSessionWalletAdress | undefined {
+    const addresses = this.client.connector.session.wallets[0].addresses
+
+    for (const [key, value] of Object.entries(addresses)) {
+      console.log(`${key}: ${value}`)
+    }
+    const result = Object.entries(addresses).find(([key, value]) => {
+      return value.address == this.account
+    })
+    return result?.[1]
+  }
+
   get signer(): OfflineDirectSigner {
-    const account = this.account
+    const currentAccountInfo = this.currentAccountInfo
+    if (!currentAccountInfo || !currentAccountInfo.pubkey) {
+      throw new Error('can not get the OfflineSigner, there is an unsupported address type')
+    }
     const accountData: AccountData = {
-      address: account,
+      address: currentAccountInfo.address,
       algo: 'secp256k1',
-      pubkey: Bech32.decode(account).data,
+      pubkey: fromBase64(currentAccountInfo.pubkey ?? ''),
     }
     return {
       getAccounts: async (): Promise<AccountData[]> => [accountData],
       signDirect: async (signerAddress: string, signDoc: SignDoc): Promise<DirectSignResponse> => {
-        return this.sendTransaction({
-          signerAddress,
-          signDoc,
-        })
+        const result = await this.sendTransaction(decodeToSignRequestJSON(signerAddress, signDoc))
+        return encodeJSONToSignResponse(result)
       },
     }
   }
