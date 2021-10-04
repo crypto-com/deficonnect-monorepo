@@ -11,13 +11,13 @@ export interface CosmosSignDocJSON {
   body: CosmosTxBodyJSON
   authInfo: CosmosAuthInfoJSON
   chainId: string
-  accountNumber: Long
+  accountNumber: string
 }
 
 export interface CosmosTxBodyJSON {
   messages: CosmosAnyJSON<CosmosMsgTransferJSON>[]
   memo: string
-  timeoutHeight: Long
+  timeoutHeight: string
 }
 export interface CosmosAnyJSON<T> {
   typeUrl: string
@@ -30,8 +30,11 @@ export interface CosmosMsgTransferJSON {
   token?: Coin
   sender: string
   receiver: string
-  timeoutHeight?: Height
-  timeoutTimestamp: Long
+  timeoutHeight?: {
+    revisionNumber: string
+    revisionHeight: string
+  }
+  timeoutTimestamp: string
 }
 
 export interface CosmosAuthInfoJSON {
@@ -42,7 +45,7 @@ export interface CosmosAuthInfoJSON {
 export interface CosmosSignerInfoJSON {
   publicKey?: CosmosAnyJSON<string>
   modeInfo?: ModeInfo
-  sequence: Long
+  sequence: string
 }
 
 export interface CosmosSignResponseJSON {
