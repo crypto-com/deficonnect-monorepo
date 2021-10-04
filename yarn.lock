@@ -1324,104 +1324,104 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@deficonnect/browser-utils@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/browser-utils/-/@deficonnect/browser-utils-1.6.7-alpha.16.tgz#313d0e71dac0dc5a012231b94642147e13d3e3b7"
-  integrity sha1-MT0OcdrA3FoBIjG5RkIUfhPT47c=
+"@deficonnect/browser-utils@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/browser-utils/-/@deficonnect/browser-utils-1.6.7-alpha.17.tgz#aded53752bd77c6e13434e961adbb84d6a190bc5"
+  integrity sha1-re1TdSvXfG4TQ06WGtu4TWoZC8U=
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.16"
+    "@deficonnect/types" "^1.6.7-alpha.17"
     "@walletconnect/safe-json" "1.0.0"
     "@walletconnect/window-getters" "1.0.0"
     "@walletconnect/window-metadata" "1.0.0"
     detect-browser "5.2.0"
 
-"@deficonnect/client@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/client/-/@deficonnect/client-1.6.7-alpha.16.tgz#a106b0a129ab5b4fa915be2bd8b5b900d80cf9f4"
-  integrity sha1-oQawoSmrW0+pFb4r2LW5ANgM+fQ=
+"@deficonnect/client@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/client/-/@deficonnect/client-1.6.7-alpha.17.tgz#5e1db7b5a693088c43c049c55ef510440ab83f1c"
+  integrity sha1-Xh23taaTCIxDwEnFXvUQRAq4Pxw=
   dependencies:
-    "@deficonnect/core" "^1.6.7-alpha.16"
-    "@deficonnect/iso-crypto" "^1.6.7-alpha.16"
-    "@deficonnect/types" "^1.6.7-alpha.16"
-    "@deficonnect/utils" "^1.6.7-alpha.16"
+    "@deficonnect/core" "^1.6.7-alpha.17"
+    "@deficonnect/iso-crypto" "^1.6.7-alpha.17"
+    "@deficonnect/types" "^1.6.7-alpha.17"
+    "@deficonnect/utils" "^1.6.7-alpha.17"
 
-"@deficonnect/core@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/core/-/@deficonnect/core-1.6.7-alpha.16.tgz#c97af427022249c0cfc0c2063f59b50c03d9f27a"
-  integrity sha1-yXr0JwIiScDPwMIGP1m1DAPZ8no=
+"@deficonnect/core@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/core/-/@deficonnect/core-1.6.7-alpha.17.tgz#33ef48d7681d6e2b5ca9105945ac095d89560efb"
+  integrity sha1-M+9I12gdbitcqRBZRawJXYlWDvs=
   dependencies:
-    "@deficonnect/socket-transport" "^1.6.7-alpha.16"
-    "@deficonnect/types" "^1.6.7-alpha.16"
-    "@deficonnect/utils" "^1.6.7-alpha.16"
+    "@deficonnect/socket-transport" "^1.6.7-alpha.17"
+    "@deficonnect/types" "^1.6.7-alpha.17"
+    "@deficonnect/utils" "^1.6.7-alpha.17"
 
-"@deficonnect/http-connection@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/http-connection/-/@deficonnect/http-connection-1.6.7-alpha.16.tgz#f39c5e933e864c539d29728703f1b811d0a86167"
-  integrity sha1-85xekz6GTFOdKXKHA/G4EdCoYWc=
+"@deficonnect/http-connection@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/http-connection/-/@deficonnect/http-connection-1.6.7-alpha.17.tgz#61fcb91c25a4813bcd81f73b66d120d24356d3f2"
+  integrity sha1-Yfy5HCWkgTvNgfc7ZtEg0kNW0/I=
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.16"
-    "@deficonnect/utils" "^1.6.7-alpha.16"
+    "@deficonnect/types" "^1.6.7-alpha.17"
+    "@deficonnect/utils" "^1.6.7-alpha.17"
     eventemitter3 "4.0.7"
     xhr2-cookies "1.1.0"
 
-"@deficonnect/iso-crypto@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/iso-crypto/-/@deficonnect/iso-crypto-1.6.7-alpha.16.tgz#4e5a51cd3e17e9877dfd5dcf94551416e6411a09"
-  integrity sha1-TlpRzT4X6Yd9/V3PlFUUFuZBGgk=
+"@deficonnect/iso-crypto@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/iso-crypto/-/@deficonnect/iso-crypto-1.6.7-alpha.17.tgz#86d9a421207778ce633eb425d26c28275d59a130"
+  integrity sha1-htmkISB3eM5jPrQl0mwoJ11ZoTA=
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.16"
-    "@deficonnect/utils" "^1.6.7-alpha.16"
+    "@deficonnect/types" "^1.6.7-alpha.17"
+    "@deficonnect/utils" "^1.6.7-alpha.17"
     "@walletconnect/crypto" "^1.0.1"
 
-"@deficonnect/qrcode-modal@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/qrcode-modal/-/@deficonnect/qrcode-modal-1.6.7-alpha.16.tgz#605d7775154ad32f658c4e49f0a1b37a053f7b37"
-  integrity sha1-YF13dRVK0y9ljE5J8KGzegU/ezc=
+"@deficonnect/qrcode-modal@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/qrcode-modal/-/@deficonnect/qrcode-modal-1.6.7-alpha.17.tgz#e238c753053ba8b803d10832423df7daa025f807"
+  integrity sha1-4jjHUwU7qLgD0QgyQj332qAl+Ac=
   dependencies:
-    "@deficonnect/browser-utils" "^1.6.7-alpha.16"
-    "@deficonnect/types" "^1.6.7-alpha.16"
+    "@deficonnect/browser-utils" "^1.6.7-alpha.17"
+    "@deficonnect/types" "^1.6.7-alpha.17"
     "@walletconnect/mobile-registry" "^1.4.0"
     copy-to-clipboard "^3.3.1"
     preact "10.4.1"
     qrcode "1.4.4"
 
-"@deficonnect/socket-transport@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/socket-transport/-/@deficonnect/socket-transport-1.6.7-alpha.16.tgz#ba15b71bcd9f3632ed29cea7d7ec19f087878ba3"
-  integrity sha1-uhW3G82fNjLtKc6n1+wZ8IeHi6M=
+"@deficonnect/socket-transport@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/socket-transport/-/@deficonnect/socket-transport-1.6.7-alpha.17.tgz#c1f5931c04df7530d1b177e7712ee7d4b0861979"
+  integrity sha1-wfWTHATfdTDRsXfncS7n1LCGGXk=
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.16"
-    "@deficonnect/utils" "^1.6.7-alpha.16"
+    "@deficonnect/types" "^1.6.7-alpha.17"
+    "@deficonnect/utils" "^1.6.7-alpha.17"
     ws "7.5.3"
 
-"@deficonnect/types@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/types/-/@deficonnect/types-1.6.7-alpha.16.tgz#3f159a130235da4a5294796e5b10d15afbd92aeb"
-  integrity sha1-PxWaEwI12kpSlHluWxDRWvvZKus=
+"@deficonnect/types@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/types/-/@deficonnect/types-1.6.7-alpha.17.tgz#6dfb41bcb2c0e2ac60359551179b688d8cbf1f22"
+  integrity sha1-bftBvLLA4qxgNZVRF5tojYy/HyI=
 
-"@deficonnect/utils@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/utils/-/@deficonnect/utils-1.6.7-alpha.16.tgz#8a7bc091581233b915d67cc3f0fa9a402e0aa1ec"
-  integrity sha1-invAkVgSM7kV1nzD8PqaQC4Koew=
+"@deficonnect/utils@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/utils/-/@deficonnect/utils-1.6.7-alpha.17.tgz#d8404d711b591a549dab0661a297d3c803baf529"
+  integrity sha1-2EBNcRtZGlSdqwZhopfTyAO69Sk=
   dependencies:
-    "@deficonnect/browser-utils" "^1.6.7-alpha.16"
-    "@deficonnect/types" "^1.6.7-alpha.16"
+    "@deficonnect/browser-utils" "^1.6.7-alpha.17"
+    "@deficonnect/types" "^1.6.7-alpha.17"
     "@walletconnect/encoding" "^1.0.0"
     "@walletconnect/jsonrpc-utils" "^1.0.0"
     bn.js "4.11.8"
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
-"@deficonnect/web3-provider@^1.6.7-alpha.16":
-  version "1.6.7-alpha.16"
-  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/web3-provider/-/@deficonnect/web3-provider-1.6.7-alpha.16.tgz#58992d32507f5dd6bc20c1bcef11442bae18a84e"
-  integrity sha1-WJktMlB/Xda8IMG87xFEK64YqE4=
+"@deficonnect/web3-provider@^1.6.7-alpha.17":
+  version "1.6.7-alpha.17"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@deficonnect/web3-provider/-/@deficonnect/web3-provider-1.6.7-alpha.17.tgz#2bcc4889ad88f332b9f6bf92727b8c81bb9a90bc"
+  integrity sha1-K8xIia2I8zK59r+ScnuMgbuakLw=
   dependencies:
-    "@deficonnect/client" "^1.6.7-alpha.16"
-    "@deficonnect/http-connection" "^1.6.7-alpha.16"
-    "@deficonnect/qrcode-modal" "^1.6.7-alpha.16"
-    "@deficonnect/types" "^1.6.7-alpha.16"
-    "@deficonnect/utils" "^1.6.7-alpha.16"
+    "@deficonnect/client" "^1.6.7-alpha.17"
+    "@deficonnect/http-connection" "^1.6.7-alpha.17"
+    "@deficonnect/qrcode-modal" "^1.6.7-alpha.17"
+    "@deficonnect/types" "^1.6.7-alpha.17"
+    "@deficonnect/utils" "^1.6.7-alpha.17"
     web3-provider-engine "16.0.1"
 
 "@eslint/eslintrc@^0.4.3":
