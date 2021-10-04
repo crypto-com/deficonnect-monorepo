@@ -26,10 +26,6 @@ export class DeFiCosmosProvider {
   }
   get currentAccountInfo(): IWalletConnectSessionWalletAdress | undefined {
     const addresses = this.client.connector.session.wallets[0].addresses
-
-    for (const [key, value] of Object.entries(addresses)) {
-      console.log(`${key}: ${value}`)
-    }
     const result = Object.entries(addresses).find(([key, value]) => {
       return value.address == this.account
     })
