@@ -196,6 +196,7 @@ export class DeFiConnector {
     if (!this.connectorClient) {
       return
     }
+    return this.connectorClient.connector.killSession()
   }
 
   get chainId(): string {
