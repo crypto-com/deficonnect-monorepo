@@ -3,7 +3,6 @@ import { AuthInfo, SignDoc, TxBody } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { fromBase64, toBase64 } from '@cosmjs/encoding'
 import { DirectSignResponse, isTsProtoGeneratedType, TsProtoGeneratedType } from '@cosmjs/proto-signing'
 import { defaultRegistryTypes } from '@cosmjs/stargate'
-import { Registry } from '@cosmjs/proto-signing'
 import Long from 'long'
 import { CosmosSignRequestJSON, CosmosSignResponseJSON } from '../connector/CosmosTypes'
 
