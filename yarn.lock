@@ -1255,6 +1255,16 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@confio/ics23@^0.6.3":
+  version "0.6.5"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@confio/ics23/-/ics23-0.6.5.tgz#9c21a61089d4c3c2429875a69d6d9cd8c87512aa"
+  integrity sha1-nCGmEInUw8JCmHWmnW2c2Mh1Eqo=
+  dependencies:
+    js-sha512 "^0.8.0"
+    protobufjs "^6.8.8"
+    ripemd160 "^2.0.2"
+    sha.js "^2.4.11"
+
 "@cosmjs/amino@0.26.0", "@cosmjs/amino@^0.26.0":
   version "0.26.0"
   resolved "http://localhost:4873/@cosmjs/amino/-/amino-0.26.0.tgz#2999204fe21101ecdfb5f2f5632440d065914b51"
@@ -1264,6 +1274,16 @@
     "@cosmjs/encoding" "0.26.0"
     "@cosmjs/math" "0.26.0"
     "@cosmjs/utils" "0.26.0"
+
+"@cosmjs/amino@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/amino/-/amino-0.26.1.tgz#78e177307756791d5c31da1d7d0f42a55a0a5d7a"
+  integrity sha1-eOF3MHdWeR1cMdodfQ9CpVoKXXo=
+  dependencies:
+    "@cosmjs/crypto" "0.26.1"
+    "@cosmjs/encoding" "0.26.1"
+    "@cosmjs/math" "0.26.1"
+    "@cosmjs/utils" "0.26.1"
 
 "@cosmjs/crypto@0.26.0":
   version "0.26.0"
@@ -1281,6 +1301,22 @@
     ripemd160 "^2.0.2"
     sha.js "^2.4.11"
 
+"@cosmjs/crypto@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/crypto/-/crypto-0.26.1.tgz#2b72c74a66f81080f7c1ba2dbd20acf8e887b05a"
+  integrity sha1-K3LHSmb4EID3wbotvSCs+OiHsFo=
+  dependencies:
+    "@cosmjs/encoding" "0.26.1"
+    "@cosmjs/math" "0.26.1"
+    "@cosmjs/utils" "0.26.1"
+    bip39 "^3.0.2"
+    bn.js "^4.11.8"
+    elliptic "^6.5.3"
+    js-sha3 "^0.8.0"
+    libsodium-wrappers "^0.7.6"
+    ripemd160 "^2.0.2"
+    sha.js "^2.4.11"
+
 "@cosmjs/encoding@0.26.0", "@cosmjs/encoding@^0.26.0":
   version "0.26.0"
   resolved "http://localhost:4873/@cosmjs/encoding/-/encoding-0.26.0.tgz#b486331d1f640327df5b21bd88c7d67c265e1dfe"
@@ -1290,12 +1326,48 @@
     bech32 "^1.1.4"
     readonly-date "^1.0.0"
 
+"@cosmjs/encoding@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/encoding/-/encoding-0.26.1.tgz#79bec892aaa831a974c9f854571d69caa549b225"
+  integrity sha1-eb7IkqqoMal0yfhUVx1pyqVJsiU=
+  dependencies:
+    base64-js "^1.3.0"
+    bech32 "^1.1.4"
+    readonly-date "^1.0.0"
+
+"@cosmjs/json-rpc@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/json-rpc/-/json-rpc-0.26.1.tgz#b79cefe1c3b92d05eac294d71181bfb849039307"
+  integrity sha1-t5zv4cO5LQXqwpTXEYG/uEkDkwc=
+  dependencies:
+    "@cosmjs/stream" "0.26.1"
+    xstream "^11.14.0"
+
 "@cosmjs/math@0.26.0":
   version "0.26.0"
   resolved "http://localhost:4873/@cosmjs/math/-/math-0.26.0.tgz#7b027732965e7a408c4be6bbf1d415cd04fd6031"
   integrity sha512-wfzdK/PnEnIA+CXM6VCyUr2daiEMvaF/iBaK3YCpkbXLfHUXQB+7bNh1HAHgJmp+PaYn3MhgBTnQbsmMsE3cKw==
   dependencies:
     bn.js "^4.11.8"
+
+"@cosmjs/math@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/math/-/math-0.26.1.tgz#8bfc1af4adc16a5857660c76c8429af70a43ac4d"
+  integrity sha1-i/wa9K3BalhXZgx2yEKa9wpDrE0=
+  dependencies:
+    bn.js "^4.11.8"
+
+"@cosmjs/proto-signing@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/proto-signing/-/proto-signing-0.26.1.tgz#057231343096fd37bbfdd71973a1472e729a150d"
+  integrity sha1-BXIxNDCW/Te7/dcZc6FHLnKaFQ0=
+  dependencies:
+    "@cosmjs/amino" "0.26.1"
+    "@cosmjs/crypto" "0.26.1"
+    "@cosmjs/math" "0.26.1"
+    cosmjs-types "^0.2.0"
+    long "^4.0.0"
+    protobufjs "~6.10.2"
 
 "@cosmjs/proto-signing@^0.26.0":
   version "0.26.0"
@@ -1309,10 +1381,65 @@
     long "^4.0.0"
     protobufjs "~6.10.2"
 
+"@cosmjs/socket@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/socket/-/socket-0.26.1.tgz#db783483a253c7b51f325dfc0f0c106853f103ce"
+  integrity sha1-23g0g6JTx7UfMl38DwwQaFPxA84=
+  dependencies:
+    "@cosmjs/stream" "0.26.1"
+    isomorphic-ws "^4.0.1"
+    ws "^7"
+    xstream "^11.14.0"
+
+"@cosmjs/stargate@^0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/stargate/-/stargate-0.26.1.tgz#24635ca89d4f7195843c7c8bd54f5ed29cf23894"
+  integrity sha1-JGNcqJ1PcZWEPHyL1U9e0pzyOJQ=
+  dependencies:
+    "@confio/ics23" "^0.6.3"
+    "@cosmjs/amino" "0.26.1"
+    "@cosmjs/encoding" "0.26.1"
+    "@cosmjs/math" "0.26.1"
+    "@cosmjs/proto-signing" "0.26.1"
+    "@cosmjs/stream" "0.26.1"
+    "@cosmjs/tendermint-rpc" "0.26.1"
+    "@cosmjs/utils" "0.26.1"
+    cosmjs-types "^0.2.0"
+    long "^4.0.0"
+    protobufjs "~6.10.2"
+    xstream "^11.14.0"
+
+"@cosmjs/stream@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/stream/-/stream-0.26.1.tgz#a1f29c6c12da887eeaa3bd3e29339f957ed0f6a8"
+  integrity sha1-ofKcbBLaiH7qo70+KTOflX7Q9qg=
+  dependencies:
+    xstream "^11.14.0"
+
+"@cosmjs/tendermint-rpc@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/tendermint-rpc/-/tendermint-rpc-0.26.1.tgz#56defe5047cf0e035cbed6b715af04ab5a7752c4"
+  integrity sha1-Vt7+UEfPDgNcvta3Fa8Eq1p3UsQ=
+  dependencies:
+    "@cosmjs/crypto" "0.26.1"
+    "@cosmjs/encoding" "0.26.1"
+    "@cosmjs/json-rpc" "0.26.1"
+    "@cosmjs/math" "0.26.1"
+    "@cosmjs/socket" "0.26.1"
+    "@cosmjs/stream" "0.26.1"
+    axios "^0.21.2"
+    readonly-date "^1.0.0"
+    xstream "^11.14.0"
+
 "@cosmjs/utils@0.26.0":
   version "0.26.0"
   resolved "http://localhost:4873/@cosmjs/utils/-/utils-0.26.0.tgz#a1c1728899e06e00ddfa99e2053b93413c9c20cf"
   integrity sha512-InTQ3P1noUR0U5zJs8ssqnToIGH2NKbFb+hS5wmYGLB0XRdlNk0UGcb9pjbAzaWRQPWxTd08YQvXg6IK/WE4fA==
+
+"@cosmjs/utils@0.26.1":
+  version "0.26.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/@cosmjs/utils/-/utils-0.26.1.tgz#52e38e26d92c34711ca8578973a76dd42faafaa6"
+  integrity sha1-UuOOJtksNHEcqFeJc6dt1C+q+qY=
 
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
@@ -3354,6 +3481,13 @@ axe-core@^4.0.2:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
   integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
+
+axios@^0.21.2:
+  version "0.21.4"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha1-xnuQ3AVo5cHPKwuFjEO6KOLtpXU=
+  dependencies:
+    follow-redirects "^1.14.0"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -6566,7 +6700,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.14.0:
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
   integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
@@ -6881,6 +7015,13 @@ globals@^13.6.0, globals@^13.9.0:
   integrity sha512-08/xrJ7wQjK9kkkRoI3OFUBbLx4f+6x3SGwcPvQ0QH6goFDrOU2oyAWrmh3dJezu65buo+HBMzAMQy6rovVC3g==
   dependencies:
     type-fest "^0.20.2"
+
+globalthis@^1.0.1:
+  version "1.0.2"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/globalthis/-/globalthis-1.0.2.tgz#2a235d34f4d8036219f7e34929b5de9e18166b8b"
+  integrity sha1-KiNdNPTYA2IZ9+NJKbXenhgWa4s=
+  dependencies:
+    define-properties "^1.1.3"
 
 globalyzer@0.1.0:
   version "0.1.0"
@@ -7884,6 +8025,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
+isomorphic-ws@^4.0.1:
+  version "4.0.1"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
+  integrity sha1-Vf1M1sXmSR523BJZON2GP1zU8tw=
+
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -8414,6 +8560,11 @@ js-sha3@0.8.0, js-sha3@^0.8.0:
   version "0.8.0"
   resolved "http://localhost:4873/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
   integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
+
+js-sha512@^0.8.0:
+  version "0.8.0"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/js-sha512/-/js-sha512-0.8.0.tgz#dd22db8d02756faccf19f218e3ed61ec8249f7d4"
+  integrity sha1-3SLbjQJ1b6zPGfIY4+1h7IJJ99Q=
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -11139,6 +11290,25 @@ prop-types@^15.6.2, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
+protobufjs@^6.8.8, protobufjs@~6.11.2:
+  version "6.11.2"
+  resolved "http://localhost:4873/protobufjs/-/protobufjs-6.11.2.tgz#de39fabd4ed32beaa08e9bb1e30d08544c1edf8b"
+  integrity sha512-4BQJoPooKJl2G9j3XftkIXjoC9C0Av2NOrWmbLWT1vH32GcSUHjM0Arra6UfTsVyfMAuFzaLucXn1sadxJydAw==
+  dependencies:
+    "@protobufjs/aspromise" "^1.1.2"
+    "@protobufjs/base64" "^1.1.2"
+    "@protobufjs/codegen" "^2.0.4"
+    "@protobufjs/eventemitter" "^1.1.0"
+    "@protobufjs/fetch" "^1.1.0"
+    "@protobufjs/float" "^1.0.2"
+    "@protobufjs/inquire" "^1.1.0"
+    "@protobufjs/path" "^1.1.2"
+    "@protobufjs/pool" "^1.1.0"
+    "@protobufjs/utf8" "^1.1.0"
+    "@types/long" "^4.0.1"
+    "@types/node" ">=13.7.0"
+    long "^4.0.0"
+
 protobufjs@~6.10.2:
   version "6.10.2"
   resolved "http://localhost:4873/protobufjs/-/protobufjs-6.10.2.tgz#b9cb6bd8ec8f87514592ba3fdfd28e93f33a469b"
@@ -11156,25 +11326,6 @@ protobufjs@~6.10.2:
     "@protobufjs/utf8" "^1.1.0"
     "@types/long" "^4.0.1"
     "@types/node" "^13.7.0"
-    long "^4.0.0"
-
-protobufjs@~6.11.2:
-  version "6.11.2"
-  resolved "http://localhost:4873/protobufjs/-/protobufjs-6.11.2.tgz#de39fabd4ed32beaa08e9bb1e30d08544c1edf8b"
-  integrity sha512-4BQJoPooKJl2G9j3XftkIXjoC9C0Av2NOrWmbLWT1vH32GcSUHjM0Arra6UfTsVyfMAuFzaLucXn1sadxJydAw==
-  dependencies:
-    "@protobufjs/aspromise" "^1.1.2"
-    "@protobufjs/base64" "^1.1.2"
-    "@protobufjs/codegen" "^2.0.4"
-    "@protobufjs/eventemitter" "^1.1.0"
-    "@protobufjs/fetch" "^1.1.0"
-    "@protobufjs/float" "^1.0.2"
-    "@protobufjs/inquire" "^1.1.0"
-    "@protobufjs/path" "^1.1.2"
-    "@protobufjs/pool" "^1.1.0"
-    "@protobufjs/utf8" "^1.1.0"
-    "@types/long" "^4.0.1"
-    "@types/node" ">=13.7.0"
     long "^4.0.0"
 
 proxy-addr@~2.0.5:
@@ -12983,6 +13134,11 @@ svgo@^1.0.0, svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+symbol-observable@^2.0.3:
+  version "2.0.3"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/symbol-observable/-/symbol-observable-2.0.3.tgz#5b521d3d07a43c351055fa43b8355b62d33fd16a"
+  integrity sha1-W1IdPQekPDUQVfpDuDVbYtM/0Wo=
+
 symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
@@ -14154,7 +14310,7 @@ ws@^6.2.1:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.4.6:
+ws@^7, ws@^7.4.6:
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.5.tgz#8b4bc4af518cfabd0473ae4f99144287b33eb881"
   integrity sha512-BAkMFcAzl8as1G/hArkxOxq3G7pjUqQ3gzYbLL0/5zNkph70e+lCoxBGnm6AW1+/aiNeV4fnKqZ8m4GZewmH2w==
@@ -14185,6 +14341,14 @@ xmlchars@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
+
+xstream@^11.14.0:
+  version "11.14.0"
+  resolved "https://deficonnect.jfrog.io/artifactory/api/npm/default-npm-virtual/xstream/-/xstream-11.14.0.tgz#2c071d26b18310523b6877e86b4e54df068a9ae5"
+  integrity sha1-LAcdJrGDEFI7aHfoa05U3waKmuU=
+  dependencies:
+    globalthis "^1.0.1"
+    symbol-observable "^2.0.3"
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.2"

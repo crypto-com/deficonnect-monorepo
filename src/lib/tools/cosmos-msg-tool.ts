@@ -1,25 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthInfo, SignDoc, TxBody } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
-import { CosmosSignRequestJSON, CosmosSignResponseJSON } from '../connector/CosmosTypes'
-import { MsgTransfer } from 'cosmjs-types/ibc/applications/transfer/v1/tx'
 import { fromBase64, toBase64 } from '@cosmjs/encoding'
-import { DirectSignResponse } from '@cosmjs/proto-signing'
+import { DirectSignResponse, isTsProtoGeneratedType, TsProtoGeneratedType } from '@cosmjs/proto-signing'
+import { defaultRegistryTypes } from '@cosmjs/stargate'
+import { Registry } from '@cosmjs/proto-signing'
 import Long from 'long'
+import { CosmosSignRequestJSON, CosmosSignResponseJSON } from '../connector/CosmosTypes'
 
-const TypeUrlMaps = {
-  '/ibc.applications.transfer.v1.MsgTransfer': MsgTransfer,
-}
-
-function queryPrototypeFromUrl(typeUrl: string): any {
-  let ProtoObj = TypeUrlMaps[typeUrl]
-  if (!ProtoObj) {
-    const path = 'cosmjs-types' + typeUrl.replace(/\./g, '/')
-    const compontens = path.split('/')
-    const latestComponent = compontens.pop() || 'default'
-    compontens.push('tx')
-    ProtoObj = require(compontens.join('/'))[latestComponent]
+function queryPrototypeFromUrl(typeUrl: string): TsProtoGeneratedType {
+  const ProtobufType = defaultRegistryTypes.find((item) => item[0] === typeUrl)?.[1]
+  if (ProtobufType && isTsProtoGeneratedType(ProtobufType)) {
+    return ProtobufType
   }
-  return ProtoObj
+  throw new Error(`can not find ProtoGeneratedType for typeUrl:${typeUrl}`)
 }
 
 export const transformProtoToJSON = (object: any): any => {
@@ -29,10 +22,10 @@ export const transformProtoToJSON = (object: any): any => {
   }
   if (object && typeof object.typeUrl === 'string' && typeof object.value === 'string') {
     try {
-      const ProtoObj = queryPrototypeFromUrl(object.typeUrl)
+      const ProtobufType = queryPrototypeFromUrl(object.typeUrl)
       return {
         typeUrl: object.typeUrl,
-        value: transformProtoToJSON(ProtoObj.toJSON(ProtoObj.decode(fromBase64(object.value)))),
+        value: transformProtoToJSON(ProtobufType.toJSON(ProtobufType.decode(fromBase64(object.value)))),
       }
     } catch (error) {
       return object
@@ -56,9 +49,9 @@ export const transformJSONtoProto = (object: any): any => {
   }
   if (object && typeof object.typeUrl === 'string' && typeof object.value === 'object') {
     try {
-      const ProtoObj = queryPrototypeFromUrl(object.typeUrl)
+      const ProtobufType = queryPrototypeFromUrl(object.typeUrl)
       const JSONValue = transformJSONtoProto(object.value)
-      const newValue = ProtoObj.encode(ProtoObj.fromJSON(JSONValue)).finish()
+      const newValue = ProtobufType.encode(ProtobufType.fromJSON(JSONValue)).finish()
       return {
         typeUrl: object.typeUrl,
         value: toBase64(newValue),

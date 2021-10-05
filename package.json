@@ -71,6 +71,7 @@
     "@cosmjs/amino": "^0.26.0",
     "@cosmjs/encoding": "^0.26.0",
     "@cosmjs/proto-signing": "^0.26.0",
+    "@cosmjs/stargate": "^0.26.1",
     "@deficonnect/client": "^1.6.7-alpha.17",
     "@deficonnect/core": "^1.6.7-alpha.17",
     "@deficonnect/iso-crypto": "^1.6.7-alpha.17",
