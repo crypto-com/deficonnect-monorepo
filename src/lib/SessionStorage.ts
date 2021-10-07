@@ -5,7 +5,7 @@ const defaultKey = 'DeFiLink_session_storage_dapp'
 
 export function isWalletConnectSession(object: any): object is IWalletConnectSession {
   return (
-    typeof object !== 'undefined' &&
+    object &&
     typeof object.bridge !== 'undefined' &&
     typeof object.chainId !== 'undefined' &&
     typeof object.chainType !== 'undefined' &&

@@ -236,7 +236,7 @@ export class DeFiConnector {
 
   protected emitUpdate(update: DeFiConnectorUpdate): void {
     this.eventEmitters.forEach((emitter) => {
-      if (emitter.event == DeFiConnectorUpdateEvent.Update) {
+      if (emitter.event === DeFiConnectorUpdateEvent.Update) {
         emitter.callback(update, undefined)
       }
     })
@@ -244,15 +244,16 @@ export class DeFiConnector {
 
   protected emitError(error: Error): void {
     this.eventEmitters.forEach((emitter) => {
-      if (emitter.event == DeFiConnectorUpdateEvent.Error) {
+      if (emitter.event === DeFiConnectorUpdateEvent.Error) {
         emitter.callback(undefined, error)
       }
     })
   }
 
   protected emitDeactivate(): void {
+    console.info('DeFiConnectorUpdateEvent: emitDeactivate')
     this.eventEmitters.forEach((emitter) => {
-      if (emitter.event == DeFiConnectorUpdateEvent.Deactivate) {
+      if (emitter.event === DeFiConnectorUpdateEvent.Deactivate) {
         emitter.callback(undefined, undefined)
       }
     })
