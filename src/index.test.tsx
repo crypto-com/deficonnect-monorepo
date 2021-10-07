@@ -1,67 +1,10 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { encodeAminoPubkey, encodeSecp256k1Pubkey, Pubkey } from '@cosmjs/amino'
-import { fromBase64, fromHex, toBase64 } from '@cosmjs/encoding'
+import { Bech32, fromBase64, fromHex, toBase64, toHex } from '@cosmjs/encoding'
 import { TxBody, AuthInfo, SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { Any } from 'cosmjs-types/google/protobuf/any'
 // import { MsgTransfer } from 'cosmjs-types/ibc/applications/transfer/v1/tx'
 import { decodeToSignRequestJSON, encodeJSONToSignResponse } from './lib/tools/cosmos-msg-tool'
-
-function transformProtoToJSON(object: any): any {
-  const result = {}
-  if (object instanceof Array) {
-    return object.map((item) => transformProtoToJSON(item))
-  }
-  if (object && typeof object.typeUrl === 'string' && typeof object.value === 'string') {
-    const path = 'cosmjs-types' + object.typeUrl.replace(/\./g, '/')
-    const compontens = path.split('/')
-    const latestComponent = compontens.pop() || 'default'
-    compontens.push('tx')
-    try {
-      const ProtoObj = require(compontens.join('/'))[latestComponent]
-      return transformProtoToJSON(ProtoObj.toJSON(ProtoObj.decode(fromBase64(object.value))))
-    } catch (error) {
-      return object
-    }
-  }
-  for (const key in object) {
-    const value = object[key]
-    if (typeof value == 'object') {
-      result[key] = transformProtoToJSON(value)
-      continue
-    }
-    result[key] = value
-  }
-  return result
-}
-
-function transformJSONtoProto(object: any): any {
-  const result = {}
-  if (object instanceof Array) {
-    return object.map((item) => transformJSONtoProto(item))
-  }
-  if (object && typeof object.typeUrl === 'string' && typeof object.value === 'object') {
-    const path = 'cosmjs-types' + object.typeUrl.replace(/\./g, '/')
-    const compontens = path.split('/')
-    const latestComponent = compontens.pop() || 'default'
-    compontens.push('tx')
-    try {
-      const ProtoObj = require(compontens.join('/'))[latestComponent]
-      ProtoObj.fromJSON()
-      return transformJSONtoProto(ProtoObj.toJSON(ProtoObj.decode(fromBase64(object.value))))
-    } catch (error) {
-      return object
-    }
-  }
-  for (const key in object) {
-    const value = object[key]
-    if (typeof value == 'object') {
-      result[key] = transformProtoToJSON(value)
-      continue
-    }
-    result[key] = value
-  }
-  return result
-}
 
 describe('ExampleComponent', () => {
   it('is truthy', () => {
@@ -134,5 +77,9 @@ describe('ExampleComponent', () => {
       'encodeR2:',
       JSON.stringify(decodeToSignRequestJSON('tcro19ygahvcfhru8kfwyx3ejlljzx6t7rcgweesrt4', encodeR.signed), null, 2)
     )
+    const betch32 = Bech32.decode('tcrc1n0q9s026mc34wdaf26s02cfx03jk2e74gcavzw')
+    console.info('betch32:', betch32.prefix)
+    console.info('toHex:', toHex(betch32.data))
+    console.info('toBase64:', toBase64(betch32.data))
   })
 })
