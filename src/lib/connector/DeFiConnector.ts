@@ -101,8 +101,8 @@ export class DeFiConnector {
         return
       }
       this.provider = await this.generateProvider({
-        chainId: payload.chainId,
-        chainType: payload.chainType,
+        chainId: this.chainId,
+        chainType: this.chainType,
         connectorClient,
         config: this.config,
       })
@@ -214,15 +214,7 @@ export class DeFiConnector {
   }
 
   get account(): string {
-    switch (this.chainType) {
-      case 'eth':
-        return this.connectorClient?.connector.session.accounts[0] ?? ''
-      case 'cosmos':
-        if (isDeFiCosmosProvider(this.provider)) {
-          return this.provider.account
-        }
-        return ''
-    }
+    return this.connectorClient?.connector.session.accounts[0] ?? ''
   }
 
   get provider(): DeFiConnectorProvider | undefined {
