@@ -1,3 +1,4 @@
+import { pubkeyType } from '@cosmjs/amino'
 import { fromBase64 } from '@cosmjs/encoding'
 import { AccountData, DirectSignResponse, OfflineDirectSigner } from '@cosmjs/proto-signing'
 import { IWalletConnectSessionWalletAdress } from '@deficonnect/types'
@@ -46,7 +47,9 @@ export class DeFiCosmosProvider {
       getAccounts: async (): Promise<AccountData[]> => [accountData],
       signDirect: async (signerAddress: string, signDoc: SignDoc): Promise<DirectSignResponse> => {
         const result = await this.sendTransaction(decodeToSignRequestJSON(signerAddress, signDoc))
-        return encodeJSONToSignResponse(result)
+        result.signature.pub_key.type = pubkeyType.secp256k1
+        const encodeResult = encodeJSONToSignResponse(result)
+        return encodeResult
       },
     }
   }

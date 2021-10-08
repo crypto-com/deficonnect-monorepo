@@ -49,6 +49,6 @@ export interface CosmosSignerInfoJSON {
 }
 
 export interface CosmosSignResponseJSON {
-  signDoc: CosmosSignDocJSON
+  signed: CosmosSignDocJSON
   signature: StdSignature
 }

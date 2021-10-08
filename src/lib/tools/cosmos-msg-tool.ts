@@ -87,10 +87,10 @@ export const decodeToSignRequestJSON = (signerAddress: string, signDoc: SignDoc)
 export const encodeJSONToSignResponse = (respJSON: CosmosSignResponseJSON): DirectSignResponse => {
   return {
     signed: {
-      chainId: respJSON.signDoc.chainId,
-      accountNumber: Long.fromString(respJSON.signDoc.accountNumber),
-      bodyBytes: TxBody.encode(TxBody.fromJSON(transformJSONtoProto(respJSON.signDoc.body))).finish(),
-      authInfoBytes: AuthInfo.encode(AuthInfo.fromJSON(transformJSONtoProto(respJSON.signDoc.authInfo))).finish(),
+      chainId: respJSON.signed.chainId,
+      accountNumber: Long.fromString(respJSON.signed.accountNumber),
+      bodyBytes: TxBody.encode(TxBody.fromJSON(transformJSONtoProto(respJSON.signed.body))).finish(),
+      authInfoBytes: AuthInfo.encode(AuthInfo.fromJSON(transformJSONtoProto(respJSON.signed.authInfo))).finish(),
     },
     signature: respJSON.signature,
   }
