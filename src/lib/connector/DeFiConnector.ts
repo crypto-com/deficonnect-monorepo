@@ -222,6 +222,9 @@ export class DeFiConnector {
   }
   set provider(value: DeFiConnectorProvider | undefined) {
     this._provider = value
+    if (!isDeFiCosmosProvider(value)) {
+      window.ethereum = value
+    }
   }
 
   on(event: DeFiConnectorUpdateEvent, callback: DeFiConnectorEventCallback): DeFiConnectorEventUnsubscribe {
@@ -249,7 +252,6 @@ export class DeFiConnector {
   }
 
   protected emitDeactivate(): void {
-    console.info('DeFiConnectorUpdateEvent: emitDeactivate')
     this.eventEmitters.forEach((emitter) => {
       if (emitter.event === DeFiConnectorUpdateEvent.Deactivate) {
         emitter.callback(undefined, undefined)
