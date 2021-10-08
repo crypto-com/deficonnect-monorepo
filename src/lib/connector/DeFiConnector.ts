@@ -95,11 +95,17 @@ export class DeFiConnector {
     connectorClient.connector.on('disconnect', () => {
       this.emitDeactivate()
     })
-    connectorClient.connector.on('session_update', (error: Error | null, payload: any | null) => {
+    connectorClient.connector.on('session_update', async (error: Error | null, payload: any | null) => {
       if (error) {
         this.emitError(error)
         return
       }
+      this.provider = await this.generateProvider({
+        chainId: payload.chainId,
+        chainType: payload.chainType,
+        connectorClient,
+        config: this.config,
+      })
       this.emitUpdate({
         account: this.account,
         chainType: this.chainType,
