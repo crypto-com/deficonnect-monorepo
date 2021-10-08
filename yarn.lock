@@ -1392,104 +1392,104 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@deficonnect/browser-utils@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/browser-utils/-/browser-utils-1.6.7-alpha.19.tgz#4c42e791d2b7fbe6226b9a25276ec78e0450c4e1"
-  integrity sha512-vBMr+brACRIhpoAxA2I+R1+tqYNjMb6KX1Pr4Oyg8mcuID+diHj0K/lFZ4PM88y2ZM25qo0UWRnOpg4FXDrkNQ==
+"@deficonnect/browser-utils@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/browser-utils/-/browser-utils-1.6.7-alpha.20.tgz#b265c0957d787f33936ccdeb08873a55cffe74b6"
+  integrity sha512-ldIxJRlJFwefg69uMGD/hS/IgsllqykKmf6QqDWNG3Zmy2QdGJQoDQU8uwHG/8BjeUKEeefTwqmKoisZY8Lmlg==
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.19"
+    "@deficonnect/types" "^1.6.7-alpha.20"
     "@walletconnect/safe-json" "1.0.0"
     "@walletconnect/window-getters" "1.0.0"
     "@walletconnect/window-metadata" "1.0.0"
     detect-browser "5.2.0"
 
-"@deficonnect/client@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/client/-/client-1.6.7-alpha.19.tgz#be5768b77123691bbba21696f911712b00504eef"
-  integrity sha512-0xC+ClOIeE789EMwVvqLEJ+840RHDxmvd0sox9Em8F69PTBp8bS22d+QuqE/ZLZN+ZshCJKHjVMZCZnn3htw+Q==
+"@deficonnect/client@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/client/-/client-1.6.7-alpha.20.tgz#ec14a1741cd41c360a922fac58983110ece09fe6"
+  integrity sha512-+TIA3c54tVSwDOje20eRh59B24ZOP7WYxtWwNmxVIeu5JW9pgyVUGhf+rOcX3NnRS30KBXkdc86nlyZPwhY17w==
   dependencies:
-    "@deficonnect/core" "^1.6.7-alpha.19"
-    "@deficonnect/iso-crypto" "^1.6.7-alpha.19"
-    "@deficonnect/types" "^1.6.7-alpha.19"
-    "@deficonnect/utils" "^1.6.7-alpha.19"
+    "@deficonnect/core" "^1.6.7-alpha.20"
+    "@deficonnect/iso-crypto" "^1.6.7-alpha.20"
+    "@deficonnect/types" "^1.6.7-alpha.20"
+    "@deficonnect/utils" "^1.6.7-alpha.20"
 
-"@deficonnect/core@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/core/-/core-1.6.7-alpha.19.tgz#f25ff3d7a62ca5d34bad230fcdb53e329275faac"
-  integrity sha512-IRwFJqQKaRaX/sOq4kIcddo/885+Z7U1luUkLWs2tuoC2KJJvOMKSbOvW98ZP6dweF5b/4cgsYTBTRxo8on3Eg==
+"@deficonnect/core@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/core/-/core-1.6.7-alpha.20.tgz#bbb4466be9c9f97aae263575c127468496b2a88e"
+  integrity sha512-GArIOOKa/Q55BbMWo2R7SlC+eLj6QIQOc6tsbvmg4CfIcoVEj1jQQVkFodEqlMURKTrKHHfrvUdO7ual5vgAUg==
   dependencies:
-    "@deficonnect/socket-transport" "^1.6.7-alpha.19"
-    "@deficonnect/types" "^1.6.7-alpha.19"
-    "@deficonnect/utils" "^1.6.7-alpha.19"
+    "@deficonnect/socket-transport" "^1.6.7-alpha.20"
+    "@deficonnect/types" "^1.6.7-alpha.20"
+    "@deficonnect/utils" "^1.6.7-alpha.20"
 
-"@deficonnect/http-connection@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/http-connection/-/http-connection-1.6.7-alpha.19.tgz#7da4e960d0bfc7db8996deae0d2fdc19839df3e1"
-  integrity sha512-6iT0fVQbpWUR2SbKlsz/Gn2fV0zHfWuc4SaYFaaoL18cZlhYyaAk9w0lrxdJuMErb42FQ8RJIGp38vmK0Nwh1A==
+"@deficonnect/http-connection@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/http-connection/-/http-connection-1.6.7-alpha.20.tgz#95b38a2d406153bc108f4eda2c38e116ae977a78"
+  integrity sha512-H4/f5f/kcRlsi87r0bpAiFaB/8kw35H8SUjY1JTsmbs+Q3ZEvJAGCfMiybjiUTj7gKieXHGoO6fLMrZ1CFNnXA==
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.19"
-    "@deficonnect/utils" "^1.6.7-alpha.19"
+    "@deficonnect/types" "^1.6.7-alpha.20"
+    "@deficonnect/utils" "^1.6.7-alpha.20"
     eventemitter3 "4.0.7"
     xhr2-cookies "1.1.0"
 
-"@deficonnect/iso-crypto@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/iso-crypto/-/iso-crypto-1.6.7-alpha.19.tgz#bfe62641612c79263599cb074f3ff4047c98808e"
-  integrity sha512-to91Cy90nu+jhpfvOf9iZ1wP+tQWFvw/40rw9T3FDTPTsd5tif5G+N4i2SBpHKi4+x56/H7/rnHSy2mMHDFXOg==
+"@deficonnect/iso-crypto@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/iso-crypto/-/iso-crypto-1.6.7-alpha.20.tgz#a240fe2cad4181629a0c681acade4dad89deda5f"
+  integrity sha512-TE+9ad5xJiQPomFJNCH7mppttwbu4BosxZE+3WDxuwoeseWP+SIfn4QhMNaP7FeZ591mip50fhD5DwBzA4+c3w==
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.19"
-    "@deficonnect/utils" "^1.6.7-alpha.19"
+    "@deficonnect/types" "^1.6.7-alpha.20"
+    "@deficonnect/utils" "^1.6.7-alpha.20"
     "@walletconnect/crypto" "^1.0.1"
 
-"@deficonnect/qrcode-modal@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/qrcode-modal/-/qrcode-modal-1.6.7-alpha.19.tgz#cac57c1e4a6c201419880a79cf34cc1c7c17fa04"
-  integrity sha512-hKU8dyYvNSYc1AQcDeG6n/nWXJw5G7ykBhqOA37rZBv3gfuxNtMnM4EvA+z5HODElca59yZLwrm0mVFYrXH/rg==
+"@deficonnect/qrcode-modal@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/qrcode-modal/-/qrcode-modal-1.6.7-alpha.20.tgz#5560fb3caf4e2444918c9f41d2dcf8bc825b9f8c"
+  integrity sha512-Hq0z11VNiw+ZbR5ozpLypq7F8uM2zZp2iPD/Vl/u4voTUdulKgzeSTHI678oQ5i1V3cVsXGsknAiILswhAL2mg==
   dependencies:
-    "@deficonnect/browser-utils" "^1.6.7-alpha.19"
-    "@deficonnect/types" "^1.6.7-alpha.19"
+    "@deficonnect/browser-utils" "^1.6.7-alpha.20"
+    "@deficonnect/types" "^1.6.7-alpha.20"
     "@walletconnect/mobile-registry" "^1.4.0"
     copy-to-clipboard "^3.3.1"
     preact "10.4.1"
     qrcode "1.4.4"
 
-"@deficonnect/socket-transport@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/socket-transport/-/socket-transport-1.6.7-alpha.19.tgz#c7d82a7c11df27a9db5dec4de28e95d208ccb215"
-  integrity sha512-rY6pq1WINMr6OsEwb5bljsm+Jz8UApI11SRmCjOHnbWtov/aqVq7/tHM/6BGpTNrRq92sMU2C/gDiCMZLqpdxQ==
+"@deficonnect/socket-transport@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/socket-transport/-/socket-transport-1.6.7-alpha.20.tgz#1de310679e8d0e47ad718dffb9def77f9773d768"
+  integrity sha512-b5plGjXZw/9xH+mKZNzpbhEQKW/e+3AZfNA9CEVcoi7970+uQl5sBki3vAhx6Gk0weMjLZ5qbbbz7/msSK36vg==
   dependencies:
-    "@deficonnect/types" "^1.6.7-alpha.19"
-    "@deficonnect/utils" "^1.6.7-alpha.19"
+    "@deficonnect/types" "^1.6.7-alpha.20"
+    "@deficonnect/utils" "^1.6.7-alpha.20"
     ws "7.5.3"
 
-"@deficonnect/types@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/types/-/types-1.6.7-alpha.19.tgz#4a334f626d4eaffe15dd044c12b73b704a4aa963"
-  integrity sha512-10wMS4iHYmVPqDzDd+uWeqc076gz9Dx8TYwxMagqXJPxtTC6dQlv+nbHl+UP6TvnMdMZj5Pn7M8ofihdwJzvVg==
+"@deficonnect/types@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/types/-/types-1.6.7-alpha.20.tgz#deeabb6ed72cb7e9f6cc13f9807cfc2aa3ef3471"
+  integrity sha512-Q+9DFYkdmGA4Wcty4gQKPsr4XVJOL8UakmW/Mw2u1uJJW8WU7Q8QtFO2dwqLlCl2+Ok46pRdrcYniuyLmIlOvQ==
 
-"@deficonnect/utils@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/utils/-/utils-1.6.7-alpha.19.tgz#5b7c99265340d1069f60c2280db7255687047b63"
-  integrity sha512-sxpj0387/6PsgvlNqQj0PJHcO3GpLMlP2lfaqCoMgwrSsYzHlcXVGGmkje39POHDAn35brjaxwFoS0Piy3z8wQ==
+"@deficonnect/utils@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/utils/-/utils-1.6.7-alpha.20.tgz#a1860a39e53e40f8024fb67252904baa0b0dc2c8"
+  integrity sha512-dSI6n821b92cFxOS2ahf/j2CNCGb2kukXgFK99n8YElMowYlquaHwOw0Lwo8Yi4NbWO/SPgnJJa+h35+yf5XgQ==
   dependencies:
-    "@deficonnect/browser-utils" "^1.6.7-alpha.19"
-    "@deficonnect/types" "^1.6.7-alpha.19"
+    "@deficonnect/browser-utils" "^1.6.7-alpha.20"
+    "@deficonnect/types" "^1.6.7-alpha.20"
     "@walletconnect/encoding" "^1.0.0"
     "@walletconnect/jsonrpc-utils" "^1.0.0"
     bn.js "4.11.8"
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
-"@deficonnect/web3-provider@^1.6.7-alpha.19":
-  version "1.6.7-alpha.19"
-  resolved "https://registry.yarnpkg.com/@deficonnect/web3-provider/-/web3-provider-1.6.7-alpha.19.tgz#4e634d7e1d68cdc41c8c648648d506c08cba26a1"
-  integrity sha512-HAUgLCpI2RYnYbM/qJp/xV7TkISzsGjotqKYlJ60+3sAqC2pBNkJtpwxBLSqWR4VcGXUkSCadqTr5VCIIN5UVA==
+"@deficonnect/web3-provider@^1.6.7-alpha.20":
+  version "1.6.7-alpha.20"
+  resolved "https://registry.yarnpkg.com/@deficonnect/web3-provider/-/web3-provider-1.6.7-alpha.20.tgz#95a6247305c52c7d5276c82be006a8f147f9d7dd"
+  integrity sha512-dtLS0ukfGmtvLT3cHd1p/+bu6++Kw/LTzi8wDArJvWdgS1rs4eVo9kobVOIPBIbKmep0yG693gw4Dzo6ws2yEw==
   dependencies:
-    "@deficonnect/client" "^1.6.7-alpha.19"
-    "@deficonnect/http-connection" "^1.6.7-alpha.19"
-    "@deficonnect/qrcode-modal" "^1.6.7-alpha.19"
-    "@deficonnect/types" "^1.6.7-alpha.19"
-    "@deficonnect/utils" "^1.6.7-alpha.19"
+    "@deficonnect/client" "^1.6.7-alpha.20"
+    "@deficonnect/http-connection" "^1.6.7-alpha.20"
+    "@deficonnect/qrcode-modal" "^1.6.7-alpha.20"
+    "@deficonnect/types" "^1.6.7-alpha.20"
+    "@deficonnect/utils" "^1.6.7-alpha.20"
     web3-provider-engine "16.0.1"
 
 "@eslint/eslintrc@^0.4.3":
