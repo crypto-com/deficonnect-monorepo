@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { pubkeyType } from '@cosmjs/amino'
-import { fromBase64 } from '@cosmjs/encoding'
+import { fromBase64, toBase64 } from '@cosmjs/encoding'
 import { AccountData, DirectSignResponse, OfflineDirectSigner } from '@cosmjs/proto-signing'
 import { IWalletConnectSessionWalletAdress } from '@deficonnect/types'
-import { SignDoc } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
+import { SignDoc, TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
-import { decodeToSignRequestJSON, encodeJSONToSignResponse } from '../tools/cosmos-msg-tool'
+import { decodeToSignRequestJSON } from '../tools/cosmos-msg-tool'
 import { DeFiCosmosConnectorArguments } from './DeFiConnector'
 
 export interface DeFiCosmosProviderArguments extends DeFiCosmosConnectorArguments {
@@ -46,10 +47,24 @@ export class DeFiCosmosProvider {
     return {
       getAccounts: async (): Promise<AccountData[]> => [accountData],
       signDirect: async (signerAddress: string, signDoc: SignDoc): Promise<DirectSignResponse> => {
-        const result = await this.sendTransaction(decodeToSignRequestJSON(signerAddress, signDoc))
-        result.signature.pub_key.type = pubkeyType.secp256k1
-        const encodeResult = encodeJSONToSignResponse(result)
-        return encodeResult
+        const signResult = await this.sendTransaction(decodeToSignRequestJSON(signerAddress, signDoc))
+        const tx = TxRaw.decode(fromBase64(signResult))
+        const signature = toBase64(tx.signatures[0])
+        return {
+          signed: {
+            bodyBytes: tx.bodyBytes,
+            authInfoBytes: tx.authInfoBytes,
+            chainId: signDoc.chainId,
+            accountNumber: signDoc.accountNumber,
+          },
+          signature: {
+            pub_key: {
+              type: pubkeyType.secp256k1,
+              value: accountData.pubkey,
+            },
+            signature,
+          },
+        }
       },
     }
   }
