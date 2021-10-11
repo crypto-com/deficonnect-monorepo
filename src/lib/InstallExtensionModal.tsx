@@ -108,7 +108,7 @@ export const InstallExtensionModal = ({
           <button
             style={styles.installButton}
             onClick={() => {
-              window.open('https://chrome.google.com/webstore/detail/hifafgmccdpekplomjjkcfgodnhcellj')
+              window.open('https://wallet.crypto.com/api/v1/extension/install')
             }}
           >
             Install DeFi Wallet Extension
