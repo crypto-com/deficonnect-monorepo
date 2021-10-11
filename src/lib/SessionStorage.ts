@@ -1,7 +1,23 @@
 import { ISessionStorage, IWalletConnectSession } from '@deficonnect/types'
-import { isWalletConnectSession, getLocal, setLocal, removeLocal } from '@deficonnect/utils'
+import { getLocal, setLocal, removeLocal } from '@deficonnect/utils'
 
 const defaultKey = 'DeFiLink_session_storage_dapp'
+
+export function isWalletConnectSession(object: any): object is IWalletConnectSession {
+  return (
+    object &&
+    typeof object.bridge !== 'undefined' &&
+    typeof object.chainId !== 'undefined' &&
+    typeof object.chainType !== 'undefined' &&
+    typeof object.wallets !== 'undefined' &&
+    typeof object.wallets !== 'undefined' &&
+    typeof object.wallets[0] !== 'undefined' &&
+    typeof object.wallets[0].addresses !== 'undefined' &&
+    typeof object.wallets[0].addresses.eth !== 'undefined' &&
+    typeof object.accounts !== 'undefined' &&
+    object.accounts.length > 0
+  )
+}
 
 export class SessionStorage implements ISessionStorage {
   key: string
@@ -11,7 +27,7 @@ export class SessionStorage implements ISessionStorage {
 
   getSession = (): IWalletConnectSession | null => {
     const session = getLocal(this.key)
-    if (session && isWalletConnectSession(session) && session.accounts && session.accounts.length > 0) {
+    if (isWalletConnectSession(session)) {
       return session
     }
     return null

@@ -6,7 +6,7 @@ import LogoIcon from './assets/defi-link-icon'
 import FeatureGlobeIcon from './assets/feature-globe-icon'
 import FeatureLinkIcon from './assets/feature-link-icon'
 import FeatureLockIcon from './assets/feature-lock-icon'
-import { formatToCWEURI } from './tools'
+import { formatToCWEURI } from './tools/url-tools'
 import QRCode from 'qrcode'
 import { styles, BannerStyles } from './InstallExtensionModal.styles'
 import { IQRCodeModal } from '@deficonnect/types'
@@ -108,7 +108,7 @@ export const InstallExtensionModal = ({
           <button
             style={styles.installButton}
             onClick={() => {
-              window.open('https://chrome.google.com/webstore/detail/hifafgmccdpekplomjjkcfgodnhcellj')
+              window.open('https://wallet.crypto.com/api/v1/extension/install')
             }}
           >
             Install DeFi Wallet Extension
