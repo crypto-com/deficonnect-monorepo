@@ -18,7 +18,7 @@ export class DeFiConnectorClient {
     }
     this.transport = new SocketTransport({
       protocol: 'wc',
-      version: 1,
+      version: 2,
       url: bridge,
     })
     this.connector = new Connector({
