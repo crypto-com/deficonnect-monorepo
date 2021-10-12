@@ -2,6 +2,7 @@
 import 'regenerator-runtime/runtime'
 import { IWalletConnectOptions } from '@deficonnect/types'
 import Web3Provider from '@deficonnect/web3-provider'
+import { AbstractConnector } from '@web3-react/abstract-connector'
 import { SessionStorage } from '../SessionStorage'
 import { addUrlParams } from '../tools/url-tools'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
@@ -67,7 +68,7 @@ const formaChainType = (value: any): DeFiConnectorChainType => {
   return 'eth'
 }
 
-export class DeFiConnector {
+export class DeFiConnector extends AbstractConnector {
   config: DeFiConnectorArguments
   eventEmitters: EventEmitter[] = []
   connectorClient?: DeFiConnectorClient
@@ -75,7 +76,18 @@ export class DeFiConnector {
   private _provider?: DeFiConnectorProvider
 
   constructor(config: DeFiConnectorArguments) {
+    super()
     this.config = config
+  }
+
+  async getProvider(): Promise<any> {
+    return this.provider
+  }
+  async getChainId(): Promise<string | number> {
+    return this.chainId
+  }
+  async getAccount(): Promise<string | null> {
+    return this.account
   }
 
   async generateClient(): Promise<DeFiConnectorClient> {
@@ -227,7 +239,7 @@ export class DeFiConnector {
     }
   }
 
-  on(event: DeFiConnectorUpdateEvent, callback: DeFiConnectorEventCallback): DeFiConnectorEventUnsubscribe {
+  onEvent(event: DeFiConnectorUpdateEvent, callback: DeFiConnectorEventCallback): DeFiConnectorEventUnsubscribe {
     const eventEmitter = { event, callback }
     this.eventEmitters.push(eventEmitter)
     return () => {
