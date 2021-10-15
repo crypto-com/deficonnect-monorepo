@@ -28,6 +28,20 @@ function getSupportedChains({ supportedChainIds, rpc }: DeFiWeb3ConnectorArgumen
   return rpc ? Object.keys(rpc).map((k) => Number(k)) : undefined
 }
 
+function parseToETHChainId(chainId: string | undefined): number {
+  try {
+    const parsed = parseInt(chainId ?? '0')
+    console.info('parseToETHChainId:', parsed)
+    if (isNaN(parsed)) {
+      return 0
+    } else {
+      return parsed
+    }
+  } catch (error) {
+    return 0
+  }
+}
+
 export class DeFiWeb3Connector extends AbstractConnector {
   defiConnector: DeFiConnector
 
@@ -41,21 +55,21 @@ export class DeFiWeb3Connector extends AbstractConnector {
       bridge: config.bridge,
       eth: config,
     })
-    this.defiConnector.on(DeFiConnectorUpdateEvent.Update, (params) => {
+    this.defiConnector.onEvent(DeFiConnectorUpdateEvent.Update, (params) => {
       if (!params) {
         return
       }
       const { chainId, provider, account } = params
-      this.emitUpdate({ chainId, provider, account })
+      this.emitUpdate({ chainId: parseToETHChainId(chainId), provider, account })
     })
-    this.defiConnector.on(DeFiConnectorUpdateEvent.Deactivate, () => {
+    this.defiConnector.onEvent(DeFiConnectorUpdateEvent.Deactivate, () => {
       this.emitDeactivate()
     })
   }
 
   public async activate(): Promise<ConnectorUpdate> {
     const { chainId, provider, account } = await this.defiConnector.activate()
-    return { chainId, provider, account }
+    return { chainId: parseToETHChainId(chainId), provider, account }
   }
 
   public async getProvider(): Promise<any> {
@@ -63,8 +77,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
   }
 
   public async getChainId(): Promise<number | string> {
-    const provider = await this.getProvider()
-    return provider.send('eth_chainId')
+    return parseToETHChainId(this.defiConnector.chainId)
   }
 
   public async getAccount(): Promise<null | string> {

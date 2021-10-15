@@ -85,4 +85,13 @@ export class DeFiCosmosProvider {
       },
     })
   }
+
+  request = async (payload: any): Promise<any> => {
+    console.info('DeFiCosmosProvider.request', payload)
+    return undefined
+  }
+  send = async (payload: any, callback?: any): Promise<any> => {
+    console.info('DeFiCosmosProvider.send', payload)
+    return undefined
+  }
 }
