@@ -1,6 +1,6 @@
 import { Coin } from '@cosmjs/amino'
-import { ModeInfo, SignerInfo, Fee } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
-import { Height } from 'cosmjs-types/ibc/core/client/v1/client'
+import { ModeInfo, Fee } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
+import { StdSignature } from '@cosmjs/amino'
 
 export interface CosmosSignRequestJSON {
   signerAddress: string

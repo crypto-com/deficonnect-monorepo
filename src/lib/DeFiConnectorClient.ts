@@ -1,32 +1,63 @@
 import Connector from '@deficonnect/core'
-import { IWalletConnectOptions, ISessionStorage } from '@deficonnect/types'
+import { IWalletConnectOptions, ISessionStorage, IConnector } from '@deficonnect/types'
 import * as cryptoLib from '@deficonnect/iso-crypto'
 import SocketTransport from '@deficonnect/socket-transport'
 import { parseWalletConnectUri } from '@deficonnect/utils'
+import { ITransportLib } from '@deficonnect/types'
+
+interface DeFiExistsConnectorClientParams {
+  connector: IConnector
+  transport: DeFiTransportLib
+}
+export interface DeFiConnectorClientParams {
+  connectorOpts?: IWalletConnectOptions
+  sessionStorage?: ISessionStorage
+  exists?: DeFiExistsConnectorClientParams
+}
+
+export interface DeFiTransportLib extends ITransportLib {
+  connected: boolean
+}
 
 export class DeFiConnectorClient {
-  connector: Connector
-  transport: SocketTransport
-  constructor(connectorOpts: IWalletConnectOptions, sessionStorage: ISessionStorage) {
-    const session = connectorOpts.session || sessionStorage.getSession()
-    let bridge = connectorOpts.bridge ?? session?.bridge
-    if (!bridge && connectorOpts.uri) {
+  connector: IConnector
+  transport: DeFiTransportLib
+  constructor(params: DeFiConnectorClientParams) {
+    const { connectorOpts, sessionStorage, exists } = params
+    const session = connectorOpts?.session || sessionStorage?.getSession()
+    let bridge = connectorOpts?.bridge ?? session?.bridge
+    if (!bridge && connectorOpts?.uri) {
       bridge = parseWalletConnectUri(connectorOpts.uri).bridge
     }
-    if (!bridge) {
-      throw new Error('bridge can not be null')
+    let transport: DeFiTransportLib | undefined
+    if (!!exists) {
+      transport = exists.transport
+    } else if (!!bridge) {
+      transport = new SocketTransport({
+        protocol: 'wc',
+        version: 2,
+        url: bridge,
+      })
     }
-    this.transport = new SocketTransport({
-      protocol: 'wc',
-      version: 2,
-      url: bridge,
-    })
-    this.connector = new Connector({
-      cryptoLib,
-      connectorOpts,
-      sessionStorage,
-      transport: this.transport,
-    })
-    this.transport.subscribe(this.connector.clientId)
+    if (!transport) {
+      throw new Error('bridge2 can not be null')
+    }
+    let connector: IConnector | undefined
+    if (!!exists) {
+      connector = exists.connector
+    } else if (!!connectorOpts) {
+      connector = new Connector({
+        cryptoLib,
+        connectorOpts,
+        sessionStorage,
+        transport: transport,
+      })
+    }
+    if (!connector) {
+      throw new Error('connectorOpts can not be null')
+    }
+    this.connector = connector
+    this.transport = transport
+    this.transport.subscribe(connector.clientId)
   }
 }

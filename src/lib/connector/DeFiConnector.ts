@@ -112,7 +112,10 @@ export class DeFiConnector extends AbstractConnector {
         qrcodeModal: InstallExtensionQRCodeModal,
       }
       const sessionStorage = new DefaultSessionStorage({ supportedChainIds: this._supportedChainIds })
-      connectorClient = new DeFiConnectorClient(wcConfig, sessionStorage)
+      connectorClient = new DeFiConnectorClient({
+        connectorOpts: wcConfig,
+        sessionStorage,
+      })
     }
     connectorClient.connector.on('disconnect', () => {
       this.emitDeactivate()
