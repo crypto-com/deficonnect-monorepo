@@ -2,7 +2,7 @@
 import { pubkeyType } from '@cosmjs/amino'
 import { fromBase64, toBase64 } from '@cosmjs/encoding'
 import { AccountData, DirectSignResponse, OfflineDirectSigner } from '@cosmjs/proto-signing'
-import { IWalletConnectSessionWalletAdress } from '@deficonnect/types'
+import { ISessionStatus, IWalletConnectSessionWalletAdress } from '@deficonnect/types'
 import { SignDoc, TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
 import { decodeToSignRequestJSON } from '../tools/cosmos-msg-tool'
@@ -19,8 +19,10 @@ export function isDeFiCosmosProvider(object: any): object is DeFiCosmosProvider 
 export class DeFiCosmosProvider {
   protected isDeFiCosmosProvider = true
   public client: DeFiConnectorClient
+  public config: DeFiCosmosProviderArguments
   constructor(config: DeFiCosmosProviderArguments) {
     const { client } = config
+    this.config = config
     this.client = client
   }
   get account(): string {
@@ -69,9 +71,17 @@ export class DeFiCosmosProvider {
     }
   }
 
-  async enable(): Promise<void> {
-    return
+  async enable(): Promise<string[]> {
+    if (this.client.connector.connected) {
+      return this.client.connector.accounts
+    }
+    await this.client.connector.connect({
+      chainId: this.config.supportedChainIds[0],
+      chainType: 'cosmos',
+    })
+    return this.client.connector.accounts
   }
+
   sendTransaction = async (payload: any): Promise<any> => {
     const { chainId, chainType } = this.client.connector.session
     const account = this.account

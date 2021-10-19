@@ -182,7 +182,6 @@ export class DeFiConnector extends AbstractConnector {
         connectorClient,
         config: this.config,
       })
-      this.provider = await this.generateProvider({ chainId, chainType, connectorClient, config: this.config })
       await this.provider?.enable()
       this.connectorClient = connectorClient
       return {
