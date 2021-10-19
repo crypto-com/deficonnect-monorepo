@@ -8,7 +8,7 @@ import { addUrlParams } from '../tools/url-tools'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
 import { DeFiWeb3ConnectorArguments } from './DeFiWeb3Connector'
 import { InstallExtensionQRCodeModal } from '../InstallExtensionModal'
-import { DeFiCosmosProvider, isDeFiCosmosProvider } from './DeFiCosmosProvider'
+import { DeFiCosmosProvider } from './DeFiCosmosProvider'
 
 export interface DeFiConnectorArguments {
   name: string
@@ -234,9 +234,6 @@ export class DeFiConnector extends AbstractConnector {
   }
   set provider(value: DeFiConnectorProvider | undefined) {
     this._provider = value
-    if (!isDeFiCosmosProvider(value)) {
-      window.ethereum = value
-    }
   }
 
   onEvent(event: DeFiConnectorUpdateEvent, callback: DeFiConnectorEventCallback): DeFiConnectorEventUnsubscribe {
