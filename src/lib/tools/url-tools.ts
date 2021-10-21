@@ -24,13 +24,16 @@ export const formatUriAddUrlParams = (uri: string, params: any): string => {
   return `${result.protocol}:${result.handshakeTopic}@${result.version}?bridge=${bridge}&key=${result.key}`
 }
 
-export const formatToCWEURI = (uri: string) => {
+export const replaceUriProtocol = (uri: string, protocol: string): string => {
   const result: IParseURIResult = parseWalletConnectUri(uri)
   const bridge = encodeURIComponent(removeAllUrlParams(decodeURIComponent(result.bridge)))
-  return `CWE:${result.handshakeTopic}@${result.version}?bridge=${bridge}&key=${result.key}`
+  return `${protocol}:${result.handshakeTopic}@${result.version}?bridge=${bridge}&key=${result.key}`
 }
 
-export const formatToWCURI = (uri: string) => {
-  const result: IParseURIResult = parseWalletConnectUri(uri)
-  return `wc:${result.handshakeTopic}@${result.version}?bridge=${result.bridge}&key=${result.key}`
+export const formatToCWEURI = (uri: string): string => {
+  return replaceUriProtocol(uri, 'CWE')
+}
+
+export const formatToWCURI = (uri: string): string => {
+  return replaceUriProtocol(uri, 'wc')
 }

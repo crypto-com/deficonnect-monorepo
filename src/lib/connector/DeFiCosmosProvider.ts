@@ -2,7 +2,7 @@
 import { pubkeyType } from '@cosmjs/amino'
 import { fromBase64, toBase64 } from '@cosmjs/encoding'
 import { AccountData, DirectSignResponse, OfflineDirectSigner } from '@cosmjs/proto-signing'
-import { ISessionStatus, IWalletConnectSessionWalletAdress } from '@deficonnect/types'
+import { IWalletConnectSessionWalletAdress } from '@deficonnect/types'
 import { SignDoc, TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
 import { decodeToSignRequestJSON } from '../tools/cosmos-msg-tool'

@@ -1,6 +1,6 @@
 import { ConnectorUpdate } from '@web3-react/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { IClientMeta, IRPCMap } from '@deficonnect/types'
+import { IRPCMap } from '@deficonnect/types'
 import { getClientMeta } from '@deficonnect/utils'
 import { DeFiConnector, DeFiConnectorUpdateEvent } from './DeFiConnector'
 

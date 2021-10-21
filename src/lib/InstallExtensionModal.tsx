@@ -6,34 +6,53 @@ import LogoIcon from './assets/defi-link-icon'
 import FeatureGlobeIcon from './assets/feature-globe-icon'
 import FeatureLinkIcon from './assets/feature-link-icon'
 import FeatureLockIcon from './assets/feature-lock-icon'
-import { formatToCWEURI } from './tools/url-tools'
+import { formatToCWEURI, replaceUriProtocol } from './tools/url-tools'
 import QRCode from 'qrcode'
 import { styles, BannerStyles } from './InstallExtensionModal.styles'
 import { IQRCodeModal } from '@deficonnect/types'
 import ReactDOM from 'react-dom'
+import { formatIOSMobile, isAndroid, isIOS, saveMobileLinkInfo } from '@deficonnect/browser-utils'
+
+const iOSRegistryEntry = {
+  name: 'Crypto.com DeFi Wallet',
+  shortName: 'DeFi Wallet',
+  color: 'rgb(17, 153, 250)',
+  logo: './logos/wallet-crypto-defi.png',
+  universalLink: 'https://wallet.crypto.com',
+  deepLink: 'cryptowallet:',
+}
 
 export const InstallExtensionQRCodeModal: IQRCodeModal = {
   open: (uri: string, cb: Function, opts?: any): void => {
+    const CWEURI = formatToCWEURI(uri)
+    if (isIOS()) {
+      const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
+      saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
+      return
+    }
+    if (isAndroid()) {
+      saveMobileLinkInfo({
+        name: 'Unknown',
+        href: replaceUriProtocol(uri, 'cwe'), // adnroid side only support lower case
+      })
+      return
+    }
     const body = document.body
     const popup = document.createElement('div')
     popup.id = 'cryptoconnect-extension'
     body.appendChild(popup)
-    ReactDOM.render(<InstallExtensionModal appElement={popup} uri={uri} closeCallback={cb} />, popup)
+    ReactDOM.render(<InstallExtensionModal appElement={popup} uri={CWEURI} closeCallback={cb} />, popup)
   },
   close: () => {
     window.dispatchEvent(new Event('InstallExtensionQRCodeModal_Event_close'))
   },
 }
 
-export const InstallExtensionModal = ({
-  appElement,
-  uri,
-  closeCallback,
-}: {
+export const InstallExtensionModal: React.FC<{
   appElement: HTMLElement
   uri: string
   closeCallback: Function
-}) => {
+}> = ({ appElement, uri, closeCallback }) => {
   const [isOpen, setisOpen] = useState(true)
   const [qrcodeImageURL, setQRCodeImageURL] = useState('')
   ReactModal.setAppElement(appElement)
@@ -44,15 +63,15 @@ export const InstallExtensionModal = ({
   const closeModalClick = useCallback(() => {
     closeCallback()
     closeModal()
-  }, [appElement, closeModal])
+  }, [closeCallback, closeModal])
   useEffect(() => {
     window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
-    return () => {
+    return (): void => {
       window.removeEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
     }
   }, [closeModal])
   useMemo(() => {
-    const dappQRCode = formatToCWEURI(uri) + '&role=dapp'
+    const dappQRCode = uri + '&role=dapp'
     QRCode.toDataURL(dappQRCode, (_err: any, url: string) => {
       setQRCodeImageURL(url)
     })
@@ -107,7 +126,7 @@ export const InstallExtensionModal = ({
           </div>
           <button
             style={styles.installButton}
-            onClick={() => {
+            onClick={(): void => {
               window.open('https://wallet.crypto.com/api/v1/extension/install')
             }}
           >
@@ -133,7 +152,7 @@ export const InstallExtensionModal = ({
             <div style={styles.terms.text}>Crypto.com DeFi Wallet </div>
             <div
               style={styles.terms.link}
-              onClick={() => {
+              onClick={(): void => {
                 window.open('https://crypto.com/document/ncw_tnc')
               }}
             >
@@ -142,7 +161,7 @@ export const InstallExtensionModal = ({
             <div style={styles.terms.text}>and</div>
             <div
               style={styles.terms.link}
-              onClick={() => {
+              onClick={(): void => {
                 window.open('https://crypto.com/privacy/ncw')
               }}
             >
@@ -150,7 +169,7 @@ export const InstallExtensionModal = ({
             </div>
           </div>
           <DownloadAppBanner
-            onDownloadClick={() => {
+            onDownloadClick={(): void => {
               window.open('https://bit.ly/3Bk4wzE')
             }}
           />
@@ -160,7 +179,7 @@ export const InstallExtensionModal = ({
   )
 }
 
-const DownloadAppBanner = ({ onDownloadClick }: { onDownloadClick: MouseEventHandler }) => {
+const DownloadAppBanner: React.FC<{ onDownloadClick: MouseEventHandler }> = ({ onDownloadClick }) => {
   return (
     <div style={BannerStyles.container}>
       <DeFiLinkIconLight />
