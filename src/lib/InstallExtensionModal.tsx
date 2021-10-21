@@ -28,13 +28,16 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
+      window.open(singleLinkHref)
       return
     }
     if (isAndroid()) {
+      const lowercaseURI = replaceUriProtocol(uri, 'cwe')
       saveMobileLinkInfo({
         name: 'Unknown',
-        href: replaceUriProtocol(uri, 'cwe'), // adnroid side only support lower case
+        href: lowercaseURI, // adnroid side only support lowercase
       })
+      window.open(lowercaseURI)
       return
     }
     const body = document.body
