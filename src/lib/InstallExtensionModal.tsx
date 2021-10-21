@@ -23,7 +23,7 @@ const iOSRegistryEntry = {
 }
 
 export const InstallExtensionQRCodeModal: IQRCodeModal = {
-  open: (uri: string, cb: Function, opts?: any): void => {
+  open: function (uri: string, cb: Function, opts?: any) {
     const CWEURI = formatToCWEURI(uri)
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
@@ -43,7 +43,7 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
     body.appendChild(popup)
     ReactDOM.render(<InstallExtensionModal appElement={popup} uri={CWEURI} closeCallback={cb} />, popup)
   },
-  close: () => {
+  close: function () {
     window.dispatchEvent(new Event('InstallExtensionQRCodeModal_Event_close'))
   },
 }
@@ -76,6 +76,19 @@ export const InstallExtensionModal: React.FC<{
       setQRCodeImageURL(url)
     })
   }, [uri])
+
+  const onInstallButtonClick = useCallback(() => {
+    window.open('https://wallet.crypto.com/api/v1/extension/install')
+  }, [])
+  const onTermsClick = useCallback(() => {
+    window.open('https://crypto.com/document/ncw_tnc')
+  }, [])
+  const onPrivacyClick = useCallback(() => {
+    window.open('https://crypto.com/privacy/ncw')
+  }, [])
+  const onDownloadClick = useCallback(() => {
+    window.open('https://bit.ly/3Bk4wzE')
+  }, [])
 
   return (
     <ReactModal
@@ -124,12 +137,7 @@ export const InstallExtensionModal: React.FC<{
             <FeatureGlobeIcon />
             <div style={styles.featureText}>Smooth App navigation with DApp connection</div>
           </div>
-          <button
-            style={styles.installButton}
-            onClick={(): void => {
-              window.open('https://wallet.crypto.com/api/v1/extension/install')
-            }}
-          >
+          <button style={styles.installButton} onClick={onInstallButtonClick}>
             Install DeFi Wallet Extension
           </button>
         </div>
@@ -150,29 +158,15 @@ export const InstallExtensionModal: React.FC<{
           <div style={styles.stretchContainer} />
           <div style={styles.terms.container}>
             <div style={styles.terms.text}>Crypto.com DeFi Wallet </div>
-            <div
-              style={styles.terms.link}
-              onClick={(): void => {
-                window.open('https://crypto.com/document/ncw_tnc')
-              }}
-            >
+            <div style={styles.terms.link} onClick={onTermsClick}>
               Terms & Conditions
             </div>
             <div style={styles.terms.text}>and</div>
-            <div
-              style={styles.terms.link}
-              onClick={(): void => {
-                window.open('https://crypto.com/privacy/ncw')
-              }}
-            >
+            <div style={styles.terms.link} onClick={onPrivacyClick}>
               Privacy Notice
             </div>
           </div>
-          <DownloadAppBanner
-            onDownloadClick={(): void => {
-              window.open('https://bit.ly/3Bk4wzE')
-            }}
-          />
+          <DownloadAppBanner onDownloadClick={onDownloadClick} />
         </div>
       </div>
     </ReactModal>
