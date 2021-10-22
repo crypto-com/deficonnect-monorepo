@@ -1,5 +1,8 @@
 import React, { MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react'
+import ReactDOM from 'react-dom'
 import ReactModal from 'react-modal'
+import { IQRCodeModal } from '@deficonnect/types'
+import { formatIOSMobile, isAndroid, isIOS, saveMobileLinkInfo } from '@deficonnect/browser-utils'
 import DeFiLinkIconLight from './assets/defi-link-icon-light'
 import ConnectStepCameraIcon from './assets/connect-step-camera-icon'
 import LogoIcon from './assets/defi-link-icon'
@@ -9,26 +12,38 @@ import FeatureLockIcon from './assets/feature-lock-icon'
 import { formatToCWEURI, replaceUriProtocol } from './tools/url-tools'
 import QRCode from 'qrcode'
 import { styles, BannerStyles } from './InstallExtensionModal.styles'
-import { IQRCodeModal } from '@deficonnect/types'
-import ReactDOM from 'react-dom'
-import { formatIOSMobile, isAndroid, isIOS, saveMobileLinkInfo } from '@deficonnect/browser-utils'
 
 const iOSRegistryEntry = {
   name: 'Crypto.com DeFi Wallet',
   shortName: 'DeFi Wallet',
   color: 'rgb(17, 153, 250)',
   logo: './logos/wallet-crypto-defi.png',
-  universalLink: 'https://wallet.crypto.com',
+  // universalLink: 'https://wallet.crypto.com',
+  universalLink: '',
   deepLink: 'cryptowallet:',
 }
 
+const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
+  const timeout = isIOS() ? 25 : 200
+  let isBlur = false
+  window.onblur = function (): void {
+    isBlur = true
+  }
+  setTimeout(function () {
+    if (isBlur) return
+    window.open(installURL)
+  }, timeout)
+  window.location.href = deepLink
+}
+
+const downloadAppURL = 'https://bit.ly/3Bk4wzE'
 export const InstallExtensionQRCodeModal: IQRCodeModal = {
   open: function (uri: string, cb: Function, opts?: any) {
     const CWEURI = formatToCWEURI(uri)
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
-      window.open(singleLinkHref)
+      openDeeplinkOrInstall(singleLinkHref, downloadAppURL)
       return
     }
     if (isAndroid()) {
@@ -37,7 +52,7 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
         name: 'Unknown',
         href: lowercaseURI, // adnroid side only support lowercase
       })
-      window.open(lowercaseURI)
+      openDeeplinkOrInstall(lowercaseURI, downloadAppURL)
       return
     }
     const body = document.body
