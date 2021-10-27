@@ -26,7 +26,8 @@ export const formatUriAddUrlParams = (uri: string, params: any): string => {
 
 export const replaceUriProtocol = (uri: string, protocol: string): string => {
   const result: IParseURIResult = parseWalletConnectUri(uri)
-  return `${protocol}:${result.handshakeTopic}@${result.version}?bridge=${result.bridge}&key=${result.key}`
+  const bridge = encodeURIComponent(removeAllUrlParams(decodeURIComponent(result.bridge)))
+  return `${protocol}:${result.handshakeTopic}@${result.version}?bridge=${bridge}&key=${result.key}`
 }
 
 export const formatToCWEURI = (uri: string): string => {

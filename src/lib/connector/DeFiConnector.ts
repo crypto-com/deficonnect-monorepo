@@ -98,7 +98,7 @@ export class DeFiConnector extends AbstractConnector {
       const wcConfig: IWalletConnectOptions = {
         bridge: addUrlParams(this.config.bridge ?? GLOBAL_DEFILINK_BRIDGE_URL, {
           role: 'dapp',
-          dapp_name: limitWords(this.config.name, 10),
+          dapp_name: this.config.name,
         }),
         qrcodeModal: InstallExtensionQRCodeModal,
       }

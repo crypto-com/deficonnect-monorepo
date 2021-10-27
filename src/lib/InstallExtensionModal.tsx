@@ -39,7 +39,7 @@ const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
 const downloadAppURL = 'https://bit.ly/3Bk4wzE'
 export const InstallExtensionQRCodeModal: IQRCodeModal = {
   open: function (uri: string, cb: Function, opts?: any) {
-    const CWEURI = formatToCWEURI(uri)
+    const CWEURI = formatToCWEURI(uri) + '&role=dapp'
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
@@ -47,7 +47,7 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
       return
     }
     if (isAndroid()) {
-      const lowercaseURI = replaceUriProtocol(CWEURI, 'cwe')
+      const lowercaseURI = replaceUriProtocol(CWEURI, 'cwe') + '&role=dapp'
       saveMobileLinkInfo({
         name: 'Unknown',
         href: lowercaseURI, // adnroid side only support lowercase
