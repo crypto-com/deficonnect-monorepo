@@ -24,11 +24,16 @@ const iOSRegistryEntry = {
 }
 
 const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
-  const timeout = isIOS() ? 25 : 200
+  const timeout = isIOS() ? 50 : 1500
   let isBlur = false
-  window.onblur = function (): void {
+  window.addEventListener('blur', () => {
     isBlur = true
-  }
+  })
+  window.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      isBlur = true
+    }
+  })
   setTimeout(function () {
     if (isBlur) return
     window.open(installURL)
