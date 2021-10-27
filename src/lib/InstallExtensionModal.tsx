@@ -39,7 +39,8 @@ const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
 const downloadAppURL = 'https://bit.ly/3Bk4wzE'
 export const InstallExtensionQRCodeModal: IQRCodeModal = {
   open: function (uri: string, cb: Function, opts?: any) {
-    const CWEURI = formatToCWEURI(uri)
+    const formatURI = uri + '&role=dapp'
+    const CWEURI = formatToCWEURI(formatURI)
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
@@ -47,7 +48,7 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
       return
     }
     if (isAndroid()) {
-      const lowercaseURI = replaceUriProtocol(uri, 'cwe')
+      const lowercaseURI = replaceUriProtocol(formatURI, 'cwe')
       saveMobileLinkInfo({
         name: 'Unknown',
         href: lowercaseURI, // adnroid side only support lowercase
@@ -89,8 +90,7 @@ export const InstallExtensionModal: React.FC<{
     }
   }, [closeModal])
   useMemo(() => {
-    const dappQRCode = uri + '&role=dapp'
-    QRCode.toDataURL(dappQRCode, (_err: any, url: string) => {
+    QRCode.toDataURL(uri, (_err: any, url: string) => {
       setQRCodeImageURL(url)
     })
   }, [uri])
