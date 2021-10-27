@@ -24,7 +24,6 @@ const iOSRegistryEntry = {
 }
 
 const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
-  const timeout = isIOS() ? 50 : 1500
   let isBlur = false
   window.addEventListener('blur', () => {
     isBlur = true
@@ -34,11 +33,11 @@ const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
       isBlur = true
     }
   })
+  window.location.href = deepLink
   setTimeout(function () {
     if (isBlur) return
     window.open(installURL)
-  }, timeout)
-  window.location.href = deepLink
+  }, 1500)
 }
 
 const downloadAppURL = 'https://bit.ly/3Bk4wzE'
