@@ -4,7 +4,7 @@ import { IWalletConnectOptions } from '@deficonnect/types'
 import Web3Provider from '@deficonnect/web3-provider'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { SessionStorage } from '../SessionStorage'
-import { addUrlParams } from '../tools/url-tools'
+import { addUrlParams, limitWords } from '../tools/url-tools'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
 import { DeFiWeb3ConnectorArguments } from './DeFiWeb3Connector'
 import { InstallExtensionQRCodeModal } from '../InstallExtensionModal'
@@ -98,7 +98,7 @@ export class DeFiConnector extends AbstractConnector {
       const wcConfig: IWalletConnectOptions = {
         bridge: addUrlParams(this.config.bridge ?? GLOBAL_DEFILINK_BRIDGE_URL, {
           role: 'dapp',
-          dapp_name: this.config.name,
+          dapp_name: limitWords(this.config.name, 10),
         }),
         qrcodeModal: InstallExtensionQRCodeModal,
       }
