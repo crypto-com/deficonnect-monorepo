@@ -18,26 +18,42 @@ const iOSRegistryEntry = {
   shortName: 'DeFi Wallet',
   color: 'rgb(17, 153, 250)',
   logo: './logos/wallet-crypto-defi.png',
-  // universalLink: 'https://wallet.crypto.com',
-  universalLink: '',
+  universalLink: 'https://wallet.crypto.com',
   deepLink: 'cryptowallet:',
 }
 
 const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
-  let isBlur = false
-  window.addEventListener('blur', () => {
-    isBlur = true
-  })
-  window.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
+  if (isIOS()) {
+    let isBlur = false
+    window.addEventListener('blur', () => {
       isBlur = true
-    }
-  })
-  window.location.href = deepLink
-  setTimeout(function () {
-    if (isBlur) return
-    window.open(installURL)
-  }, 1500)
+    })
+    window.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isBlur = true
+      }
+    })
+    setTimeout(function () {
+      if (isBlur) return
+      window.location.href = installURL
+    }, 200)
+    window.location.href = deepLink
+  } else {
+    let isBlur = false
+    window.addEventListener('blur', () => {
+      isBlur = true
+    })
+    window.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isBlur = true
+      }
+    })
+    window.location.href = deepLink
+    setTimeout(() => {
+      if (isBlur) return
+      window.open(installURL)
+    }, 1500)
+  }
 }
 
 const downloadAppURL = 'https://bit.ly/3Bk4wzE'
