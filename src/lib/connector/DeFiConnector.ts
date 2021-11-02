@@ -3,12 +3,12 @@ import 'regenerator-runtime/runtime'
 import { IWalletConnectOptions } from '@deficonnect/types'
 import Web3Provider from '@deficonnect/web3-provider'
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { SessionStorage } from '../SessionStorage'
-import { addUrlParams, limitWords } from '../tools/url-tools'
+import { addUrlParams } from '../tools/url-tools'
 import { DeFiConnectorClient } from '../DeFiConnectorClient'
 import { DeFiWeb3ConnectorArguments } from './DeFiWeb3Connector'
 import { InstallExtensionQRCodeModal } from '../InstallExtensionModal'
 import { DeFiCosmosProvider } from './DeFiCosmosProvider'
+import { DefaultSessionStorage } from '../SessionStorage'
 
 export interface DeFiConnectorArguments {
   name: string
@@ -51,7 +51,9 @@ export interface DeFiConnectorUpdate {
   provider?: DeFiConnectorProvider
 }
 
-// export type DeFiAddressType = 'eth' | 'cro' | 'tcro'
+/**
+ * the type value is like = 'eth' | 'cro' | 'tcro'
+ */
 export interface DeFiAddressTuple {
   type: string
   address: string
@@ -90,8 +92,15 @@ export class DeFiConnector extends AbstractConnector {
     return this.account
   }
 
+  get _supportedChainIds(): string[] {
+    const ethChainIds = this.config.eth?.supportedChainIds.map((item) => item.toString()) ?? []
+    const cosmosChainIds = this.config.cosmos?.supportedChainIds ?? []
+    return ethChainIds.concat(cosmosChainIds)
+  }
+
   async generateClient(): Promise<DeFiConnectorClient> {
     let connectorClient: DeFiConnectorClient
+
     if (typeof window.deficonnectClientGenerator === 'function') {
       connectorClient = await window.deficonnectClientGenerator(this.config)
     } else {
@@ -102,7 +111,8 @@ export class DeFiConnector extends AbstractConnector {
         }),
         qrcodeModal: InstallExtensionQRCodeModal,
       }
-      connectorClient = new DeFiConnectorClient(wcConfig, new SessionStorage())
+      const sessionStorage = new DefaultSessionStorage({ supportedChainIds: this._supportedChainIds })
+      connectorClient = new DeFiConnectorClient(wcConfig, sessionStorage)
     }
     connectorClient.connector.on('disconnect', () => {
       this.emitDeactivate()

@@ -3,7 +3,7 @@ import { getLocal, setLocal, removeLocal } from '@deficonnect/utils'
 
 const defaultKey = 'DeFiLink_session_storage_dapp'
 
-export function isWalletConnectSession(object: any): object is IWalletConnectSession {
+function isWalletConnectSession(object: any): object is IWalletConnectSession {
   return (
     object &&
     typeof object.bridge !== 'undefined' &&
@@ -19,22 +19,31 @@ export function isWalletConnectSession(object: any): object is IWalletConnectSes
   )
 }
 
-export class SessionStorage implements ISessionStorage {
+interface DefaultSessionStorageParams {
+  key?: string
+  supportedChainIds: string[]
+}
+
+export class DefaultSessionStorage implements ISessionStorage {
   key: string
-  constructor({ key } = { key: defaultKey }) {
+  supportedChainIds: string[]
+  constructor({ key = defaultKey, supportedChainIds }: DefaultSessionStorageParams) {
     this.key = key
+    this.supportedChainIds = supportedChainIds
   }
 
   getSession = (): IWalletConnectSession | null => {
     const session = getLocal(this.key)
-    if (isWalletConnectSession(session)) {
+    if (isWalletConnectSession(session) && this.supportedChainIds.includes(session.chainId)) {
       return session
     }
     return null
   }
 
   setSession = (session: IWalletConnectSession): IWalletConnectSession => {
-    setLocal(this.key, session)
+    if (this.supportedChainIds.includes(session.chainId)) {
+      setLocal(this.key, session)
+    }
     return session
   }
 
