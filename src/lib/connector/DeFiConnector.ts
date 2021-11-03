@@ -88,8 +88,8 @@ export class DeFiConnector extends AbstractConnector {
     this.config = config
   }
 
-  _chainId: string = ''
-  _chainType: string = ''
+  _chainId = ''
+  _chainType = ''
   _accounts: string[] = []
 
   async getProvider(): Promise<any> {
@@ -263,7 +263,7 @@ export class DeFiConnector extends AbstractConnector {
     // avoid the dApp never being able to connect to the extension again
     this.connectorClient?.clearSessionStorage()
 
-    await this.provider?.stop()
+    this.provider?.stop()
     this.emitDeactivate()
   }
 

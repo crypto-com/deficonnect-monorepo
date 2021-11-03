@@ -102,11 +102,11 @@ export class DeFiCosmosProvider {
   send = async (payload: any, callback?: any): Promise<any> => {
     return undefined
   }
-  stop = () => {
+  stop = async (): Promise<void> => {
     // stop http requet, such as block heigh?
   }
-  close = async () => {
+  close = async (): Promise<void> => {
     await this.client.connector.killSession()
-    this.stop()
+    await this.stop()
   }
 }
