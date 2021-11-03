@@ -18,12 +18,6 @@ export interface DeFiConnectorArguments {
   cosmos?: DeFiCosmosConnectorArguments
 }
 
-interface DeFiConnectorAccountInfo {
-  chainId: string
-  chainType: string
-  accounts: string[]
-}
-
 export interface DeFiCosmosConnectorArguments {
   supportedChainIds: string[]
 }
@@ -88,18 +82,18 @@ export class DeFiConnector extends AbstractConnector {
     this.config = config
   }
 
-  _chainId = ''
-  _chainType = ''
-  _accounts: string[] = []
+  chainId = ''
+  chainType: DeFiConnectorChainType = 'eth'
+  accounts: string[] = []
 
   async getProvider(): Promise<any> {
     return this.provider
   }
   async getChainId(): Promise<string | number> {
-    return this._chainId
+    return this.chainId
   }
   async getAccount(): Promise<string | null> {
-    return this._accounts[0]
+    return this.accounts[0]
   }
 
   get _supportedChainIds(): string[] {
@@ -142,9 +136,9 @@ export class DeFiConnector extends AbstractConnector {
         return
       }
       const { params: [{ chainId, chainType, accounts }] = [] } = payload
-      this._chainId = chainId
-      this._chainType = chainType
-      this._accounts = accounts
+      this.chainId = chainId
+      this.chainType = chainType
+      this.accounts = accounts
       this.provider = await this.generateProvider({
         chainId,
         chainType,
@@ -210,9 +204,9 @@ export class DeFiConnector extends AbstractConnector {
         chainId: expectChainId,
         chainType: expectChainType,
       })
-      this._chainId = chainId
-      this._chainType = chainType
-      this._accounts = accounts
+      this.chainId = chainId
+      this.chainType = formaChainType(chainType)
+      this.accounts = accounts
       this.provider = await this.generateProvider({
         chainId,
         chainType,
@@ -263,7 +257,9 @@ export class DeFiConnector extends AbstractConnector {
     // avoid the dApp never being able to connect to the extension again
     this.connectorClient?.clearSessionStorage()
 
-    this.provider?.stop()
+    if (typeof this.provider?.stop == 'function') {
+      this.provider?.stop()
+    }
     this.emitDeactivate()
   }
 

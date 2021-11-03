@@ -76,7 +76,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
   }
 
   public async getChainId(): Promise<number | string> {
-    return parseToETHChainId(this.defiConnector._chainId)
+    return parseToETHChainId(this.defiConnector.chainId)
   }
 
   public async getAccount(): Promise<null | string> {
