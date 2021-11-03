@@ -31,7 +31,6 @@ function getSupportedChains({ supportedChainIds, rpc }: DeFiWeb3ConnectorArgumen
 function parseToETHChainId(chainId: string | undefined): number {
   try {
     const parsed = parseInt(chainId ?? '0')
-    console.info('parseToETHChainId:', parsed)
     if (isNaN(parsed)) {
       return 0
     } else {
@@ -77,7 +76,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
   }
 
   public async getChainId(): Promise<number | string> {
-    return parseToETHChainId(this.defiConnector.chainId)
+    return parseToETHChainId(this.defiConnector._chainId)
   }
 
   public async getAccount(): Promise<null | string> {
@@ -86,7 +85,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
   }
 
   public close(): Promise<void> {
-    return this.defiConnector.deactivate()
+    return this.defiConnector.close()
   }
 
   public deactivate(): void {

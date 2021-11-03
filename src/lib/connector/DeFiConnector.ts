@@ -18,6 +18,12 @@ export interface DeFiConnectorArguments {
   cosmos?: DeFiCosmosConnectorArguments
 }
 
+interface DeFiConnectorAccountInfo {
+  chainId: string
+  chainType: string
+  accounts: string[]
+}
+
 export interface DeFiCosmosConnectorArguments {
   supportedChainIds: string[]
 }
@@ -82,14 +88,18 @@ export class DeFiConnector extends AbstractConnector {
     this.config = config
   }
 
+  _chainId: string = ''
+  _chainType: string = ''
+  _accounts: string[] = []
+
   async getProvider(): Promise<any> {
     return this.provider
   }
   async getChainId(): Promise<string | number> {
-    return this.chainId
+    return this._chainId
   }
   async getAccount(): Promise<string | null> {
-    return this.account
+    return this._accounts[0]
   }
 
   get _supportedChainIds(): string[] {
@@ -103,6 +113,9 @@ export class DeFiConnector extends AbstractConnector {
 
     if (typeof window.deficonnectClientGenerator === 'function') {
       connectorClient = await window.deficonnectClientGenerator(this.config)
+      if (typeof connectorClient.clearSessionStorage == 'undefined') {
+        connectorClient.clearSessionStorage = DeFiConnectorClient.prototype.clearSessionStorage
+      }
     } else {
       const wcConfig: IWalletConnectOptions = {
         bridge: addUrlParams(this.config.bridge ?? GLOBAL_DEFILINK_BRIDGE_URL, {
@@ -125,17 +138,24 @@ export class DeFiConnector extends AbstractConnector {
         this.emitError(error)
         return
       }
+      if (!payload?.params[0]) {
+        return
+      }
+      const { params: [{ chainId, chainType, accounts }] = [] } = payload
+      this._chainId = chainId
+      this._chainType = chainType
+      this._accounts = accounts
       this.provider = await this.generateProvider({
-        chainId: this.chainId,
-        chainType: this.chainType,
+        chainId,
+        chainType,
         connectorClient,
         config: this.config,
       })
       await this.provider?.enable()
       this.emitUpdate({
-        account: this.account,
-        chainType: this.chainType,
-        chainId: this.chainId,
+        account: accounts[0],
+        chainType,
+        chainId,
         provider: this.provider,
       })
     })
@@ -186,10 +206,13 @@ export class DeFiConnector extends AbstractConnector {
         }
         expectChainId = `${this.config.cosmos.supportedChainIds[0] ?? 1}`
       }
-      const { chainId, chainType } = await connectorClient.connector.connect({
+      const { chainId, chainType, accounts } = await connectorClient.connector.connect({
         chainId: expectChainId,
         chainType: expectChainType,
       })
+      this._chainId = chainId
+      this._chainType = chainType
+      this._accounts = accounts
       this.provider = await this.generateProvider({
         chainId,
         chainType,
@@ -199,9 +222,9 @@ export class DeFiConnector extends AbstractConnector {
       await this.provider?.enable()
       this.connectorClient = connectorClient
       return {
-        account: this.account,
-        chainType: this.chainType,
-        chainId: this.chainId,
+        account: accounts[0],
+        chainType: formaChainType(chainType),
+        chainId,
         provider: this.provider,
       }
     } catch (error) {
@@ -222,24 +245,26 @@ export class DeFiConnector extends AbstractConnector {
       }
     })
   }
+  public async close(): Promise<void> {
+    // called by dapp when user click the disconnect function
+
+    // avoid the dApp never being able to connect to the extension again
+    this.connectorClient?.clearSessionStorage()
+    try {
+      await this.provider?.close()
+    } finally {
+      await this.connectorClient?.connector.killSession()
+    }
+  }
 
   async deactivate(): Promise<void> {
-    if (!this.connectorClient) {
-      return
-    }
-    return this.connectorClient.connector.killSession()
-  }
+    // called by dapp when chainId notsupport or something error
 
-  get chainId(): string {
-    return `${this.connectorClient?.connector.chainId ?? ''}`
-  }
+    // avoid the dApp never being able to connect to the extension again
+    this.connectorClient?.clearSessionStorage()
 
-  get chainType(): DeFiConnectorChainType {
-    return formaChainType(this.connectorClient?.connector.chainType)
-  }
-
-  get account(): string {
-    return this.connectorClient?.connector.session.accounts[0] ?? ''
+    await this.provider?.stop()
+    this.emitDeactivate()
   }
 
   get provider(): DeFiConnectorProvider | undefined {

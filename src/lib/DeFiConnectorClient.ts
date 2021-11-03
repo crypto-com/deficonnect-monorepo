@@ -22,8 +22,10 @@ export interface DeFiTransportLib extends ITransportLib {
 export class DeFiConnectorClient {
   connector: IConnector
   transport: DeFiTransportLib
+  sessionStorage?: ISessionStorage
   constructor(params: DeFiConnectorClientParams) {
     const { connectorOpts, sessionStorage, exists } = params
+    this.sessionStorage = sessionStorage
     const session = connectorOpts?.session || sessionStorage?.getSession()
     let bridge = connectorOpts?.bridge ?? session?.bridge
     if (!bridge && connectorOpts?.uri) {
@@ -40,7 +42,7 @@ export class DeFiConnectorClient {
       })
     }
     if (!transport) {
-      throw new Error('bridge2 can not be null')
+      throw new Error('bridge can not be null')
     }
     let connector: IConnector | undefined
     if (!!exists) {
@@ -59,5 +61,14 @@ export class DeFiConnectorClient {
     this.connector = connector
     this.transport = transport
     this.transport.subscribe(connector.clientId)
+  }
+
+  clearSessionStorage() {
+    if (this.sessionStorage) {
+      this.sessionStorage.removeSession()
+    } else {
+      const connector = this.connector as any
+      connector._sessionStorage?.removeSession()
+    }
   }
 }
