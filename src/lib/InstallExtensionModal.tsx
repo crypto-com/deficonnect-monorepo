@@ -24,20 +24,7 @@ const iOSRegistryEntry = {
 
 const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
   if (isIOS()) {
-    let isBlur = false
-    window.addEventListener('blur', () => {
-      isBlur = true
-    })
-    window.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        isBlur = true
-      }
-    })
-    setTimeout(function () {
-      if (isBlur) return
-      window.location.href = installURL
-    }, 200)
-    window.location.href = deepLink
+    window.open(deepLink)
   } else {
     let isBlur = false
     window.addEventListener('blur', () => {
