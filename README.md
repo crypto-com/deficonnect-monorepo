@@ -1,9 +1,9 @@
-# @deficonnect/defi-link
+# deficonnect
 
 ## Install
 
 ```bash
-yarn add "@deficonnect/defi-link"
+yarn add "deficonnect"
 ```
 
 ## Usage
