@@ -3,6 +3,7 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { IRPCMap } from '@deficonnect/types'
 import { getClientMeta } from '@deficonnect/utils'
 import { DeFiConnector, DeFiConnectorUpdateEvent } from './DeFiConnector'
+import { InjectedConnector } from '@web3-react/injected-connector'
 
 export const URI_AVAILABLE = 'URI_AVAILABLE'
 
@@ -43,6 +44,7 @@ function parseToETHChainId(chainId: string | undefined): number {
 
 export class DeFiWeb3Connector extends AbstractConnector {
   defiConnector: DeFiConnector
+  private _injectConnect?: InjectedConnector
 
   constructor(config: DeFiWeb3ConnectorArguments) {
     super({ supportedChainIds: getSupportedChains(config) })
@@ -64,22 +66,38 @@ export class DeFiWeb3Connector extends AbstractConnector {
     this.defiConnector.onEvent(DeFiConnectorUpdateEvent.Deactivate, () => {
       this.emitDeactivate()
     })
+
+    if (navigator?.userAgent?.includes('DeFiWallet') && !!window.ethereum) {
+      this._injectConnect = new InjectedConnector({ supportedChainIds: config.supportedChainIds })
+    }
   }
 
   public async activate(): Promise<ConnectorUpdate> {
+    if (this._injectConnect) {
+      return await this._injectConnect.activate()
+    }
     const { chainId, provider, account } = await this.defiConnector.activate()
     return { chainId: parseToETHChainId(chainId), provider, account }
   }
 
   public async getProvider(): Promise<any> {
+    if (this._injectConnect) {
+      return await this._injectConnect.getProvider()
+    }
     return this.defiConnector.provider
   }
 
   public async getChainId(): Promise<number | string> {
+    if (this._injectConnect) {
+      return await this._injectConnect.getChainId()
+    }
     return parseToETHChainId(this.defiConnector.chainId)
   }
 
   public async getAccount(): Promise<null | string> {
+    if (this._injectConnect) {
+      return await this._injectConnect.getAccount()
+    }
     const provider = await this.getProvider()
     return provider.send('eth_accounts').then((accounts: string[]): string => accounts[0])
   }
@@ -89,6 +107,9 @@ export class DeFiWeb3Connector extends AbstractConnector {
   }
 
   public deactivate(): void {
+    if (this._injectConnect) {
+      return this._injectConnect.deactivate()
+    }
     this.defiConnector.deactivate()
   }
 }
