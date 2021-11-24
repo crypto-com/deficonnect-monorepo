@@ -9,6 +9,7 @@ yarn add "deficonnect"
 ## Usage
 
 ### for `web3-react`
+
 if you use `web3-react`, it is easy to integrat:
 
 > `DeFiWeb3Connector` has implement `AbstractConnector` from `web3-react`
@@ -39,3 +40,9 @@ connector.activate()
 const provider = await connector.getProvider()
 const web3 = new Web3(provider)
 ```
+
+## release package step
+
+1. change the package.json version, and create PR to master.
+2. approved release on CI control
+3. create a new tag on Github
