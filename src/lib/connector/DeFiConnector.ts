@@ -107,16 +107,19 @@ export class DeFiConnector extends AbstractConnector {
 
     async function checkIsReady(times = 0) {
       return new Promise((resolve) => {
-        if (times > 0 && typeof window.deficonnectClientGenerator !== 'function') {
-          setTimeout(async () => {
-            await checkIsReady(--times)
-            resolve(true)
-          }, 100)
-        } else {
+        function check() {
+          if (times > 0 && typeof window.deficonnectClientGenerator !== 'function') {
+            setTimeout(async () => {
+              check()
+            }, 100)
+            return
+          }
           resolve(true)
         }
+        check()
       })
     }
+
     await checkIsReady(10)
 
     if (typeof window.deficonnectClientGenerator === 'function') {
