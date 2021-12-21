@@ -110,6 +110,7 @@ export class DeFiConnector extends AbstractConnector {
         function check() {
           if (times > 0 && typeof window.deficonnectClientGenerator !== 'function') {
             setTimeout(async () => {
+              --times
               check()
             }, 100)
             return
