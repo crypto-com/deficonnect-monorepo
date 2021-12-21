@@ -9,7 +9,6 @@ import { DeFiWeb3ConnectorArguments } from './DeFiWeb3Connector'
 import { InstallExtensionQRCodeModal } from '../InstallExtensionModal'
 import { DeFiCosmosProvider } from './DeFiCosmosProvider'
 import { DefaultSessionStorage } from '../SessionStorage'
-import { resolve } from 'dns'
 
 export interface DeFiConnectorArguments {
   name: string
