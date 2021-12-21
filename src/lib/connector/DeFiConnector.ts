@@ -9,6 +9,7 @@ import { DeFiWeb3ConnectorArguments } from './DeFiWeb3Connector'
 import { InstallExtensionQRCodeModal } from '../InstallExtensionModal'
 import { DeFiCosmosProvider } from './DeFiCosmosProvider'
 import { DefaultSessionStorage } from '../SessionStorage'
+import { resolve } from 'dns'
 
 export interface DeFiConnectorArguments {
   name: string
@@ -104,6 +105,19 @@ export class DeFiConnector extends AbstractConnector {
 
   async generateClient(): Promise<DeFiConnectorClient> {
     let connectorClient: DeFiConnectorClient
+
+    async function checkIsReady(times = 0) {
+      return new Promise((resolve) => {
+        if (times > 0 && typeof window.deficonnectClientGenerator !== 'function') {
+          setTimeout(() => {
+            checkIsReady(--times)
+          }, 100)
+          return
+        }
+        resolve(true)
+      })
+    }
+    await checkIsReady(10)
 
     if (typeof window.deficonnectClientGenerator === 'function') {
       connectorClient = await window.deficonnectClientGenerator(this.config)
