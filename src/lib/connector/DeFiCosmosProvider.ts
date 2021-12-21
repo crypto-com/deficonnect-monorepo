@@ -85,15 +85,20 @@ export class DeFiCosmosProvider {
   sendTransaction = async (payload: any): Promise<any> => {
     const { chainId, chainType } = this.client.connector.session
     const account = this.account
-    return this.client.connector.sendJSONRequest({
-      method: 'cosmos_sendTransaction',
-      params: [payload],
-      session: {
-        chainId: chainId as string,
-        chainType: chainType as string,
-        account,
+    return this.client.connector.sendJSONRequest(
+      {
+        method: 'cosmos_sendTransaction',
+        params: [payload],
+        session: {
+          chainId: chainId as string,
+          chainType: chainType as string,
+          account,
+        },
       },
-    })
+      {
+        forcePushNotification: true,
+      }
+    )
   }
 
   request = async (payload: any): Promise<any> => {
