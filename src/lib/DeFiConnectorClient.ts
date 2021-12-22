@@ -37,7 +37,7 @@ export class DeFiConnectorClient {
     } else if (!!bridge) {
       transport = new SocketTransport({
         protocol: 'wc',
-        version: 2,
+        version: 3,
         url: bridge,
       })
     }
