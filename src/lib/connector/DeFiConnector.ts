@@ -278,6 +278,7 @@ export class DeFiConnector extends AbstractConnector {
     if (typeof this.provider?.stop == 'function') {
       this.provider?.stop()
     }
+    await this.connectorClient?.connector.killSession()
     this.emitDeactivate()
   }
 
