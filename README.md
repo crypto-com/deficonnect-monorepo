@@ -19,7 +19,7 @@ import { DeFiWeb3Connector } from 'deficonnect'
 
 const connector = new DeFiWeb3Connector({
   supportedChainIds: [1],
-  rpc: [1: 'https://mainnet.infura.io/v3/INFURA_API_KEY'],
+  rpc: { 1: 'https://mainnet.infura.io/v3/INFURA_API_KEY' },
   pollingInterval: 15000,
 })
 connector.activate()
