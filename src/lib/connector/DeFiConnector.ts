@@ -154,6 +154,9 @@ export class DeFiConnector extends AbstractConnector {
         return
       }
       const { params: [{ chainId, chainType, accounts }] = [] } = payload
+      if (!chainId || !chainType || !accounts) {
+        return
+      }
       this.chainId = chainId
       this.chainType = chainType
       this.accounts = accounts
