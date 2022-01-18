@@ -3,7 +3,7 @@ version: 2.1
 executors:
   js-executor:
     docker:
-      - image: circleci/node:15.3.0
+      - image: cimg/node:16.13.2
     working_directory: ~/app
 
 commands:
