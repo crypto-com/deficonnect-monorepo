@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-yarn add "deficonnect"
+npm install "deficonnect"
 ```
 
 ## Usage
