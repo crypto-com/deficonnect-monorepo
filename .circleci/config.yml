@@ -29,7 +29,7 @@ commands:
           paths:
             - ~/app/node_modules
 
-  yarn_install:
+  npm_install:
     description: 'Setup Dependencies'
     parameters:
       cache_version:
@@ -39,8 +39,8 @@ commands:
       - restore_js_cache:
           cache_version: <<parameters.cache_version>>
       - run:
-          name: Yarn Install
-          command: yarn install --network-concurrency 1
+          name: Npm Install
+          command: npm install
       - persist_js_cache:
           cache_version: <<parameters.cache_version>>
 
@@ -48,8 +48,8 @@ commands:
     description: 'Build @deficonnect/defi-link'
     steps:
       - run:
-          name: Yarn Build
-          command: yarn build
+          name: Npm Build
+          command: npm run build
       - persist_to_workspace:
           root: ~/app
           paths: 
@@ -60,18 +60,18 @@ jobs:
     executor: js-executor
     steps:
       - checkout
-      - yarn_install
+      - npm_install
       - run:
           name: Lint
-          command: yarn test
+          command: npm run test
       # - run:
       #     name: Unit Test
-      #     command: yarn test
+      #     command: npm run test
   build-js-library:
     executor: js-executor
     steps:
       - checkout
-      - yarn_install
+      - npm_install
       - js_build
   npm-publish-library:
     executor: js-executor
@@ -83,7 +83,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/app/.npmrc
       - run:
           name: Publish package
-          command: yarn publish --access public
+          command: npm publish --access public
 
 workflows:
   version: 2.1
