@@ -1,11 +1,11 @@
 version: 2.1
-​
+
 executors:
   js-executor:
     docker:
       - image: cimg/node:16.13.2
     working_directory: ~/app
-​
+
 commands:
   restore_js_cache:
     description: 'restore js cache'
@@ -28,7 +28,7 @@ commands:
           key: <<parameters.cache_version>>-js-cache-{{ .Branch }}-{{ checksum "~/app/package.json" }}
           paths:
             - ~/app/node_modules
-​
+
   npm_install:
     description: 'Setup Dependencies'
     parameters:
@@ -43,7 +43,7 @@ commands:
           command: npm install
       - persist_js_cache:
           cache_version: <<parameters.cache_version>>
-​
+
   js_build:
     description: 'Build @deficonnect/defi-link'
     steps:
@@ -52,9 +52,9 @@ commands:
           command: npm run build
       - persist_to_workspace:
           root: ~/app
-          paths: 
+          paths:
             - .
-​
+
 jobs:
   lint-and-test:
     executor: js-executor
@@ -100,11 +100,11 @@ jobs:
             gh version
       - run:
           name: Create Release and Upload assets
-          command: | 
-			  export TAG=1.1.$CIRCLE_BUILD_NUM 
-			  echo Creating Release $TAG
-			  gh release create $TAG --generate-notes
-			  gh release upload $TAG dist.zip
+          command: |
+            export TAG=1.1.$CIRCLE_BUILD_NUM 
+            echo Creating Release $TAG
+            gh release create $TAG --generate-notes
+            gh release upload $TAG dist.zip
 workflows:
   version: 2.1
   continuous-deployment:
