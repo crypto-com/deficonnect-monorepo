@@ -12,7 +12,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle -f modern,cjs --jsx React.createElement",
+    "build": "microbundle -f modern,cjs --jsx React.createElement && npm run zip",
     "start": "microbundle watch --no-compress --format modern,cjs --jsx React.createElement",
     "prepare": "run-s build",
     "test": "run-s test:lint test:build",
@@ -21,7 +21,8 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "zip": "zip -r dist.zip dist"
   },
   "peerDependencies": {
     "@web3-react/core": "^6.0.9",
