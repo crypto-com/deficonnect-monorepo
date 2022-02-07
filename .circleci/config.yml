@@ -52,7 +52,7 @@ commands:
           command: npm run build
       - persist_to_workspace:
           root: ~/app
-          paths: 
+          paths:
             - .
 
 jobs:
@@ -84,12 +84,38 @@ jobs:
       - run:
           name: Publish package
           command: npm publish --access public
-
+  github-release:
+    executor: js-executor
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Install Github CLI
+          command: |
+            curl -fL https://github.com/cli/cli/releases/download/v2.5.0/gh_2.5.0_linux_386.tar.gz -o gh.tar.gz
+            tar -xf gh.tar.gz
+            chmod +x gh_2.5.0_linux_386/bin/gh
+            mkdir -p ~/.local/bin
+            mv gh_2.5.0_linux_386/bin/gh ~/.local/bin
+            gh version
+      - run:
+          name: Create Release and Upload assets
+          command: |
+            export TAG=1.1.$CIRCLE_BUILD_NUM 
+            echo Creating Release $TAG
+            gh release create $TAG --generate-notes
+            gh release upload $TAG dist.zip
 workflows:
   version: 2.1
   continuous-deployment:
     jobs:
       - build-js-library
+      - hold-github-release:
+          type: approval
+          branches:
+            only:
+              - main
+              - develop
       - hold-npm-publish:
           type: approval
           branches:
@@ -100,3 +126,7 @@ workflows:
           requires:
             - build-js-library
             - hold-npm-publish
+      - github-release:
+          requires:
+            - build-js-library
+            - hold-github-release
