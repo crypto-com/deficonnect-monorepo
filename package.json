@@ -1,6 +1,6 @@
 {
   "name": "deficonnect",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "defilink SDK for Crypto.com DeFi Wallet Extension",
   "author": "Crypto.com",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle -f modern,cjs --jsx React.createElement && npm run zip",
+    "build": "microbundle -f modern,cjs --jsx React.createElement",
     "start": "microbundle watch --no-compress --format modern,cjs --jsx React.createElement",
     "prepare": "run-s build",
     "test": "run-s test:lint test:build",

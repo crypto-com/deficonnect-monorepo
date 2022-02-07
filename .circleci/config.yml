@@ -101,9 +101,10 @@ jobs:
       - run:
           name: Create Release and Upload assets
           command: |
-            export TAG=1.1.$CIRCLE_BUILD_NUM 
+            export TAG="v$(node -p -e "require('./package.json').version")"
             echo Creating Release $TAG
             gh release create $TAG --generate-notes
+            npm run zip
             gh release upload $TAG dist.zip
 workflows:
   version: 2.1
