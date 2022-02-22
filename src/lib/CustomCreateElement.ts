@@ -56,7 +56,7 @@ export function createElement(tagName:any, props:{ style?: any } = {}, ...childN
     Object.keys(styles).forEach(prop => {
       const value = styles[prop]
       if (typeof value === 'number') {
-        el.style[prop] = `${value}px`
+        el.style[prop] = `${value}`
       } else if (typeof value === 'string') {
         el.style[prop] = value
       } else {

@@ -1,6 +1,6 @@
-import { createElement as CurtomCreateElement } from '../CustomCreateElement';
+import { createElement as CurtomCreateElement } from '../CustomCreateElement'
 
-function DeFiLinkIconLight(props: any) {
+function DeFiLinkIconLight(props: {}): JSX.Element {
   return (
     <svg width={60} height={60} viewBox="5 5 66 66" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g filter="url(#prefix__filter0_d)">

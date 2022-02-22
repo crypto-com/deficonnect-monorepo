@@ -1,4 +1,4 @@
-import { createElement as CurtomCreateElement } from './CustomCreateElement';
+import { createElement as CurtomCreateElement } from './CustomCreateElement'
 import { IQRCodeModal } from '@deficonnect/types'
 import { formatIOSMobile, isAndroid, isIOS, saveMobileLinkInfo } from '@deficonnect/browser-utils'
 import DeFiLinkIconLight from './assets/defi-link-icon-light'
@@ -43,7 +43,7 @@ const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
 
 const downloadAppURL = 'https://bit.ly/3Bk4wzE'
 export const InstallExtensionQRCodeModal: IQRCodeModal = {
-  open: async function (uri: string, cb: Function, opts?: any) {
+  open: async function (uri: string, cb: Function, opts) {
     const CWEURI = formatToCWEURI(uri) + '&role=dapp'
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
@@ -60,22 +60,23 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
       openDeeplinkOrInstall(lowercaseURI, downloadAppURL)
       return
     }
-    
+
     const body = document.body
     const popup = document.createElement('div')
     popup.id = 'cryptoconnect-extension'
     body.appendChild(popup)
     try {
-      const url = await new Promise<string>(resolve => QRCode.toDataURL(CWEURI, (_err: any, url: string) => resolve(url)))
-      const overlay:any = <InstallExtensionModal qrUrl={url} />;
+      const url = await new Promise<string>((resolve) => QRCode.toDataURL(CWEURI, (_err, url: string) => resolve(url)))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const overlay: any = <InstallExtensionModal qrUrl={url} />
       body.appendChild(overlay)
-      const closeModal = () => {
+      const closeModal = (): void => {
         overlay.parentElement?.removeChild(overlay)
         popup.parentElement?.removeChild(popup)
         window.removeEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
         cb()
       }
-      window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal);
+      window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
       overlay.onclick = closeModal
     } catch (error) {
       console.log(error)
@@ -89,13 +90,21 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
 interface InstallExtensionModalProps {
   qrUrl: string
 }
-export const InstallExtensionModal = (props: InstallExtensionModalProps) => {
-  const { qrUrl } = props;
-  const onInstallButtonClick = () => window.open('https://wallet.crypto.com/api/v1/extension/install')
-  const onTermsClick = () => window.open('https://crypto.com/document/ncw_tnc')
-  const onPrivacyClick = () => window.open('https://crypto.com/privacy/ncw')
-  const onDownloadClick = () => window.open('https://bit.ly/3Bk4wzE');
-  const stopPropagation = (event:any) => event?.stopPropagation();
+export const InstallExtensionModal = (props: InstallExtensionModalProps): JSX.Element => {
+  const { qrUrl } = props
+  const onInstallButtonClick = (): void => {
+    window.open('https://wallet.crypto.com/api/v1/extension/install')
+  }
+  const onTermsClick = (): void => {
+    window.open('https://crypto.com/document/ncw_tnc')
+  }
+  const onPrivacyClick = (): void => {
+    window.open('https://crypto.com/privacy/ncw')
+  }
+  const onDownloadClick = (): void => {
+    window.open('https://bit.ly/3Bk4wzE')
+  }
+  const stopPropagation = (event: { stopPropagation: () => void }): void => event?.stopPropagation()
   return (
     <div style={styles.overlay}>
       <div style={styles.container} onClick={stopPropagation}>
@@ -158,7 +167,7 @@ export const InstallExtensionModal = (props: InstallExtensionModalProps) => {
 interface DownloadAppBannerProps {
   onDownloadClick: () => void
 }
-const DownloadAppBanner= (props: DownloadAppBannerProps) => {
+const DownloadAppBanner = (props: DownloadAppBannerProps): JSX.Element => {
   const { onDownloadClick } = props
   return (
     <div style={BannerStyles.container}>
