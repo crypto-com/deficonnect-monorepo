@@ -1,4 +1,4 @@
-import React from 'react'
+import { createElement as CurtomCreateElement } from '../CustomCreateElement';
 
 function FeatureGlobeIcon() {
   return (

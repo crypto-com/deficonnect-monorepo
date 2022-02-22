@@ -1,6 +1,7 @@
-import React, { CSSProperties } from 'react'
+import { CSSProperties } from 'react'
 
 export const styles: {
+  overlay: CSSProperties
   container: CSSProperties
   containerLeft: CSSProperties
   containerRight: CSSProperties
@@ -28,6 +29,20 @@ export const styles: {
     camera: CSSProperties
   }
 } = {
+  overlay: {
+    background: 'rgba(12, 12, 15, 0.7)',
+    display: 'flex',
+    position: 'fixed',
+    zIndex: '2',
+    left: '0',
+    top: '0',
+    width: '100%',
+    height: '100%',
+    overflow: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+    userSelect: 'none',
+  },
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -41,7 +56,7 @@ export const styles: {
     display: 'flex',
     flexDirection: 'column',
     marginRight: '40px',
-    flexShrink: 1,
+    flexShrink: '1',
     minWidth: '450px',
   },
   header: {
@@ -61,7 +76,7 @@ export const styles: {
   },
   title: {
     color: '#FFFFFF',
-    fontWeight: 600,
+    fontWeight: '600',
     fontSize: '28px',
     marginTop: '24px',
     marginBottom: '16px',
@@ -77,7 +92,7 @@ export const styles: {
   featureText: {
     marginLeft: '16px',
     color: '#FFFFFF',
-    fontWeight: 600,
+    fontWeight: '600',
     fontSize: '16px',
   },
   installButton: {
@@ -87,15 +102,15 @@ export const styles: {
     borderRadius: '8px',
     padding: '0px 36px',
     border: '0px solid white',
-    fontWeight: 600,
+    fontWeight: '600',
     fontSize: '18px',
     color: '#FFFFFF',
     alignSelf: 'flex-start',
     cursor: 'pointer',
-    zIndex: 1001,
+    zIndex: '1001',
   },
   containerRight: {
-    flexShrink: 0,
+    flexShrink: '0',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'stretch',
@@ -107,7 +122,7 @@ export const styles: {
     overflow: 'hidden',
   },
   rightQRcode: {
-    flexGrow: 0,
+    flexGrow: '0',
     marginTop: '48px',
     width: '160px',
     height: '160px',
@@ -115,7 +130,7 @@ export const styles: {
     borderRadius: '8px',
   },
   rightTitle: {
-    fontWeight: 600,
+    fontWeight: '600',
     fontSize: '22px',
     color: '#323C52',
     margin: '32px 0px 8px 0px',
@@ -191,16 +206,16 @@ export const BannerStyles: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    flex: 1,
+    flex: '1',
   },
   title: {
-    fontWeight: 600,
+    fontWeight: '600',
     fontSize: '14px',
     lineHeight: '150%',
     color: '#323C52',
   },
   desc: {
-    fontWeight: 500,
+    fontWeight: '500',
     fontSize: '10px',
     lineHeight: '150%',
     color: '#7B849B',
@@ -211,11 +226,11 @@ export const BannerStyles: {
     background: '#1199FA',
     border: '0px solid white',
     borderRadius: '4px',
-    fontWeight: 600,
+    fontWeight: '600',
     fontSize: '12px',
     color: '#FFFFFF',
     marginRight: '12px',
     cursor: 'pointer',
-    zIndex: 1001,
+    zIndex: '1001',
   },
 }

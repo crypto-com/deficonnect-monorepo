@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { createElement as CurtomCreateElement } from '../CustomCreateElement';
 
 function ConnectStepCameraIcon(props: any) {
   return (
