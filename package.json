@@ -26,7 +26,7 @@
   },
   "peerDependencies": {
     "@web3-react/core": "^6.0.9",
-    "ws": "7.3.0"
+    "ws": "7.4.6"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -83,6 +83,6 @@
     "cosmjs-types": "^0.2.0",
     "qrcode": "^1.4.4",
     "regenerator-runtime": "^0.13.9",
-    "ws": "7.3.0"
+    "ws": "7.4.6"
   }
 }
