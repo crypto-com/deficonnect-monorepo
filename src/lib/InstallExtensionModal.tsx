@@ -1,6 +1,4 @@
-import React, { MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react'
-import ReactDOM from 'react-dom'
-import ReactModal from 'react-modal'
+import { createElement as CurtomCreateElement } from './CustomCreateElement'
 import { IQRCodeModal } from '@deficonnect/types'
 import { formatIOSMobile, isAndroid, isIOS, saveMobileLinkInfo } from '@deficonnect/browser-utils'
 import DeFiLinkIconLight from './assets/defi-link-icon-light'
@@ -45,7 +43,7 @@ const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
 
 const downloadAppURL = 'https://bit.ly/3Bk4wzE'
 export const InstallExtensionQRCodeModal: IQRCodeModal = {
-  open: function (uri: string, cb: Function, opts?: any) {
+  open: async function (uri: string, cb: Function, opts) {
     const CWEURI = formatToCWEURI(uri) + '&role=dapp'
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
@@ -62,85 +60,54 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
       openDeeplinkOrInstall(lowercaseURI, downloadAppURL)
       return
     }
+
     const body = document.body
     const popup = document.createElement('div')
     popup.id = 'cryptoconnect-extension'
     body.appendChild(popup)
-    ReactDOM.render(<InstallExtensionModal appElement={popup} uri={CWEURI} closeCallback={cb} />, popup)
+    try {
+      const url = await new Promise<string>((resolve) => QRCode.toDataURL(CWEURI, (_err, url: string) => resolve(url)))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const overlay: any = <InstallExtensionModal qrUrl={url} />
+      body.appendChild(overlay)
+      const closeModal = (): void => {
+        overlay.parentElement?.removeChild(overlay)
+        popup.parentElement?.removeChild(popup)
+        window.removeEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
+        cb()
+      }
+      window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
+      overlay.onclick = closeModal
+    } catch (error) {
+      console.log(error)
+    }
   },
   close: function () {
     window.dispatchEvent(new Event('InstallExtensionQRCodeModal_Event_close'))
   },
 }
 
-export const InstallExtensionModal: React.FC<{
-  appElement: HTMLElement
-  uri: string
-  closeCallback: Function
-}> = ({ appElement, uri, closeCallback }) => {
-  const [isOpen, setisOpen] = useState(true)
-  const [qrcodeImageURL, setQRCodeImageURL] = useState('')
-  ReactModal.setAppElement(appElement)
-  const closeModal = useCallback(() => {
-    appElement.parentElement?.removeChild(appElement)
-    setisOpen(false)
-  }, [appElement])
-  const closeModalClick = useCallback(() => {
-    closeCallback()
-    closeModal()
-  }, [closeCallback, closeModal])
-  useEffect(() => {
-    window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
-    return (): void => {
-      window.removeEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
-    }
-  }, [closeModal])
-  useMemo(() => {
-    QRCode.toDataURL(uri, (_err: any, url: string) => {
-      setQRCodeImageURL(url)
-    })
-  }, [uri])
-
-  const onInstallButtonClick = useCallback(() => {
+interface InstallExtensionModalProps {
+  qrUrl: string
+}
+export const InstallExtensionModal = (props: InstallExtensionModalProps): JSX.Element => {
+  const { qrUrl } = props
+  const onInstallButtonClick = (): void => {
     window.open('https://wallet.crypto.com/api/v1/extension/install')
-  }, [])
-  const onTermsClick = useCallback(() => {
+  }
+  const onTermsClick = (): void => {
     window.open('https://crypto.com/document/ncw_tnc')
-  }, [])
-  const onPrivacyClick = useCallback(() => {
+  }
+  const onPrivacyClick = (): void => {
     window.open('https://crypto.com/privacy/ncw')
-  }, [])
-  const onDownloadClick = useCallback(() => {
+  }
+  const onDownloadClick = (): void => {
     window.open('https://bit.ly/3Bk4wzE')
-  }, [])
-
+  }
+  const stopPropagation = (event: { stopPropagation: () => void }): void => event?.stopPropagation()
   return (
-    <ReactModal
-      isOpen={isOpen}
-      shouldCloseOnOverlayClick
-      shouldCloseOnEsc
-      shouldFocusAfterRender
-      shouldReturnFocusAfterClose
-      style={{
-        content: {
-          background: '#00000000',
-          border: 'none',
-          margin: '40px',
-          display: 'flex',
-          position: 'relative',
-          padding: '0px',
-        },
-        overlay: {
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          background: 'rgba(12, 12, 15, 0.7)',
-          zIndex: 1000,
-        },
-      }}
-      onRequestClose={closeModalClick}
-    >
-      <div style={styles.container}>
+    <div style={styles.overlay}>
+      <div style={styles.container} onClick={stopPropagation}>
         <div style={styles.containerLeft}>
           <div style={styles.header}>
             <LogoIcon />
@@ -166,7 +133,7 @@ export const InstallExtensionModal: React.FC<{
           </button>
         </div>
         <div style={styles.containerRight}>
-          <img style={styles.rightQRcode} src={qrcodeImageURL} alt="qrcode" />
+          <img style={styles.rightQRcode} src={qrUrl} alt="qrcode" />
           <span style={styles.rightTitle}>Scan to Connect</span>
           <div style={styles.rightStep.container}>
             <div style={styles.rightStep.desc}>• Open DeFi Wallet Mobile App</div>
@@ -193,11 +160,15 @@ export const InstallExtensionModal: React.FC<{
           <DownloadAppBanner onDownloadClick={onDownloadClick} />
         </div>
       </div>
-    </ReactModal>
+    </div>
   )
 }
 
-const DownloadAppBanner: React.FC<{ onDownloadClick: MouseEventHandler }> = ({ onDownloadClick }) => {
+interface DownloadAppBannerProps {
+  onDownloadClick: () => void
+}
+const DownloadAppBanner = (props: DownloadAppBannerProps): JSX.Element => {
+  const { onDownloadClick } = props
   return (
     <div style={BannerStyles.container}>
       <DeFiLinkIconLight />

@@ -1,6 +1,8 @@
-import React, { CSSProperties } from 'react'
+import * as CSS from 'csstype'
+type CSSProperties = CSS.Properties<string | number>
 
 export const styles: {
+  overlay: CSSProperties
   container: CSSProperties
   containerLeft: CSSProperties
   containerRight: CSSProperties
@@ -28,6 +30,20 @@ export const styles: {
     camera: CSSProperties
   }
 } = {
+  overlay: {
+    background: 'rgba(12, 12, 15, 0.7)',
+    display: 'flex',
+    position: 'fixed',
+    zIndex: 2,
+    left: 0,
+    top: 0,
+    width: '100%',
+    height: '100%',
+    overflow: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+    userSelect: 'none',
+  },
   container: {
     display: 'flex',
     flexDirection: 'row',

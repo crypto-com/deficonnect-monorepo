@@ -1,6 +1,6 @@
-import React from 'react'
+import { createElement as CurtomCreateElement } from '../CustomCreateElement'
 
-function Icon() {
+function Icon(): JSX.Element {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="27" height="32" fill="none" viewBox="0 0 27 32">
       <path
