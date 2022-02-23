@@ -1,4 +1,5 @@
-import { CSSProperties } from 'react'
+import * as CSS from 'csstype'
+type CSSProperties = CSS.Properties<string | number>
 
 export const styles: {
   overlay: CSSProperties
