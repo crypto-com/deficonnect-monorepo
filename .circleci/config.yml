@@ -106,6 +106,9 @@ jobs:
             gh release create $TAG --generate-notes
             npm run zip
             gh release upload $TAG dist.zip
+            gh release upload $TAG README.md
+            gh release upload $TAG package.json
+
 workflows:
   version: 2.1
   continuous-deployment:
