@@ -74,10 +74,13 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
         overlay.parentElement?.removeChild(overlay)
         popup.parentElement?.removeChild(popup)
         window.removeEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
-        cb()
       }
       window.addEventListener('InstallExtensionQRCodeModal_Event_close', closeModal)
-      overlay.onclick = closeModal
+      const closeModalClick = (): void => {
+        cb()
+        closeModal()
+      }
+      overlay.onclick = closeModalClick
     } catch (error) {
       console.log(error)
     }
