@@ -83,7 +83,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/app/.npmrc
       - run:
           name: Publish package
-          command: npm publish --access public
+          command: npm run publish:npm
   github-release:
     executor: js-executor
     steps:
