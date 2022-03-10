@@ -1,6 +1,6 @@
 {
   "name": "deficonnect",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "defilink SDK for Crypto.com DeFi Wallet Extension",
   "author": "Crypto.com",
   "license": "MIT",
@@ -14,7 +14,6 @@
   "scripts": {
     "build": "microbundle -f modern,cjs --jsx",
     "start": "microbundle watch --no-compress --format modern,cjs --jsx",
-    "prepare": "run-s build",
     "test": "run-s test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "eslint .",
@@ -22,7 +21,8 @@
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build",
-    "zip": "zip -r dist.zip dist"
+    "zip": "zip -r dist.zip dist",
+    "publish:npm": "run-s build && npm publish --access public"
   },
   "peerDependencies": {
     "@web3-react/core": "^6.0.9",
