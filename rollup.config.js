@@ -3,10 +3,10 @@ import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import typescript from '@rollup/plugin-typescript'
 import json from '@rollup/plugin-json'
-// import builtins from 'rollup-plugin-node-builtins'
+import builtins from 'rollup-plugin-node-builtins'
 import globals from 'rollup-plugin-node-globals'
 // import auto from '@rollup/plugin-auto-install'
-import nodePolyfills from 'rollup-plugin-node-polyfills'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
 import inject from 'rollup-plugin-inject'
 
 // `npm run build` -> `production` is true
@@ -37,9 +37,15 @@ const configes = [
     },
     plugins: [
       commonjs(), // converts date-fns to ES modules
-      // auto({ manager: 'npm' }),
       nodePolyfills(),
-      resolve(), // tells Rollup how to find date-fns in node_modules
+      // builtins(),
+      globals(),
+      typescript({
+        tsconfig: 'tsconfig.json',
+      }),
+      resolve({
+        dedupe: ['ws'],
+      }), // tells Rollup how to find date-fns in node_modules
       // globals({
       //   global: {
       //     EventEmitter: require('events'),
@@ -52,10 +58,6 @@ const configes = [
       //   //   EventEmitter: 'events',
       //   // },
       // }),
-      // builtins(),
-      typescript({
-        tsconfig: 'tsconfig.json',
-      }),
       json(),
       // production && terser(), // minify, but only in production
     ],
