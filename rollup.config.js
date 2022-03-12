@@ -3,7 +3,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import typescript from '@rollup/plugin-typescript'
 import json from '@rollup/plugin-json'
-import builtins from 'rollup-plugin-node-builtins'
+// import builtins from 'rollup-plugin-node-builtins'
 import globals from 'rollup-plugin-node-globals'
 // import auto from '@rollup/plugin-auto-install'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
@@ -34,31 +34,34 @@ const configes = [
       name: 'DeFiConnect',
       format: 'umd', // immediately-invoked function expression — suitable for <script> tags
       sourcemap: true,
+      globals: {
+        global: 'self',
+      },
     },
     plugins: [
       commonjs(), // converts date-fns to ES modules
+      // builtins()
       nodePolyfills(),
-      // builtins(),
-      globals(),
+      // globals({ global: true }),
+      resolve({
+        dedupe: ['ws'],
+        preferBuiltins: true,
+      }), // tells Rollup how to find date-fns in node_modules
+      // inject({
+      //   global: globalThis,
+      // }),
       typescript({
         tsconfig: 'tsconfig.json',
       }),
-      resolve({
-        dedupe: ['ws'],
-      }), // tells Rollup how to find date-fns in node_modules
-      // globals({
-      //   global: {
-      //     EventEmitter: require('events'),
-      //   },
-      // }),
+      // globals(),
+      json(),
       // inject({
-      //   EventEmitter2: 'dasdas',
-      //   EventEmitter: require('events'),
+      //   global: globalThis,
+      //   // EventEmitter: require('events'),
       //   // modules: {
       //   //   EventEmitter: 'events',
       //   // },
       // }),
-      json(),
       // production && terser(), // minify, but only in production
     ],
     // external: ['ws'],
