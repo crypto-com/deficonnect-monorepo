@@ -1,19 +1,21 @@
 {
   "name": "deficonnect",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "defilink SDK for Crypto.com DeFi Wallet Extension",
   "author": "Crypto.com",
   "license": "MIT",
   "repository": "https://github.com/crypto-com/defi-connector",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
-  "source": "src/index.tsx",
+  "source": "src/index.ts",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle -f modern,cjs --jsx",
     "start": "microbundle watch --no-compress --format modern,cjs --jsx",
+    "build": "run-s build:modern build:umd",
+    "build:modern": "microbundle -f modern,cjs --jsx",
+    "build:umd": "webpack",
     "test": "run-s test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "eslint .",
@@ -59,7 +61,10 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react-scripts": "5.0.0",
-    "typescript": "^4.3.5"
+    "ts-loader": "^9.2.7",
+    "typescript": "^4.3.5",
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10"
   },
   "overrides": {
     "mini-css-extract-plugin": "2.4.5"
