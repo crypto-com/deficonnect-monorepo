@@ -72,6 +72,9 @@ export class DeFiWeb3Connector extends AbstractConnector {
     }
   }
 
+  /**
+   * connect to the Wallet
+   */
   public async activate(): Promise<ConnectorUpdate> {
     if (this._injectConnect) {
       return await this._injectConnect.activate()
@@ -80,6 +83,9 @@ export class DeFiWeb3Connector extends AbstractConnector {
     return { chainId: parseToETHChainId(chainId), provider, account }
   }
 
+  /**
+   * @returns the web3 provider, it is EIP-1193 compatible
+   */
   public async getProvider(): Promise<any> {
     if (this._injectConnect) {
       return await this._injectConnect.getProvider()
@@ -87,6 +93,9 @@ export class DeFiWeb3Connector extends AbstractConnector {
     return this.defiConnector.provider
   }
 
+  /**
+   * @returns the connected chainID
+   */
   public async getChainId(): Promise<number | string> {
     if (this._injectConnect) {
       return await this._injectConnect.getChainId()
@@ -94,6 +103,9 @@ export class DeFiWeb3Connector extends AbstractConnector {
     return parseToETHChainId(this.defiConnector.chainId)
   }
 
+  /**
+   * @returns the connected wallet address
+   */
   public async getAccount(): Promise<null | string> {
     if (this._injectConnect) {
       return await this._injectConnect.getAccount()
@@ -102,10 +114,16 @@ export class DeFiWeb3Connector extends AbstractConnector {
     return provider.send('eth_accounts').then((accounts: string[]): string => accounts[0])
   }
 
+  /**
+   * @deprecated disconnect Wallet
+   */
   public close(): Promise<void> {
     return this.defiConnector.close()
   }
 
+  /**
+   * disconnect Wallet
+   */
   public deactivate(): void {
     if (this._injectConnect) {
       return this._injectConnect.deactivate()
