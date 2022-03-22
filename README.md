@@ -1,6 +1,6 @@
-# deficonnect
+# DeFiConnect
 
-## Install
+## Installation
 
 ### use npm package manager
 
@@ -8,7 +8,7 @@
 npm install "deficonnect"
 ```
 
-### using script tag
+### use script tag
 
 ```html
 <script type="module" src="https://unpkg.com/deficonnect/dist/index.umd.js"></script>
@@ -42,7 +42,7 @@ const connector = new DeFiWeb3Connector({
 connector.activate()
 ```
 
-### method for DeFiWeb3Connector
+### methods for DeFiWeb3Connector
 
 ```typescript
 // connect to the Wallet
@@ -52,7 +52,7 @@ await connector.activate()
 await connector.deactivate()
 ```
 
-### Events for provider (EIP-1193)
+### events for Provider (EIP-1193)
 
 ```typescript
 // Subscribe to accounts change
@@ -76,12 +76,12 @@ provider.on('disconnect', (code: number, reason: string) => {
 })
 ```
 
-### Provider Methods
+### methods for Provider
 
 ```typescript
 interface RequestArguments {
-  method: string;
-  params?: unknown[] | object;
+ method: string;
+ params?: unknown[] | object;
 }
 
 // Send JSON RPC requests
@@ -91,7 +91,7 @@ const result = await provider.request(payload: RequestArguments);
 await provider.disconnect()
 ```
 
-### Web3 Methods
+### methods for Web3
 
 ```typescript
 //  Get Accounts
