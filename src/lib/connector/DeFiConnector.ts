@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import 'regenerator-runtime/runtime'
 import { IWalletConnectOptions } from '@deficonnect/types'
 import Web3Provider from '@deficonnect/web3-provider'
 import { AbstractConnector } from '@web3-react/abstract-connector'
