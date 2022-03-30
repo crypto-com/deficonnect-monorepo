@@ -1,4 +1,4 @@
-import { createElement as CurtomCreateElement } from '../CustomCreateElement'
+import { createElement as CustomCreateElement } from '../CustomCreateElement'
 
 function DeFiLinkIconLight(props: {}): JSX.Element {
   return (

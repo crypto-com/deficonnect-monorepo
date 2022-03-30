@@ -1,4 +1,4 @@
-import { createElement as CurtomCreateElement } from './CustomCreateElement'
+import { createElement as CustomCreateElement } from './CustomCreateElement'
 import { IQRCodeModal } from '@deficonnect/types'
 import { formatIOSMobile, isAndroid, isIOS, saveMobileLinkInfo } from '@deficonnect/browser-utils'
 import DeFiLinkIconLight from './assets/defi-link-icon-light'

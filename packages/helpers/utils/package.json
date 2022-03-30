@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/utils",
-  "version": "1.6.13",
+  "version": "1.6.14",
   "description": "Utility Library for WalletConnect",
   "scripts": {
     "clean": "rm -rf dist",
@@ -62,8 +62,8 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/browser-utils": "^1.6.13",
-    "@deficonnect/types": "^1.6.13",
+    "@deficonnect/browser-utils": "^1.6.14",
+    "@deficonnect/types": "^1.6.14",
     "@walletconnect/encoding": "^1.0.0",
     "@walletconnect/jsonrpc-utils": "^1.0.0",
     "bn.js": "4.11.8",
