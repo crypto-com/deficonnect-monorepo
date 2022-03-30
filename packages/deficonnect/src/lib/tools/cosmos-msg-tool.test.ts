@@ -9,16 +9,13 @@ it('cosmos-msg-tool.test', () => {
   const fromBase64R = fromBase64(TxBodyBase64)
   const tx = TxBody.decode(fromBase64R)
   const txJSON = transformProtoToJSON(TxBody.toJSON(tx))
-  console.info('txJSON:', JSON.stringify(txJSON))
   const base64Result = toBase64(TxBody.encode(TxBody.fromJSON(transformJSONtoProto(txJSON))).finish())
   expect(base64Result).to.eql(TxBodyBase64)
 
-  const authInfoBase64 = fromBase64(
-    'Ck4KRgofL2Nvc21vcy5jcnlwdG8uc2VjcDI1NmsxLlB1YktleRIjCiEDYYToBTdYWFoiCn48H2/Pn6MWFgkWWMmw74ZWfASQlQYSBAoCCAESBBDAqQc='
-  )
+  const authInfoBase64Str = 'Ck4KRgofL2Nvc21vcy5jcnlwdG8uc2VjcDI1NmsxLlB1YktleRIjCiEDYYToBTdYWFoiCn48H2/Pn6MWFgkWWMmw74ZWfASQlQYSBAoCCAESBBDAqQc='
+  const authInfoBase64 = fromBase64(authInfoBase64Str)
   const authInfo = AuthInfo.decode(authInfoBase64)
   const authJSON = transformProtoToJSON(AuthInfo.toJSON(authInfo))
-  console.info('authJSON:', JSON.stringify(authJSON))
   const authBase64Result = toBase64(AuthInfo.encode(AuthInfo.fromJSON(transformJSONtoProto(authJSON))).finish())
-  console.info('authBase64Result:', authBase64Result)
+  expect(authBase64Result).to.eql(authInfoBase64Str)
 })
