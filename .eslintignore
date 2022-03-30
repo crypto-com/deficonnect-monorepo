@@ -1,6 +1,4 @@
-build/
-dist/
-node_modules/
-example/
-.snapshots/
-*.min.js
+dist
+example
+**/node_modules/*
+*.d.ts

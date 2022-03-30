@@ -1,123 +1,67 @@
-# DeFiConnect
+# WalletConnect v1.x.x
 
-## Installation
+Open protocol for connecting Wallets to Dapps - https://walletconnect.org
 
-### use npm package manager
+## Packages
+
+| SDK           | Current Version                                                                                      | Description |
+| ------------- | ---------------------------------------------------------------------------------------------------- | ----------- |
+| @deficonnect/sdk | [![npm version](https://badge.fury.io/js/walletconnect.svg)](https://badge.fury.io/js/walletconnect) | SDK         |
+
+| Clients               | Current Version                                                                                                              | Description       |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| @deficonnect/core   | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fcore.svg)](https://badge.fury.io/js/%40walletconnect%2Fcore)     | Core Client       |
+| @deficonnect/client | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fclient.svg)](https://badge.fury.io/js/%40walletconnect%2Fclient) | Isomorphic Client |
+
+| Providers                        | Current Version                                                                                                                                    | Description       |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| @deficonnect/ethereum-provider | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fethereum-provider.svg)](https://badge.fury.io/js/%40walletconnect%2Fethereum-provider) | Ethereum Provider |
+| @deficonnect/truffle-provider  | [![npm version](https://badge.fury.io/js/%40walletconnect%2Ftruffle-provider.svg)](https://badge.fury.io/js/%40walletconnect%2Ftruffle-provider)   | Truffle Provider  |
+| @deficonnect/web3-provider     | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fweb3-provider.svg)](https://badge.fury.io/js/%40walletconnect%2Fweb3-provider)         | Web3 Provider     |
+| @deficonnect/web3-subprovider  | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fweb3-subprovider.svg)](https://badge.fury.io/js/%40walletconnect%2Fweb3-subprovider)   | Web3 Subprovider  |
+
+| Helpers                          | Current Version                                                                                                                                    | Description       |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| @deficonnect/browser-utils     | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fbrowser-utils.svg)](https://badge.fury.io/js/%40walletconnect%2Fbrowser-utils)         | Browser Utilities |
+| @deficonnect/http-connection   | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fhttp-connection.svg)](https://badge.fury.io/js/%40walletconnect%2Fhttp-connection)     | HTTP Connection   |
+| @deficonnect/iso-crypto        | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fiso-crypto.svg)](https://badge.fury.io/js/%40walletconnect%2Fiso-crypto)               | Isomorphic Crypto |
+| @deficonnect/qrcode-modal      | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fqrcode-modal.svg)](https://badge.fury.io/js/%40walletconnect%2Fqrcode-modal)           | QR Code Modal     |
+| @deficonnect/react-native-dapp | [![npm version](https://badge.fury.io/js/%40walletconnect%2Freact-native-dapp.svg)](https://badge.fury.io/js/%40walletconnect%2Freact-native-dapp) | React-Native Dapp |
+| @deficonnect/signer-connection | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fsigner-connection.svg)](https://badge.fury.io/js/%40walletconnect%2Fsigner-connection) | Signer Connection |
+| @deficonnect/socket-transport  | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fsocket-transport.svg)](https://badge.fury.io/js/%40walletconnect%2Fsocket-transport)   | Socket Transport  |
+| @deficonnect/types             | [![npm version](https://badge.fury.io/js/%40walletconnect%2Ftypes.svg)](https://badge.fury.io/js/%40walletconnect%2Ftypes)                         | Typescript Types  |
+| @deficonnect/utils             | [![npm version](https://badge.fury.io/js/%40walletconnect%2Futils.svg)](https://badge.fury.io/js/%40walletconnect%2Futils)                         | Utility Library   |
+
+`## Quick Start`
+
+Find quick start examples for your platform at https://docs.walletconnect.org/quick-start
+
+## Documentation
+
+Read more about WalletConnect protocol and how to use our Clients at https://docs.walletconnect.org
+
+## Contributors
+
+This project exists thanks to all the people who contribute.
+<a href="https://github.com/monacohq/walletconnect-monorepo/graphs/contributors"><img src="https://opencollective.com/walletconnect/contributors.svg?width=890&button=false" /></a>
+
+All contributions are welcome! Feel free to create an Issue or make a PR in this repository
+
+## License
+
+LGPL-3.0
+
+## publish
+Node.js use v14.17.6
 
 ```bash
-npm install "deficonnect"
+$ npm run new-version
 ```
 
-### use script tag
-
-```html
-<script type="module" src="https://unpkg.com/deficonnect/dist/index.umd.js"></script>
+```bash
+$ npm run build
 ```
 
-the global variable is: `window.DeFiConnect`
-
-```javascript
-const connector = new window.DeFiConnect.DeFiWeb3Connector({
-  supportedChainIds: [1],
-  rpc: { 1: 'https://mainnet.infura.io/v3/INFURA_API_KEY' },
-  pollingInterval: 15000
-})
+```bash
+$ npm run npm-publish:latest
 ```
-
-## Usage
-
-### connect wallet
-
-> if you use `web3-react`, it is easy to integrate:
-> `DeFiWeb3Connector` has implement `AbstractConnector` from `web3-react`
-
-```tsx
-import { DeFiWeb3Connector } from 'deficonnect'
-
-const connector = new DeFiWeb3Connector({
-  supportedChainIds: [1],
-  rpc: { 1: 'https://mainnet.infura.io/v3/INFURA_API_KEY' },
-  pollingInterval: 15000
-})
-connector.activate()
-```
-
-### methods for DeFiWeb3Connector
-
-```typescript
-// connect to the Wallet
-await connector.activate()
-
-// disconnect the Wallet
-await connector.deactivate()
-```
-
-### events for Provider (EIP-1193)
-
-```typescript
-// Subscribe to accounts change
-provider.on('accountsChanged', (accounts: string[]) => {
-  console.log(accounts)
-})
-
-// Subscribe to chainId change
-provider.on('chainChanged', (chainId: number) => {
-  console.log(chainId)
-})
-
-// Subscribe to session connection
-provider.on('connect', () => {
-  console.log('connect')
-})
-
-// Subscribe to session disconnection
-provider.on('disconnect', (code: number, reason: string) => {
-  console.log(code, reason)
-})
-```
-
-### methods for Provider
-
-```typescript
-interface RequestArguments {
- method: string;
- params?: unknown[] | object;
-}
-
-// Send JSON RPC requests
-const result = await provider.request(payload: RequestArguments);
-
-// Close provider session
-await provider.disconnect()
-```
-
-### methods for Web3
-
-```typescript
-//  Get Accounts
-const accounts = await web3.eth.getAccounts()
-
-//  Get Chain Id
-const chainId = await web3.eth.chainId()
-
-//  Get Network Id
-const networkId = await web3.eth.net.getId()
-
-// Send Transaction
-const txHash = await web3.eth.sendTransaction(tx)
-
-// Sign Transaction
-const signedTx = await web3.eth.signTransaction(tx)
-
-// Sign Message
-const signedMessage = await web3.eth.sign(msg)
-
-// Sign Typed Data
-const signedTypedData = await web3.eth.signTypedData(msg)
-```
-
-## release package step
-
-1. change the package.json version, and create PR to master.
-2. approved release on CI control
-3. create a new tag on Github
