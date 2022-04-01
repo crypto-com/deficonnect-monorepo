@@ -82,7 +82,7 @@ export const InstallExtensionQRCodeModal: IQRCodeModal = {
       }
       overlay.onclick = closeModalClick
     } catch (error) {
-      console.log(error)
+      // ignore
     }
   },
   close: function () {

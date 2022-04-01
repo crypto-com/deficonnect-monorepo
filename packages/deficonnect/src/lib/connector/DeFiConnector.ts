@@ -241,7 +241,6 @@ export class DeFiConnector extends AbstractConnector {
         provider: this.provider,
       }
     } catch (error) {
-      console.error('DeFiConnector activate error:', error)
       throw error
     }
   }

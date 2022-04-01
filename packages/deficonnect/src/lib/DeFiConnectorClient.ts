@@ -1,9 +1,8 @@
 import Connector from '@deficonnect/core'
-import { IWalletConnectOptions, ISessionStorage, IConnector } from '@deficonnect/types'
+import { IWalletConnectOptions, ISessionStorage, IConnector, ITransportLib } from '@deficonnect/types'
 import * as cryptoLib from '@deficonnect/iso-crypto'
 import SocketTransport from '@deficonnect/socket-transport'
 import { parseWalletConnectUri } from '@deficonnect/utils'
-import { ITransportLib } from '@deficonnect/types'
 
 interface DeFiExistsConnectorClientParams {
   connector: IConnector
@@ -32,9 +31,9 @@ export class DeFiConnectorClient {
       bridge = parseWalletConnectUri(connectorOpts.uri).bridge
     }
     let transport: DeFiTransportLib | undefined
-    if (!!exists) {
+    if (exists) {
       transport = exists.transport
-    } else if (!!bridge) {
+    } else if (bridge) {
       transport = new SocketTransport({
         protocol: 'wc',
         version: 3,
@@ -45,9 +44,9 @@ export class DeFiConnectorClient {
       throw new Error('bridge can not be null')
     }
     let connector: IConnector | undefined
-    if (!!exists) {
+    if (exists) {
       connector = exists.connector
-    } else if (!!connectorOpts) {
+    } else if (connectorOpts) {
       connector = new Connector({
         cryptoLib,
         connectorOpts,
