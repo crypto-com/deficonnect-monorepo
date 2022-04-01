@@ -28,8 +28,9 @@ commands:
           key: <<parameters.cache_version>>-js-cache-{{ .Branch }}-{{ checksum "~/app/package.json" }}
           paths:
             - ~/app/node_modules
+            - ~/app/packages/**/node_modules
 
-  npm_install:
+  lerna_bootstrap:
     description: 'Setup Dependencies'
     parameters:
       cache_version:
@@ -39,13 +40,13 @@ commands:
       - restore_js_cache:
           cache_version: <<parameters.cache_version>>
       - run:
-          name: Npm Install
-          command: npm install
+          name: lerna bootstrap
+          command: npm run bootstrap
       - persist_js_cache:
           cache_version: <<parameters.cache_version>>
 
   js_build:
-    description: 'Build @deficonnect/defi-link'
+    description: 'Build all lerna packages'
     steps:
       - run:
           name: Npm Build
@@ -60,7 +61,7 @@ jobs:
     executor: js-executor
     steps:
       - checkout
-      - npm_install
+      - lerna_bootstrap
       - run:
           name: Lint
           command: npm run test
@@ -71,7 +72,7 @@ jobs:
     executor: js-executor
     steps:
       - checkout
-      - npm_install
+      - lerna_bootstrap
       - js_build
   npm-publish-library:
     executor: js-executor
@@ -82,8 +83,8 @@ jobs:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/app/.npmrc
       - run:
-          name: Publish package
-          command: npm run publish:npm
+          name: Publish all lerna packages
+          command: npm run npm-publish:latest
   github-release:
     executor: js-executor
     steps:
