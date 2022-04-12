@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/http-connection",
-  "version": "1.6.14-dev.0",
+  "version": "1.6.14-dev.1",
   "description": "Http Connection for WalletConnect Providers",
   "scripts": {
     "clean": "rm -rf dist",
@@ -61,8 +61,8 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/types": "^1.6.14-dev.0",
-    "@deficonnect/utils": "^1.6.14-dev.0",
+    "@deficonnect/types": "^1.6.14-dev.1",
+    "@deficonnect/utils": "^1.6.14-dev.1",
     "eventemitter3": "4.0.7",
     "xhr2-cookies": "1.1.0"
   },

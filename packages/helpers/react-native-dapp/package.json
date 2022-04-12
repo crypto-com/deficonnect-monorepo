@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/react-native-dapp",
-  "version": "1.6.14-dev.0",
+  "version": "1.6.14-dev.1",
   "description": "WalletConnect for React Native dapps",
   "scripts": {
     "clean": "rm -rf dist",
@@ -38,9 +38,9 @@
     "url": "https://github.com/monacohq/walletconnect-monorepo/issues"
   },
   "dependencies": {
-    "@deficonnect/client": "^1.6.14-dev.0",
-    "@deficonnect/types": "^1.6.14-dev.0",
-    "@deficonnect/utils": "^1.6.14-dev.0",
+    "@deficonnect/client": "^1.6.14-dev.1",
+    "@deficonnect/types": "^1.6.14-dev.1",
+    "@deficonnect/utils": "^1.6.14-dev.1",
     "keyvaluestorage": "0.7.1",
     "react-native-qrcode-svg": "6.0.6",
     "react-native-svg": "9.6.4",
