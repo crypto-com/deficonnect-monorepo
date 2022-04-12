@@ -71,7 +71,7 @@ import { getBridgeUrl } from "./url";
 
 class Connector implements IConnector {
   public readonly protocol = "wc";
-  public readonly version = 4;
+  public readonly version = 3;
 
   // -- connection ----------------------------------------------------- //
 
