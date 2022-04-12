@@ -81,7 +81,7 @@ jobs:
           at: ~/app
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/app/.npmrc
+          command: npm config set //registry.npmjs.org/:_authToken=$npm_TOKEN
       - run:
           name: Publish all lerna packages
           command: npm run npm-publish:latest
