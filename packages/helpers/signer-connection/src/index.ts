@@ -5,6 +5,7 @@ import { IJsonRpcConnection, JsonRpcError, JsonRpcResponse } from "@walletconnec
 import { formatJsonRpcError } from "@walletconnect/jsonrpc-utils";
 import {
   IConnector,
+  IJsonRpcErrorMessage,
   IJsonRpcResponseError,
   IJsonRpcResponseSuccess,
   IQRCodeModalOptions,
@@ -177,7 +178,7 @@ export class SignerConnection extends IJsonRpcConnection {
   private registerConnectorEvents() {
     this.wc = this.register(this.opts);
 
-    this.wc.on("connect", (err: Error | null) => {
+    this.wc.on("connect", (err: IJsonRpcErrorMessage | null) => {
       if (err) {
         this.events.emit("error", err);
         return;
@@ -188,7 +189,7 @@ export class SignerConnection extends IJsonRpcConnection {
       this.onOpen();
     });
 
-    this.wc.on("disconnect", (err: Error | null) => {
+    this.wc.on("disconnect", (err: IJsonRpcErrorMessage | null) => {
       if (err) {
         this.events.emit("error", err);
         return;

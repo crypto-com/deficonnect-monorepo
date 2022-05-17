@@ -64,8 +64,7 @@ class EventManager {
 
     eventEmitters.forEach((eventEmitter: IEventEmitter) => {
       if (isJsonRpcResponseError(payload)) {
-        const error = new Error(payload.error.message);
-        eventEmitter.callback(error, null);
+        eventEmitter.callback(payload.error, null);
       } else {
         eventEmitter.callback(null, payload);
       }

@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/client",
-  "version": "1.6.14-dev.1",
+  "version": "1.6.14-dev.2",
   "description": "Client for WalletConnect",
   "scripts": {
     "clean": "rm -rf dist",
@@ -60,10 +60,10 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/core": "^1.6.14-dev.1",
-    "@deficonnect/iso-crypto": "^1.6.14-dev.1",
-    "@deficonnect/types": "^1.6.14-dev.1",
-    "@deficonnect/utils": "^1.6.14-dev.1"
+    "@deficonnect/core": "^1.6.14-dev.2",
+    "@deficonnect/iso-crypto": "^1.6.14-dev.2",
+    "@deficonnect/types": "^1.6.14-dev.2",
+    "@deficonnect/utils": "^1.6.14-dev.2"
   },
   "gitHead": "165f7993c2acc907c653c02847fb02721052c6e7"
 }
