@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/qrcode-modal",
-  "version": "1.6.14",
+  "version": "1.6.14-dev.1",
   "description": "QR Code Modal for WalletConnect",
   "scripts": {
     "clean": "rm -rf dist",
@@ -68,8 +68,8 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/browser-utils": "^1.6.14",
-    "@deficonnect/types": "^1.6.14",
+    "@deficonnect/browser-utils": "^1.6.14-dev.1",
+    "@deficonnect/types": "^1.6.14-dev.1",
     "@walletconnect/mobile-registry": "^1.4.0",
     "copy-to-clipboard": "^3.3.1",
     "preact": "10.4.1",
