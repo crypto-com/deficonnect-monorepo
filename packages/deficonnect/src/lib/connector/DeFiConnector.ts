@@ -1,4 +1,4 @@
-import { IWalletConnectOptions } from '@deficonnect/types'
+import { IJsonRpcErrorMessage, IWalletConnectOptions } from '@deficonnect/types'
 import Web3Provider from '@deficonnect/web3-provider'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { addUrlParams } from '../tools/url-tools'
@@ -143,9 +143,9 @@ export class DeFiConnector extends AbstractConnector {
     connectorClient.connector.on('disconnect', () => {
       this.emitDeactivate()
     })
-    connectorClient.connector.on('session_update', async (error: Error | null, payload: any | null) => {
+    connectorClient.connector.on('session_update', async (error: IJsonRpcErrorMessage | null, payload: any | null) => {
       if (error) {
-        this.emitError(error)
+        this.emitError(new Error(error.message))
         return
       }
       if (!payload?.params[0]) {
