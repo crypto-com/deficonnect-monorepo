@@ -26,6 +26,7 @@ import {
   IQRCodeModalOptions,
   IWalletConnectSessionWallet,
   IJsonRpcRequestSessionInfo,
+  IJsonRpcErrorMessage,
 } from "@deficonnect/types";
 import {
   parsePersonalSign,
@@ -397,7 +398,7 @@ class Connector implements IConnector {
 
   // -- public ---------------------------------------------------------- //
 
-  public on(event: string, callback: (error: Error | null, payload: any | null) => void): void {
+  public on(event: string, callback: (error: IJsonRpcErrorMessage | null, payload: any | null) => void): void {
     const eventEmitter = {
       event,
       callback,
@@ -789,7 +790,7 @@ class Connector implements IConnector {
     });
 
     return new Promise((resolve, reject) => {
-      this._subscribeToResponse(request.id, (error: Error | null, payload: any | null) => {
+      this._subscribeToResponse(request.id, (error: IJsonRpcErrorMessage | null, payload: any | null) => {
         if (error) {
           reject(error);
           return;
@@ -1104,7 +1105,7 @@ class Connector implements IConnector {
 
   private _subscribeToResponse(
     id: number,
-    callback: (error: Error | null, payload: any | null) => void,
+    callback: (error: IJsonRpcErrorMessage | null, payload: any | null) => void,
   ) {
     this.on(`response:${id}`, callback);
   }
@@ -1135,7 +1136,7 @@ class Connector implements IConnector {
         if (payload.result) {
           resolve(payload.result);
         } else if (payload.error && payload.error.message) {
-          reject(new Error(payload.error.message));
+          reject(payload.error);
         } else {
           reject(new Error(ERROR_INVALID_RESPONSE));
         }
@@ -1356,7 +1357,7 @@ class Connector implements IConnector {
       language: pushServerOpts.language || "",
     };
 
-    this.on("connect", async (error: Error | null, payload: any) => {
+    this.on("connect", async (error: IJsonRpcErrorMessage | null, payload: any) => {
       if (error) {
         throw error;
       }

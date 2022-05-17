@@ -17,7 +17,7 @@ declare module "@deficonnect/types" {
     readonly pending: boolean;
     session: IWalletConnectSession;
 
-    on(event: string, callback: (error: Error | null, payload: any | null) => void): void;
+    on(event: string, callback: (error: IJsonRpcErrorMessage | null, payload: any | null) => void): void;
     connect(opts?: ICreateSessionOptions): Promise<ISessionStatus>;
     createSession(opts?: ICreateSessionOptions): Promise<void>;
     approveSession(sessionStatus: ISessionStatus): void;
@@ -206,7 +206,7 @@ declare module "@deficonnect/types" {
 
   export interface IEventEmitter {
     event: string;
-    callback: (error: Error | null, request: any | null) => void;
+    callback: (error: IJsonRpcErrorMessage | null, request: any | null) => void;
   }
 
   export interface IRequiredParamsResult {
