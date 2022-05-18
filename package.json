@@ -1,10 +1,12 @@
 {
   "name": "deficonnect",
-  "description": "Monorepo for WalletConnect",
+  "description": "Monorepo for DeFiConnect",
   "private": true,
   "keywords": [
     "wallet",
-    "walletconnect",
+    "DeFiConnect",
+    "DeFi Labs",
+    "chrome extension",
     "ethereum",
     "jsonrpc",
     "mobile",
@@ -14,8 +16,8 @@
     "cryptocurrency",
     "dapp"
   ],
-  "author": "WalletConnect <walletconnect.org>",
-  "homepage": "https://github.com/monacohq/walletconnect-monorepo/",
+  "author": "DeFi Labs <defilabs@crypto.com>",
+  "homepage": "https://github.com/crypto-com/deficonnect-monorepo/",
   "license": "LGPL-3.0",
   "scripts": {
     "ls": "lerna ls",
@@ -33,24 +35,18 @@
     "npm-publish:latest": "lerna exec -- npm publish --access public",
     "npm-publish:local": "lerna exec -- npm publish --access public --registry http://localhost:4873/",
     "npm-publish:next": "lerna exec -- npm publish --access public --tag next",
-    "health-check": "node ./scripts/health-check/index.js",
-    "move-dist": "node ./scripts/move-dist.js",
-    "commit-version": "node ./scripts/commit-version.js",
-    "check:skip-test": "run-s clean lint build move-dist",
-    "check": "run-s clean lint build test move-dist",
+    "check:skip-test": "run-s clean lint build",
+    "check": "run-s clean lint build test",
     "reset": "run-s clean:all bootstrap check",
     "start": "cd example && npm run start",
     "example": "run-s check:skip-test start",
-    "pre-publish": "run-s new-version reset commit-version",
+    "pre-publish": "run-s new-version reset",
     "publish:latest": "run-s pre-publish npm-publish:latest",
     "publish:next": "run-s pre-publish npm-publish:next"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/monacohq/walletconnect-monorepo.git"
-  },
-  "bugs": {
-    "url": "https://github.com/monacohq/walletconnect-monorepo/issues"
+    "url": "git+https://github.com/crypto-com/deficonnect-monorepo.git"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "2.20.0",
