@@ -5,6 +5,9 @@ import {
   IJsonRpcMessage,
   IJsonRpcResponse,
   WSMessage,
+  EthNetworkConfig,
+  NetworkConfig,
+  CosmosNetworkConfig,
 } from '@deficonnect/types'
 import { signingMethods } from './constants'
 
@@ -16,6 +19,16 @@ export function isWSMessage(object: any): object is WSMessage {
     typeof object.payload !== 'undefined'
   )
 }
+
+export function isEthNetworkConfig(object: NetworkConfig): object is EthNetworkConfig {
+  return object.chainType === 'eth'
+}
+
+export function isCosmosNetworkConfig(object: NetworkConfig): object is CosmosNetworkConfig {
+  return object.chainType === 'cosmos'
+}
+
+
 
 export function isJsonRpcRequest(object: any): object is IJsonRpcRequest {
   return object

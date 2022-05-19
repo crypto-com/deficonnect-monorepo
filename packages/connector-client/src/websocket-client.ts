@@ -1,12 +1,9 @@
 import { addUrlParams, safeJsonParse } from '@deficonnect/utils'
 import { WSMessage } from '@deficonnect/types'
 import Emitter from 'events'
+import { DEFI_CONNECT_URL, DEFI_CONNECT_PROTOCOL, DEFI_CONNECT_VERSION } from '.'
 
 const WS = globalThis.WebSocket
-
-export const DEFI_CONNECT_URL = 'wss://wallet-connect.crypto.com/api/v2/ncwconnect/relay/ws'
-export const DEFI_CONNECT_PROTOCOL = 'dc'
-export const DEFI_CONNECT_VERSION = 3
 
 export class WebSocketClient extends Emitter {
   private url: string

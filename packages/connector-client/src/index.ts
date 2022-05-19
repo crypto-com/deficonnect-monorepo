@@ -13,7 +13,11 @@ import {
   payloadId,
 } from '@deficonnect/utils'
 import Emitter from 'events'
-import { DEFI_CONNECT_URL, WebSocketClient } from './websocket-client'
+import { WebSocketClient } from './websocket-client'
+
+export const DEFI_CONNECT_URL = 'wss://wallet-connect.crypto.com/api/v2/ncwconnect/relay/ws'
+export const DEFI_CONNECT_PROTOCOL = 'dc'
+export const DEFI_CONNECT_VERSION = 3
 
 export class ConnectorClient extends Emitter {
   socketTransport?: WebSocketClient
@@ -121,6 +125,23 @@ export class ConnectorClient extends Emitter {
     }
     return this.sessionRequest(session)
   }
+  async disconnect() {
+    await this.sendIgnoreResponse({
+      id: payloadId(),
+      jsonrpc: '2.0',
+      method: 'dc_sessionUpdate',
+      params: [{
+        approved: false,
+        chainId: null,
+        chainType: null,
+        accounts: null,
+        selectedWalletId: null,
+        rpcUrl: '',
+        wallets: [],
+      }],
+    })
+    this.deleteSession()
+  }
   async sessionRequest(session: IDeFiConnectSession) {
     this.setSession(session)
     this.emit('sessionRequest', session)
@@ -182,6 +203,21 @@ export class ConnectorClient extends Emitter {
   }
 
   async send(msg: IJsonRpcRequest): Promise<any> {
+    await this.sendIgnoreResponse(msg)
+    return new Promise((resolve, reject) => {
+      this.once(`response-${msg.id}`, (resp) => {
+        if (isJsonRpcResponseSuccess(resp)) {
+          resolve(resp.result)
+        } else if (isJsonRpcResponseError(resp)) {
+          reject(resp.error)
+        } else {
+          reject(new Error('can not parse the response'))
+        }
+      })
+    })
+  }
+
+  async sendIgnoreResponse(msg: IJsonRpcRequest): Promise<any> {
     await this.start()
     const session = this.getSession()
 
@@ -213,15 +249,6 @@ export class ConnectorClient extends Emitter {
       rpc_method: rpcMethod,
       silent,
       topic: session.peerId,
-    })
-    return new Promise((resolve, reject) => {
-      this.once(`response-${msg.id}`, (resp) => {
-        if(isJsonRpcResponseSuccess(resp)) {
-          resolve(resp)
-        } else {
-          reject(resp)
-        }
-      })
     })
   }
 

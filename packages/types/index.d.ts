@@ -101,7 +101,13 @@ declare module "@deficonnect/types" {
   export interface EthNetworkConfig {
     chainType: 'eth'
     chainId: string
+    rpcUrls: RpcUrlConfig
     customNode?: EthCustomNodeConfig
+  }
+
+
+  export interface RpcUrlConfig {
+    [rpcUrl: string]: string
   }
 
   export interface EthCustomNodeConfig {
@@ -115,6 +121,7 @@ declare module "@deficonnect/types" {
   export interface CosmosNetworkConfig {
     chainType: 'cosmos'
     chainId: string
+    rpcUrls: RpcUrlConfig
     customNode?: CosmosCustomNodeConfig
   }
 
