@@ -18,7 +18,7 @@
   ],
   "author": "DeFi Labs <defilabs@crypto.com>",
   "homepage": "https://github.com/crypto-com/deficonnect-monorepo/",
-  "license": "LGPL-3.0",
+  "license": "Apache-2.0",
   "scripts": {
     "ls": "lerna ls",
     "bootstrap": "npm install && run-s bootstrap:monorepo bootstrap:example",

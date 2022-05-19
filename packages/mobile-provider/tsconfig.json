@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react",
+    "jsxFactory": "CustomCreateElement",
+  },
+  "include": ["./src/**/*"]
+}
