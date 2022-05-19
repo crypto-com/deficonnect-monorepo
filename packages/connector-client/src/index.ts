@@ -15,7 +15,7 @@ import {
 import Emitter from 'events'
 import { DEFI_CONNECT_URL, WebSocketClient } from './websocket-client'
 
-export class ConnectClient extends Emitter {
+export class ConnectorClient extends Emitter {
   socketTransport?: WebSocketClient
   constructor() {
     super()

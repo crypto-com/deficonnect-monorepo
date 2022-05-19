@@ -1,7 +1,7 @@
 {
-  "name": "@deficonnect/connect-client",
+  "name": "@deficonnect/connector-client",
   "version": "2.0.0-dev.0",
-  "description": "connect-client for Crypto.com DeFi Wallet Extension",
+  "description": "connector-client for connect to wallet via websocket",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
   "repository": "https://github.com/crypto-com/defi-connector",
