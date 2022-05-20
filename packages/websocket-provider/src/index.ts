@@ -1,6 +1,7 @@
 import { ConnectorClient, DEFI_CONNECT_PROTOCOL, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
 import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider } from '@deficonnect/types'
-import { payloadId, signingMethods } from '@deficonnect/utils'
+import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMethods } from '@deficonnect/utils'
+import { resolve } from 'dns'
 import Emitter from 'events'
 
 interface RequestArguments {
@@ -31,7 +32,7 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       this.emit('accountsChanged', this.accounts)
     })
     this.connectorClient.on('sessionRequest', (session: IDeFiConnectSession) => {
-      const uri = `${DEFI_CONNECT_PROTOCOL}:${session.handshakeTopic}@${DEFI_CONNECT_VERSION}?bridge=${DEFI_CONNECT_URL}&key=${session.key}`
+      const uri = `CWE:${session.handshakeTopic}@${DEFI_CONNECT_VERSION}?bridge=${DEFI_CONNECT_URL}&key=${session.key}&role=extension`
       console.warn('TODO: on display qrcode', uri)
       alert(uri)
     })
@@ -109,7 +110,7 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
   }
   async handleOtherRequests(args: RequestArguments): Promise<unknown> {
     const chainType = this.connectorClient.getSession()?.chainType
-    const chainId = this.chainId
+    const chainId = this.networkVersion
     const rpcUrl = this.networkConfig.rpcUrls[chainId]
     if(chainType == 'eth' && rpcUrl) {
       const body = JSON.stringify({
@@ -127,6 +128,14 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
         body,
       }).then((res) => {
         return res.json()
+      }).then((resp) => {
+        if (isJsonRpcResponseSuccess(resp)) {
+          return resp.result
+        } else if (isJsonRpcResponseError(resp)) {
+          throw resp.error
+        } else {
+          throw new Error('can not parse the response')
+        }
       })
       return result
     }

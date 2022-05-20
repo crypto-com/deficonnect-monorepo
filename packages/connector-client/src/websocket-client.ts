@@ -15,12 +15,12 @@ export class WebSocketClient extends Emitter {
   constructor(deviceUUID: string) {
     super()
     this.url = addUrlParams(DEFI_CONNECT_URL, {
-      role: 'extension',
+      role: 'dapp',
       device_uuid: deviceUUID,
       protocol: DEFI_CONNECT_PROTOCOL,
       version: DEFI_CONNECT_VERSION,
       env: 'browser',
-      host: window?.location.host || '',
+      dapp_name: 'test dapp',
     })
     this.socket = null
     this.nextSocket = null
@@ -161,10 +161,7 @@ export class WebSocketClient extends Emitter {
     if (!socketMessage) {
       return
     }
-
-    if (this.socket && this.socket.readyState === 1) {
-      this.emit('message', socketMessage)
-    }
+    this.emit('message', socketMessage)
   }
 
   private socketError(e: Event) {

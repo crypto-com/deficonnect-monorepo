@@ -54,7 +54,7 @@ export class DeFiConnectProvider extends Emitter implements IDeFiConnectProvider
       })
     }
     if(!this.deficonnectProvider) {
-      await checkIsReady(20)
+      await checkIsReady(10)
       if(isDeFiConnectProvider(window.deficonnectProvider)) {
         this.deficonnectProvider = window.deficonnectProvider
         this.setupProviderEvent()

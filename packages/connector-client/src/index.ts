@@ -23,8 +23,6 @@ export class ConnectorClient extends Emitter {
   socketTransport?: WebSocketClient
   constructor() {
     super()
-    const id: string = localStorage.getItem('deficonnect-device-id') ?? uuid()
-    this.socketTransport = new WebSocketClient(id)
     this.on('dc_sessionUpdate', (req) => {
       const session = this.getSession()
       if(!isJsonRpcRequest(req)) {
@@ -93,6 +91,7 @@ export class ConnectorClient extends Emitter {
   async connectEagerly() {
     const session = this.getSession()
     if(session && session.connected) {
+      this.subscribe(session.clientId)
       return session
     }
     return undefined
@@ -115,7 +114,7 @@ export class ConnectorClient extends Emitter {
       key,
       clientId,
       clientMeta: null,
-      peerId: '',
+      peerId: handshakeTopic,
       peerMeta: null,
       handshakeId,
       handshakeTopic,
@@ -145,6 +144,7 @@ export class ConnectorClient extends Emitter {
     this.setSession(session)
     this.emit('sessionRequest', session)
     try {
+      await this.subscribe(session.clientId)
       const result = await this.send({
         id: session.handshakeId,
         jsonrpc: '2.0',
@@ -159,8 +159,9 @@ export class ConnectorClient extends Emitter {
           },
         ],
       })
-      if(session) {
+      if(result) {
         session.connected = true
+        session.accounts = result.accounts
         session.chainId = result.chainId
         session.chainType = result.chainType
         session.peerId = result.peerId
@@ -191,14 +192,14 @@ export class ConnectorClient extends Emitter {
       return
     }
     this.socketTransport = new WebSocketClient(this.getDeviceId())
-    this.socketTransport.on('message', (socketMessage: ISocketMessage) =>
-      this.handleJSONRequestEvent(socketMessage as any),
-    )
     this.socketTransport.open()
     const session = this.getSession()
     if (session) {
       this.socketTransport.subscribe(session.clientId)
     }
+    this.socketTransport.on('message', (socketMessage: ISocketMessage) => {
+      this.handleJSONRequestEvent(socketMessage as any)
+    })
   }
 
   async send(msg: IJsonRpcRequest): Promise<any> {
@@ -221,7 +222,6 @@ export class ConnectorClient extends Emitter {
     const session = this.getSession()
 
     if (!session) {
-      console.warn('can not find session', msg)
       throw new Error(`send request failed: ${msg.method}`)
     }
 
@@ -251,9 +251,9 @@ export class ConnectorClient extends Emitter {
     })
   }
 
-  async sendRaw(msg: any) {
+  async subscribe(topic: string) {
     await this.start()
-    this.socketTransport?.send(msg)
+    this.socketTransport?.subscribe(topic)
   }
 
   private async handleJSONRequestEvent(wsMessage: any) {
@@ -264,7 +264,6 @@ export class ConnectorClient extends Emitter {
     if (!payload) {
       return
     }
-
     if (isJsonRpcRequest(payload)) {
       this.emit(payload.method, payload)
     } else if (
