@@ -10,7 +10,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].umd.js',
     libraryTarget: 'umd',
-    library: 'DeFiConnect',
+    library: 'DeFiConnectCosmosSigner',
     umdNamedDefine: true,
     globalObject: 'this',
   },

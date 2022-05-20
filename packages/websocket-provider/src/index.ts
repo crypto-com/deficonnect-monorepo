@@ -1,5 +1,5 @@
 import { ConnectorClient, DEFI_CONNECT_PROTOCOL, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
-import { IDeFiConnectSession, NetworkConfig } from '@deficonnect/types'
+import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider } from '@deficonnect/types'
 import { payloadId, signingMethods } from '@deficonnect/utils'
 import Emitter from 'events'
 
@@ -8,10 +8,10 @@ interface RequestArguments {
   readonly params?: readonly unknown[] | object
 }
 
-export class WebSocketProvider extends Emitter {
+export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
   connectorClient: ConnectorClient
   networkConfig: NetworkConfig
-  isDeFiConnector = true
+  isDeficonnectProvider = true
 
   constructor(network: NetworkConfig) {
     super()

@@ -8,6 +8,7 @@ import {
   EthNetworkConfig,
   NetworkConfig,
   CosmosNetworkConfig,
+  IDeFiConnectProvider,
 } from '@deficonnect/types'
 import { signingMethods } from './constants'
 
@@ -68,4 +69,13 @@ export function isSilentPayload(request: IJsonRpcRequest): boolean {
     return false
   }
   return true
+}
+
+export function isDeFiConnectProvider(object: any): object is IDeFiConnectProvider {
+  return object
+    && typeof object.chainId !== 'undefined'
+    && typeof object.networkVersion !== 'undefined'
+    && typeof object.accounts !== 'undefined'
+    && typeof object.connect !== 'undefined'
+    && typeof object.request !== 'undefined'
 }

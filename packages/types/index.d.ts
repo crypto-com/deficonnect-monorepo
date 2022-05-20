@@ -137,4 +137,35 @@ declare module "@deficonnect/types" {
   }
   
   export type NetworkConfig = EthNetworkConfig | CosmosNetworkConfig
+
+  interface JsonRpcRequestArguments {
+    readonly method: string
+    readonly params?: readonly unknown[] | object
+  }
+
+
+  /**
+   * EIP-1193 compatible
+   */
+  interface IDeFiConnectProvider {
+    /**
+     * hexString format. e.g: '0x1' 
+     */
+    get chainId(): string
+    /**
+     * decimal format. e.g: '1' 
+     */
+    get networkVersion(): string
+    get accounts(): string[]
+  
+    connectEagerly(network: NetworkConfig): Promise<string[]>
+    connect(network: NetworkConfig): Promise<string[]>
+    enable(): Promise<string[]>
+    close(): Promise<void>
+
+    request(args: JsonRpcRequestArguments): Promise<unknown>
+
+    on(event: string, listener: (...args: any[]) => void): this
+    once(event: string, listener: (...args: any[]) => void): this
+  }
 }
