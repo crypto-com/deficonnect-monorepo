@@ -33,6 +33,7 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     this.connectorClient.on('sessionRequest', (session: IDeFiConnectSession) => {
       const uri = `${DEFI_CONNECT_PROTOCOL}:${session.handshakeTopic}@${DEFI_CONNECT_VERSION}?bridge=${DEFI_CONNECT_URL}&key=${session.key}`
       console.warn('TODO: on display qrcode', uri)
+      alert(uri)
     })
   }
   get chainId() {
@@ -46,15 +47,17 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     return accounts.map((item) => item.toLocaleLowerCase())
   }
 
-  async connectEagerly(): Promise<string[]> {
+  async connectEagerly(network: NetworkConfig): Promise<string[]> {
+    this.networkConfig = network
     if (this.accounts.length > 0) {
       return this.accounts
     }
-    await this.connectorClient.connectEagerly(this.networkConfig)
+    await this.connectorClient.connectEagerly()
     return this.accounts
   }
 
-  async connect(): Promise<string[]> {
+  async connect(network: NetworkConfig): Promise<string[]> {
+    this.networkConfig = network
     if (this.accounts.length > 0) {
       return this.accounts
     }
@@ -62,8 +65,8 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     return this.accounts
   }
 
-  async enable(): Promise<string[]> {
-    await this.connect()
+  async enable(network: NetworkConfig): Promise<string[]> {
+    await this.connect(network)
     return this.accounts
   }
   async close(): Promise<void> {
@@ -87,16 +90,16 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     const method = args.method
     switch (method) {
       case 'eth_requestAccounts':
-        await this.connect()
+        await this.connect(this.networkConfig)
         return this.accounts
       case 'eth_chainId':
-        await this.connectEagerly()
+        await this.connectEagerly(this.networkConfig)
         return this.chainId
       case 'eth_accounts':
-        await this.connectEagerly()
+        await this.connectEagerly(this.networkConfig)
         return this.accounts
       case 'net_version':
-        await this.connectEagerly()
+        await this.connectEagerly(this.networkConfig)
         return this.connectorClient.getSession()?.chainId
     }
     if (signingMethods.includes(args.method)) {

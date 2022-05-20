@@ -90,13 +90,12 @@ export class ConnectorClient extends Emitter {
     this.socketTransport?.close()
     this.socketTransport = undefined
   }
-  async connectEagerly(network: NetworkConfig) {
+  async connectEagerly() {
     const session = this.getSession()
     if(session && session.connected) {
-      return this.sessionRequest(session)
-    } else {
-      return this.connect(network)
+      return session
     }
+    return undefined
   }
   async connect(network: NetworkConfig) {
     const { chainId, chainType } = network

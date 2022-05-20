@@ -12,7 +12,7 @@ declare global {
 }
 
 
-export class Provider extends Emitter implements IDeFiConnectProvider {
+export class DeFiConnectProvider extends Emitter implements IDeFiConnectProvider {
   networkConfig: NetworkConfig
   isDeficonnectProvider = true
   deficonnectProvider?: IDeFiConnectProvider
@@ -80,19 +80,28 @@ export class Provider extends Emitter implements IDeFiConnectProvider {
     return this.deficonnectProvider?.accounts ?? []
   }
 
-  async connectEagerly(network: NetworkConfig): Promise<string[]> {
+  async connectEagerly(network?: NetworkConfig): Promise<string[]> {
+    if(network) {
+      this.networkConfig = network
+    }
     const provider = await this.getProvider()
-    return provider.connectEagerly(network)
+    return provider.connectEagerly(this.networkConfig)
   }
 
-  async connect(network: NetworkConfig): Promise<string[]> {
+  async connect(network?: NetworkConfig): Promise<string[]> {
+    if(network) {
+      this.networkConfig = network
+    }
     const provider = await this.getProvider()
-    return provider.connect(network)
+    return provider.connect(this.networkConfig)
   }
 
-  async enable(): Promise<string[]> {
+  async enable(network?: NetworkConfig): Promise<string[]> {
+    if(network) {
+      this.networkConfig = network
+    }
     const provider = await this.getProvider()
-    return provider.enable()
+    return provider.enable(this.networkConfig)
   }
   async close(): Promise<void> {
     const provider = await this.getProvider()

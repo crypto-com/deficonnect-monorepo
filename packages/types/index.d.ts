@@ -158,14 +158,14 @@ declare module "@deficonnect/types" {
     get networkVersion(): string
     get accounts(): string[]
   
-    connectEagerly(network: NetworkConfig): Promise<string[]>
-    connect(network: NetworkConfig): Promise<string[]>
-    enable(): Promise<string[]>
+    connectEagerly(network?: NetworkConfig): Promise<string[]>
+    connect(network?: NetworkConfig): Promise<string[]>
+    enable(network?: NetworkConfig): Promise<string[]>
     close(): Promise<void>
 
     request(args: JsonRpcRequestArguments): Promise<unknown>
 
     on(event: string, listener: (...args: any[]) => void): this
-    once(event: string, listener: (...args: any[]) => void): this
+    removeListener(event: string, listener: (...args: any[]) => void): this
   }
 }
