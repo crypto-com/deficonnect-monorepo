@@ -139,6 +139,7 @@ export class ConnectorClient extends Emitter {
       }],
     })
     this.deleteSession()
+    this.emit('disconnect')
   }
   async sessionRequest(session: IDeFiConnectSession) {
     this.setSession(session)

@@ -2,7 +2,6 @@
 import {  NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
 import { isDeFiConnectProvider } from '@deficonnect/utils'
 import { WebSocketProvider } from '@deficonnect/websocket-provider'
-import Emitter from 'events'
 
 declare global {
   interface Window {
@@ -11,27 +10,44 @@ declare global {
   }
 }
 
-
-export class DeFiConnectProvider extends Emitter implements IDeFiConnectProvider {
+interface EventCallback {
+  event: string
+  listener: (...args: any[]) => void
+}
+export class DeFiConnectProvider implements IDeFiConnectProvider {
   networkConfig: NetworkConfig
   isDeficonnectProvider = true
   deficonnectProvider?: IDeFiConnectProvider
+  private eventCallbacks: EventCallback[] =[]
 
   constructor(network: NetworkConfig) {
-    super()
+    // super()
     this.networkConfig = network
+  }
+  on(event: string, listener: (...args: any[]) => void): this {
+    this.eventCallbacks.push({ event, listener })
+    this.deficonnectProvider?.on(event, listener)
+    return this
+  }
+  removeListener(event: string, listener: (...args: any[]) => void): this {
+    this.eventCallbacks = this.eventCallbacks.filter(e => e.event === event && e.listener === listener)
+    this.deficonnectProvider?.removeListener(event, listener)
+    return this
   }
 
   setupProviderEvent() {
-    this.deficonnectProvider?.on('chainChanged', (args) => {
-      this.emit('chainChanged', args)
+    this.eventCallbacks.forEach(e => {
+      this.deficonnectProvider?.on(e.event, e.listener)
     })
-    this.deficonnectProvider?.on('accountsChanged', (args) => {
-      this.emit('accountsChanged', args)
-    })
-    this.deficonnectProvider?.on('disconnect', (args) => {
-      this.emit('disconnect', args)
-    })
+    // this.deficonnectProvider?.on('chainChanged', (args) => {
+    //   this.emit('chainChanged', args)
+    // })
+    // this.deficonnectProvider?.on('accountsChanged', (args) => {
+    //   this.emit('accountsChanged', args)
+    // })
+    // this.deficonnectProvider?.on('disconnect', (args) => {
+    //   this.emit('disconnect', args)
+    // })
   }
   async getProvider(): Promise<IDeFiConnectProvider> {
     async function checkIsReady(times = 0) {

@@ -71,7 +71,11 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     return this.accounts
   }
   async close(): Promise<void> {
-    return this.connectorClient.disconnect()
+    if(this.connected) {
+      return this.connectorClient.disconnect()
+    } else {
+      this.connectorClient.deleteSession()
+    }
   }
 
   get connected(): boolean {
