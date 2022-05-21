@@ -1,7 +1,6 @@
-import { ConnectorClient, DEFI_CONNECT_PROTOCOL, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
+import { ConnectorClient, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
 import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider } from '@deficonnect/types'
 import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMethods } from '@deficonnect/utils'
-import { resolve } from 'dns'
 import Emitter from 'events'
 
 interface RequestArguments {
