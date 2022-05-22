@@ -1,5 +1,5 @@
 import { ConnectorClient, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
-import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider } from '@deficonnect/types'
+import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider, IDeFiConnectSessionWalletAddresses } from '@deficonnect/types'
 import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMethods } from '@deficonnect/utils'
 import Emitter from 'events'
 
@@ -45,6 +45,9 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
   get accounts() {
     const accounts = this.connectorClient.getSession()?.accounts ?? []
     return accounts.map((item) => item.toLocaleLowerCase())
+  }
+  get chainType() {
+    return this.connectorClient.getSession()?.chainType ?? 'eth'
   }
 
   async connectEagerly(network: NetworkConfig): Promise<string[]> {
@@ -102,6 +105,9 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       case 'eth_accounts':
         await this.connectEagerly(this.networkConfig)
         return this.accounts
+      case 'cosmos_getAccounts':
+        await this.connectEagerly(this.networkConfig)
+        return this.cosmos_getAccounts(args.params?.[0] ?? {})
       case 'net_version':
         await this.connectEagerly(this.networkConfig)
         return this.connectorClient.getSession()?.chainId
@@ -143,5 +149,23 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       return result
     }
     throw new Error(`can not resolve request: ${args}`)
+  }
+  async cosmos_getAccounts(args: {chainId: string}): Promise<IDeFiConnectSessionWalletAddresses> {
+    const session = this.connectorClient.getSession()
+    const wallet = session?.wallets.find(w => w.id === session?.selectedWalletId)
+    if(!wallet) {
+      throw new Error('can not find address for special chainId')
+    }
+    const addressTypeChainIdMap = {
+      'cosmoshub-4': 'cosmos',
+      'crypto-org-chain-mainnet-1': 'cro',
+      'testnet-croeseid-4': 'tcro',
+    }
+    const addressType = addressTypeChainIdMap[args.chainId]
+    const accountInfo = wallet.addresses[addressType]
+    if(!accountInfo) {
+      throw new Error('can not find address for special chainId')
+    }
+    return accountInfo
   }
 }

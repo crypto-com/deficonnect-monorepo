@@ -95,6 +95,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   get accounts() {
     return this.deficonnectProvider?.accounts ?? []
   }
+  get chainType(): string {
+    return this.deficonnectProvider?.chainType ?? 'eth'
+  }
 
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
     if(network) {

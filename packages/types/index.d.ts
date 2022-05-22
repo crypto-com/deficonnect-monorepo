@@ -157,6 +157,10 @@ declare module "@deficonnect/types" {
      */
     get networkVersion(): string
     get accounts(): string[]
+    /**
+     * current suppory 'eth' and 'csomos'
+     */
+    get chainType(): string
   
     connectEagerly(network?: NetworkConfig): Promise<string[]>
     connect(network?: NetworkConfig): Promise<string[]>
