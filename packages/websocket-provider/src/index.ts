@@ -37,7 +37,11 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     })
   }
   get chainId() {
-    return '0x' + Number(this.networkVersion).toString(16)
+    if(this.chainType === 'eth') {
+      return '0x' + Number(this.networkVersion).toString(16)
+    } else {
+      return this.connectorClient.getSession()?.chainId ?? ''
+    }
   }
   get networkVersion() {
     return this.connectorClient.getSession()?.chainId ?? '1'
@@ -99,9 +103,9 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       case 'cosmos_getAccounts':
         await this.connectEagerly(this.networkConfig)
         return this.cosmos_getAccounts()
-      case 'wallet_getAllSupportedAccounts':
+      case 'wallet_getAllAccounts':
         await this.connectEagerly(this.networkConfig)
-        return this.wallet_getAllSupportedAccounts()
+        return this.wallet_getAllAccounts()
       case 'net_version':
         await this.connectEagerly(this.networkConfig)
         return this.connectorClient.getSession()?.chainId
@@ -168,7 +172,7 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     }
     return result[1]
   }
-  private async wallet_getAllSupportedAccounts(): Promise<IDeFiConnectSessionAddresses> {
+  private async wallet_getAllAccounts(): Promise<IDeFiConnectSessionAddresses> {
     const session = this.connectorClient.getSession()
     const wallet = session?.wallets.find(w => w.id === session?.selectedWalletId)
     if(!wallet) {

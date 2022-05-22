@@ -87,7 +87,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     }
   }
   get chainId() {
-    return '0x' + Number(this.networkVersion).toString(16)
+    return this.deficonnectProvider?.chainId ?? '0x1'
   }
   get networkVersion() {
     return this.deficonnectProvider?.networkVersion ?? '1'
