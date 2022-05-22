@@ -1,5 +1,5 @@
 import { ConnectorClient, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
-import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider, IDeFiConnectSessionWalletAddresses } from '@deficonnect/types'
+import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider, IDeFiConnectSessionAddresses, IDeFiConnectSessionAddress } from '@deficonnect/types'
 import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMethods } from '@deficonnect/utils'
 import Emitter from 'events'
 
@@ -84,15 +84,6 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     return this.accounts.length > 0
   }
 
-  async sendRpcRequest(args: RequestArguments): Promise<any> {
-    return this.connectorClient.send({
-      id: payloadId(),
-      jsonrpc: '2.0',
-      method: args.method,
-      params: args.params as any,
-    })
-  }
-
   async request(args: RequestArguments): Promise<unknown> {
     const method = args.method
     switch (method) {
@@ -107,7 +98,10 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
         return this.accounts
       case 'cosmos_getAccounts':
         await this.connectEagerly(this.networkConfig)
-        return this.cosmos_getAccounts(args.params?.[0] ?? {})
+        return this.cosmos_getAccounts()
+      case 'wallet_getAllSupportedAccounts':
+        await this.connectEagerly(this.networkConfig)
+        return this.wallet_getAllSupportedAccounts()
       case 'net_version':
         await this.connectEagerly(this.networkConfig)
         return this.connectorClient.getSession()?.chainId
@@ -117,7 +111,17 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     }
     return this.handleOtherRequests(args)
   }
-  async handleOtherRequests(args: RequestArguments): Promise<unknown> {
+
+  private async sendRpcRequest(args: RequestArguments): Promise<any> {
+    return this.connectorClient.send({
+      id: payloadId(),
+      jsonrpc: '2.0',
+      method: args.method,
+      params: args.params as any,
+    })
+  }
+  
+  private async handleOtherRequests(args: RequestArguments): Promise<unknown> {
     const chainType = this.connectorClient.getSession()?.chainType
     const chainId = this.networkVersion
     const rpcUrl = this.networkConfig.rpcUrls[chainId]
@@ -150,22 +154,27 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     }
     throw new Error(`can not resolve request: ${args}`)
   }
-  async cosmos_getAccounts(args: {chainId: string}): Promise<IDeFiConnectSessionWalletAddresses> {
+  private async cosmos_getAccounts(): Promise<IDeFiConnectSessionAddress> {
     const session = this.connectorClient.getSession()
     const wallet = session?.wallets.find(w => w.id === session?.selectedWalletId)
     if(!wallet) {
       throw new Error('can not find address for special chainId')
     }
-    const addressTypeChainIdMap = {
-      'cosmoshub-4': 'cosmos',
-      'crypto-org-chain-mainnet-1': 'cro',
-      'testnet-croeseid-4': 'tcro',
-    }
-    const addressType = addressTypeChainIdMap[args.chainId]
-    const accountInfo = wallet.addresses[addressType]
-    if(!accountInfo) {
+    const result = Object.entries(wallet.addresses).find(([, value]) => {
+      return this.accounts.includes(value.address)
+    })
+    if(!result) {
       throw new Error('can not find address for special chainId')
     }
-    return accountInfo
+    return result[1]
   }
+  private async wallet_getAllSupportedAccounts(): Promise<IDeFiConnectSessionAddresses> {
+    const session = this.connectorClient.getSession()
+    const wallet = session?.wallets.find(w => w.id === session?.selectedWalletId)
+    if(!wallet) {
+      throw new Error('can not find address for special chainId')
+    }
+    return wallet.addresses
+  }
+  
 }

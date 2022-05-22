@@ -43,6 +43,10 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    
+    "@cosmjs/amino": "^0.28.4",
+    "@cosmjs/encoding": "^0.28.4",
+    "@cosmjs/proto-signing": "^0.28.4",
+    "@cosmjs/stargate": "^0.28.4",
+    "@deficonnect/types": "^2.0.0-dev.0"
   }
 }

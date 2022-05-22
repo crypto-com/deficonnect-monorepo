@@ -18,19 +18,19 @@ declare module "@deficonnect/types" {
     name: string;
   }
 
-  export interface IDeFiConnectSessionWalletAddresses {
+  export interface IDeFiConnectSessionAddress {
     address: string
     algo?: string ////"secp256k1" | "ed25519" | "sr25519"
     pubkey?: string
   }
-  export interface IDeFiConnectSessionWalletAddress {
-    [addressType: string]: IDeFiConnectSessionWalletAddresses
+  export interface IDeFiConnectSessionAddresses {
+    [addressType: string]: IDeFiConnectSessionAddress
   }
   export interface IDeFiConnectSessionWallet {
     id: string;
     name: string;
     icon: string;
-    addresses: IDeFiConnectSessionWalletAddress;
+    addresses: IDeFiConnectSessionAddresses;
   }
 
   export interface IDeFiConnectSession {
@@ -99,6 +99,7 @@ declare module "@deficonnect/types" {
   }
 
   export interface EthNetworkConfig {
+    appName: string
     chainType: 'eth'
     chainId: string
     rpcUrls: RpcUrlConfig
@@ -119,6 +120,7 @@ declare module "@deficonnect/types" {
   }
   
   export interface CosmosNetworkConfig {
+    appName: string
     chainType: 'cosmos'
     chainId: string
     rpcUrls: RpcUrlConfig
