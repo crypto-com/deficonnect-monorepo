@@ -19,10 +19,16 @@ export const DEFI_CONNECT_URL = 'wss://wallet-connect.crypto.com/api/v2/ncwconne
 export const DEFI_CONNECT_PROTOCOL = 'dc'
 export const DEFI_CONNECT_VERSION = 3
 
+interface ConnectorClientArgs { 
+  dappName: string
+}
+
 export class ConnectorClient extends Emitter {
   socketTransport?: WebSocketClient
-  constructor() {
+  args: ConnectorClientArgs
+  constructor(args: ConnectorClientArgs) {
     super()
+    this.args = args
     this.on('dc_sessionUpdate', (req) => {
       const session = this.getSession()
       if(!isJsonRpcRequest(req)) {
@@ -192,7 +198,7 @@ export class ConnectorClient extends Emitter {
     if (this.socketTransport) {
       return
     }
-    this.socketTransport = new WebSocketClient(this.getDeviceId())
+    this.socketTransport = new WebSocketClient(this.getDeviceId(), this.args.dappName)
     this.socketTransport.open()
     const session = this.getSession()
     if (session) {

@@ -16,7 +16,7 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
   constructor(network: NetworkConfig) {
     super()
     this.networkConfig = network
-    this.connectorClient = new ConnectorClient()
+    this.connectorClient = new ConnectorClient({ dappName: network.appName })
     this.connectorClient.on('connect', () => {
       this.emit('chainChanged', this.chainId)
       this.emit('accountsChanged', this.accounts)

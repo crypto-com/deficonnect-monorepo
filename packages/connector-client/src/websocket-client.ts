@@ -12,7 +12,7 @@ export class WebSocketClient extends Emitter {
   private queue: WSMessage[] = []
   private subscriptions: Map<string, string>
 
-  constructor(deviceUUID: string) {
+  constructor(deviceUUID: string, dappName: string) {
     super()
     this.url = addUrlParams(DEFI_CONNECT_URL, {
       role: 'dapp',
@@ -20,7 +20,7 @@ export class WebSocketClient extends Emitter {
       protocol: DEFI_CONNECT_PROTOCOL,
       version: DEFI_CONNECT_VERSION,
       env: 'browser',
-      dapp_name: 'test dapp',
+      dapp_name: dappName,
     })
     this.socket = null
     this.nextSocket = null
