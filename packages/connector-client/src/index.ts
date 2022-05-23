@@ -256,6 +256,8 @@ export class ConnectorClient extends Emitter {
       rpc_method: rpcMethod,
       silent,
       topic: session.peerId,
+      from: 'dapp',
+      name: session.clientMeta?.name,
     })
   }
 
