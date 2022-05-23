@@ -33,8 +33,6 @@
     "strictPropertyInitialization": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es2017",
-    "outDir": "dist",
-    "rootDir": "src",
   },
   "include": []
 }
