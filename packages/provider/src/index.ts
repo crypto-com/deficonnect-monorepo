@@ -39,15 +39,6 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     this.eventCallbacks.forEach(e => {
       this.deficonnectProvider?.on(e.event, e.listener)
     })
-    // this.deficonnectProvider?.on('chainChanged', (args) => {
-    //   this.emit('chainChanged', args)
-    // })
-    // this.deficonnectProvider?.on('accountsChanged', (args) => {
-    //   this.emit('accountsChanged', args)
-    // })
-    // this.deficonnectProvider?.on('disconnect', (args) => {
-    //   this.emit('disconnect', args)
-    // })
   }
   async getProvider(): Promise<IDeFiConnectProvider> {
     async function checkIsReady(times = 0) {

@@ -43,6 +43,8 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    
+    "@deficonnect/types": "^2.0.0-dev.0",
+    "@deficonnect/utils": "^2.0.0-dev.0",
+    "@walletconnect/window-metadata": "^1.0.0"
   }
 }

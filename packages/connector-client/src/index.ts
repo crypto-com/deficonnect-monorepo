@@ -14,6 +14,7 @@ import {
 } from '@deficonnect/utils'
 import Emitter from 'events'
 import { WebSocketClient } from './websocket-client'
+import { getWindowMetadata } from '@walletconnect/window-metadata'
 
 export const DEFI_CONNECT_URL = 'wss://wallet-connect.crypto.com/api/v2/ncwconnect/relay/ws'
 export const DEFI_CONNECT_PROTOCOL = 'dc'
@@ -119,7 +120,7 @@ export class ConnectorClient extends Emitter {
       bridge: DEFI_CONNECT_URL,
       key,
       clientId,
-      clientMeta: null,
+      clientMeta: getWindowMetadata(),
       peerId: handshakeTopic,
       peerMeta: null,
       handshakeId,
