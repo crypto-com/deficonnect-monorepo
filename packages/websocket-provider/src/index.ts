@@ -8,6 +8,20 @@ interface RequestArguments {
   readonly params?: readonly unknown[] | object
 }
 
+class ProviderRpcError extends Error {
+  code: number
+  message: string
+  constructor(code: number, message: string) {
+    super()
+    this.code = code
+    this.message = message
+  }
+
+  toString() {
+    return `${this.message} (${this.code})`
+  }
+}
+
 export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
   connectorClient: ConnectorClient
   networkConfig: NetworkConfig
@@ -109,6 +123,15 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       case 'net_version':
         await this.connectEagerly(this.networkConfig)
         return this.connectorClient.getSession()?.chainId
+      case 'eth_newFilter':
+      case 'eth_newBlockFilter':
+      case 'eth_newPendingTransactionFilter':
+      case 'eth_uninstallFilter':
+      case 'eth_subscribe':
+        throw new ProviderRpcError(
+          4200,
+          `not support calling ${method}. Please use your own solution`,
+        )
     }
     if (signingMethods.includes(args.method)) {
       return this.sendRpcRequest(args)
@@ -151,12 +174,18 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
         } else if (isJsonRpcResponseError(resp)) {
           throw resp.error
         } else {
-          throw new Error('can not parse the response')
+          throw new ProviderRpcError(
+            -32000,
+            `can not parse the response for request ${args.method}.`,
+          )
         }
       })
       return result
     }
-    throw new Error(`can not resolve request: ${args}`)
+    throw new ProviderRpcError(
+      4200,
+      `not support calling ${args.method} for current network: ${chainId}`,
+    )
   }
   private async cosmos_getAccounts(): Promise<IDeFiConnectSessionAddress> {
     const session = this.connectorClient.getSession()
