@@ -5,51 +5,47 @@
 ### use npm package manager
 
 ```bash
-npm install "deficonnect"
+npm install "@deficonnect/provider"
 ```
 
 ### use script tag
 
 ```html
-<script type="module" src="https://unpkg.com/deficonnect/dist/index.umd.js"></script>
+<script type="module" src="https://unpkg.com/@deficonnect/provider/dist/index.umd.js"></script>
 ```
 
-the global variable is: `window.DeFiConnect`
+the global variable is: `DeFiConnectProvider`
+
+### constructor
 
 ```javascript
-const connector = new window.DeFiConnect.DeFiWeb3Connector({
-  supportedChainIds: [1],
-  rpc: { 1: 'https://mainnet.infura.io/v3/INFURA_API_KEY' },
-  pollingInterval: 15000
+const provider = new DeFiConnectProvider({
+  appName: 'your app name'
+  chainType: 'eth'
+  chainId: '28' // for eth is 1
+  rpcUrls: {
+    1: 'https://mainnet.infura.io/v3/INFURA_API_KEY',
+    28: 'https://evm-cronos.crypto.org/',
+  }
 })
 ```
 
-## Usage
+### methods for DeFiConnectProvider
 
-### connect wallet
-
-> if you use `web3-react`, it is easy to integrate:
-> `DeFiWeb3Connector` has implement `AbstractConnector` from `web3-react`
-
-```tsx
-import { DeFiWeb3Connector } from 'deficonnect'
-
-const connector = new DeFiWeb3Connector({
-  supportedChainIds: [1],
-  rpc: { 1: 'https://mainnet.infura.io/v3/INFURA_API_KEY' },
-  pollingInterval: 15000
-})
-connector.activate()
-```
-
-### methods for DeFiWeb3Connector
+this is a eip-1193 compatible provider.
+more detail info: https://eips.ethereum.org/EIPS/eip-1193
 
 ```typescript
-// connect to the Wallet
-await connector.activate()
+interface RequestArguments {
+ method: string;
+ params?: unknown[] | object;
+}
 
-// disconnect the Wallet
-await connector.deactivate()
+// Send JSON RPC requests
+const result = await provider.request(payload: RequestArguments);
+
+// Close provider session
+await provider.disconnect()
 ```
 
 ### events for Provider (EIP-1193)
@@ -74,21 +70,6 @@ provider.on('connect', () => {
 provider.on('disconnect', (code: number, reason: string) => {
   console.log(code, reason)
 })
-```
-
-### methods for Provider
-
-```typescript
-interface RequestArguments {
- method: string;
- params?: unknown[] | object;
-}
-
-// Send JSON RPC requests
-const result = await provider.request(payload: RequestArguments);
-
-// Close provider session
-await provider.disconnect()
 ```
 
 ### methods for Web3
