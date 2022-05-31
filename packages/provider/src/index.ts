@@ -41,13 +41,17 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     })
   }
   async getProvider(): Promise<IDeFiConnectProvider> {
-    async function checkIsReady(times = 0) {
+    async function checkInjectProvider(times = 0): Promise<any> {
       return new Promise((resolve) => {
         function check() {
           if(isDeFiConnectProvider(window.deficonnectProvider)) {
-            resolve(true)
+            resolve(window.deficonnectProvider)
             return
           } 
+          if(navigator?.userAgent?.includes('DeFiWallet') && window.ethereum) {
+            resolve(window.ethereum)
+            return
+          }
           if (times > 0 ) {
             setTimeout(async () => {
               --times
@@ -55,15 +59,15 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
             }, 100)
             return
           }
-          resolve(false)
+          resolve(undefined)
         }
         check()
       })
     }
     if(!this.deficonnectProvider) {
-      await checkIsReady(10)
-      if(isDeFiConnectProvider(window.deficonnectProvider)) {
-        this.deficonnectProvider = window.deficonnectProvider
+      const injectProvider = await checkInjectProvider(10)
+      if(injectProvider) {
+        this.deficonnectProvider = injectProvider
         this.setupProviderEvent()
       }
     }

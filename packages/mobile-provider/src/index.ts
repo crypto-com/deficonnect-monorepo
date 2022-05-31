@@ -1,4 +1,4 @@
-import type { IDeFiConnectProvider, IDeFiConnectSessionAddresses, IJsonRpcMessage, IJsonRpcResponse, NetworkConfig } from '@deficonnect/types'
+import type { IDeFiConnectProvider, IDeFiConnectSessionAddresses, IJsonRpcMessage, NetworkConfig } from '@deficonnect/types'
 import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMethods } from '@deficonnect/utils'
 import Emitter from 'events'
 import { ConnectorClient, ProviderRpcError, RequestArguments } from './connect-client'
