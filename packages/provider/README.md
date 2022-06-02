@@ -48,6 +48,10 @@ const result = await provider.request(payload: RequestArguments);
 await provider.disconnect()
 ```
 
+- [ethereum RPC methods](./ethereum-rpc.md)
+
+- [cosmos RPC methods](./cosmos-rpc.md)
+  
 ### events for Provider (EIP-1193)
 
 ```typescript
