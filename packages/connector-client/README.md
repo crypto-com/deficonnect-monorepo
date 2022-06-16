@@ -1,6 +1,6 @@
-# DeFiConnect
+# @deficonnect/connector-client
 
-deficonnect core package, support webscoket message encrypt/decode and send/receive.
+deficonnect core package, support websocket message encrypt/decode and send/receive.
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# DeFiConnect
+# @deficonnect/provider
 
 ## Installation
 
