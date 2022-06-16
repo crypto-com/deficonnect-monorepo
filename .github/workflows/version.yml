@@ -33,11 +33,13 @@ jobs:
           
       - name: Set up bot
         run: |
-          git config --global user.name "version bot"
-          git config --global user.email ""
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
       
       - name: Bump version
         run: npx standard-version
       
-      - name: Push
-        run: git push origin 2.x
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
