@@ -42,7 +42,7 @@ jobs:
           cache: 'npm'
       
       - name: Publish all lerna packages
-        run: npm run npm-publish:latest
+        run: npm run publish:latest
         
       - name: Get name & version from package.json
         shell: bash
