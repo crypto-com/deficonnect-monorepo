@@ -38,7 +38,7 @@
     "reset": "run-s clean:all bootstrap check",
     "example": "run-s check:skip-test start",
     "pre-publish": "run-s new-version reset",
-    "publish:latest": "run-s pre-publish npm-publish:latest",
+    "publish:latest": "run-s pre-publish",
     "publish:next": "run-s pre-publish npm-publish:next"
   },
   "repository": {
