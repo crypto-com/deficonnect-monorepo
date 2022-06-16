@@ -1,0 +1,63 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Release
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "2.x" branch
+  push:
+    branches: [ "2.x" ]
+    tags-ignore:
+      - "v*"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch: 
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  release:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+      - uses: actions/checkout@v3
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Publish all lerna packages
+        run: npm run npm-publish:latest
+        
+      - name: Get name & version from package.json
+        shell: bash
+        run: | 
+          echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
+          echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
+        id: package_json
+      
+      - name: Archive Release
+      - uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: 'deficonnect.zip'
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+      
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          tag_name: v${{ steps.package_json.outputs.version }}
+          body_path: ${{ github.workspace }}-CHANGELOG.md
+          files: |
+            deficonnect.zip
