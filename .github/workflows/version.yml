@@ -48,6 +48,5 @@ jobs:
         with:
           base: 2.x
           branch: release/latest
-          delete-branch: true
 
 
