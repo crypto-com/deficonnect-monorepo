@@ -1,6 +1,5 @@
-# DeFiConnect
+# DeFiConnect Monorepo
 
-DeFiConnect Monorepo
 <p align="center">
     <a href="https://lgtm.com/projects/g/crypto-com/deficonnect-monorepo/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/crypto-com/deficonnect-monorepo.svg?logo=lgtm&logoWidth=18"/></a>
     <a href="https://lgtm.com/projects/g/crypto-com/deficonnect-monorepo/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/crypto-com/deficonnect-monorepo.svg?logo=lgtm&logoWidth=18"/></a>
