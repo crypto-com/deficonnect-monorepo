@@ -1,0 +1,33 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Bump version
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "2.x" branch
+  push:
+    branches: [ "2.x" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Set up bot
+      - run: git config user.name auto.bump.version.bot      
+      - run: git config user.email 
+      
+      - name: Bump version
+      - run: npx standard-version
+      
+      - run: git push origin 2.x
