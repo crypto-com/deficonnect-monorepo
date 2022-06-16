@@ -10,6 +10,11 @@ on:
     tags-ignore:
       - "v*"
 
+  pull_request:
+    branches: [ "2.x" ]
+    tags-ignore:
+      - "v*"
+      
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch: 
 
