@@ -4,6 +4,11 @@ DeFiConnect Monorepo
 
 
 
+## Packages
+
+DeFiConnect is a library that consists of many smaller npm packages within the @deficonnect namespace, a so called monorepo. Here are some of them to get an idea:
+
+
 
 | Package                                                      | Description        | Latest                                                       |
 | ------------------------------------------------------------ | ------------------ | ------------------------------------------------------------ |
