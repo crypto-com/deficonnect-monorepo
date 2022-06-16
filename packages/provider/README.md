@@ -4,6 +4,8 @@
 
 ### use npm package manager
 
+here's an full example of how to use this package: [dapp-connect-provider-example](../../examples/dapp-connect-provider-example/DefiConnector.ts)
+
 ```bash
 npm install "@deficonnect/provider"
 ```
