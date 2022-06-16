@@ -32,7 +32,7 @@ jobs:
         run: git config user.email 
       
       - name: Bump version
-      - run: npx standard-version
+        run: npx standard-version
       
       - name: Push
         run: git push origin 2.x
