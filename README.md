@@ -2,6 +2,7 @@
 
 DeFiConnect Monorepo
 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/crypto-com/deficonnect-monorepo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/crypto-com/deficonnect-monorepo/alerts/)[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/crypto-com/deficonnect-monorepo.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/crypto-com/deficonnect-monorepo/context:javascript)
 
 
 ## Packages
