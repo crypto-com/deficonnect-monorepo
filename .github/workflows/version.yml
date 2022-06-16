@@ -41,8 +41,5 @@ jobs:
         run: npx standard-version
       
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true
+        run: git push --set-upstream origin release/latest
 
