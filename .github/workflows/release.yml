@@ -58,34 +58,34 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           npx lerna version --no-push --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
 
+      - name: Get name & version from package.json
+        shell: bash
+        run: | 
+          echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
+          echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
+        id: package_json
+      
+      - name: Archive Release
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: v${{ steps.package_json.outputs.version }}-deficonnect.zip
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+  
       - name: Push version changes
         uses: ad-m/github-push-action@master
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
           branch: 'release/latest'
-
-      # - name: Get name & version from package.json
-      #   shell: bash
-      #   run: | 
-      #     echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
-      #     echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
-      #   id: package_json
       
-      # - name: Archive Release
-      #   uses: thedoctor0/zip-release@main
-      #   with:
-      #     type: 'zip'
-      #     filename: 'deficonnect.zip'
-      #     exclusions: '*.git* /*node_modules/* .editorconfig'
-      
-      # - name: Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     draft: true
-      #     tag_name: v${{ steps.package_json.outputs.version }}
-      #     body_path: ./CHANGELOG.md
-      #     files: |
-      #       deficonnect.zip
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          tag_name: v${{ steps.package_json.outputs.version }}
+          body_path: ./CHANGELOG.md
+          files: |
+            v${{ steps.package_json.outputs.version }}-deficonnect.zip
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
