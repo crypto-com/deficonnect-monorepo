@@ -34,8 +34,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: 2.x
 
       - name: Checkout new branch
         run: |
