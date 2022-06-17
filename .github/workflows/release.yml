@@ -34,6 +34,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: 2.x
 
       - name: Checkout new branch
         run: |
@@ -50,17 +52,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git remote -v
+          git branch
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           npx lerna version --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
-        
-      - name: Push Version
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git log -1
-          git push --set-upstream origin release/latest --force
-          
 
       # - name: Get name & version from package.json
       #   shell: bash
