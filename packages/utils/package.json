@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/utils",
-  "version": "2.0.0-dev.0",
+  "version": "2.0.0",
   "description": "utils for Crypto.com DeFi Wallet Extension",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
@@ -43,7 +43,7 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/types": "^2.0.0-dev.0",
+    "@deficonnect/types": "^2.0.0",
     "@walletconnect/encoding": "^1.0.1",
     "query-string": "^7.1.1",
     "uuid": "^8.3.2"
