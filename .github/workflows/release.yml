@@ -27,7 +27,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [14]
+        node-version: ['14.x']
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -53,11 +53,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git remote -v
-          git branch
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          npx lerna version --no-push --force-publish --force-git-tag  --conventional-commits --no-changelog --outfile ./CHANGELOG.md --conventional-graduate --yes
+          npx lerna version --no-push --force-publish --force-git-tag  --conventional-commits --no-changelog --conventional-graduate --yes
 
       - name: Get name & version from package.json
         shell: bash
@@ -65,9 +63,9 @@ jobs:
           echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
           echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
         id: package_json
-        
-      - name: Print version
-        run: echo ${{ steps.package_json.outputs.version }}
+      
+      - name: Generate changelog
+        run: npm run changelog -- --release-as ${{ steps.package_json.outputs.version }}
       
       - name: Archive Release
         uses: thedoctor0/zip-release@main
