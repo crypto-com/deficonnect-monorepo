@@ -62,17 +62,17 @@ jobs:
         shell: bash
         run: | 
           echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
-          echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
+          echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
         id: package_json
         
       - name: Print version
-        run: echo ${{ steps.package_json.outputs.name }}
+        run: echo ${{ steps.package_json.outputs.version }}
       
       - name: Archive Release
         uses: thedoctor0/zip-release@main
         with:
           type: 'zip'
-          filename: v${{ steps.package_json.outputs.version }}-deficonnect.zip
+          filename: v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
   
       - name: Push version changes
@@ -85,10 +85,10 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           draft: true
-          tag_name: v${{ env.version }}
+          tag_name: v${{ steps.package_json.outputs.version }}
           body_path: ./CHANGELOG.md
           files: |
-            v${{ env.version }}-deficonnect.zip
+            v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
