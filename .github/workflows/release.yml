@@ -56,7 +56,7 @@ jobs:
 
       - uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ secrect.GITHUB_TOKEN }}
+          secret: ${{ secrets.GITHUB_TOKEN }}
           approvers: andy-bin-cn,vern-crypto
 
       - name: Tag Version and Publish to npm
