@@ -54,6 +54,11 @@ jobs:
           
       - run: npm ci
 
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrect.GITHUB_TOKEN }}
+          approvers: andy-bin-cn,vern-crypto
+
       - name: Tag Version and Publish to npm
         run: |
           npm run publish:latest
