@@ -49,6 +49,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
+          
+      - run: npm ci
 
       - name: Tag Version and Publish to npm
         run: |
