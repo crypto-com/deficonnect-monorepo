@@ -36,6 +36,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: 2.x
+
+      - run: git checkout -b release/latest
       
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -51,6 +53,8 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
           npx lerna version --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
+
+      - run: git push --set-upstream origin release/latest --force
         
       - name: Get name & version from package.json
         shell: bash
@@ -74,3 +78,9 @@ jobs:
           body_path: ${{ github.workspace }}-CHANGELOG.md
           files: |
             deficonnect.zip
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          base: 2.x
+          branch: release/latest
