@@ -37,7 +37,9 @@ jobs:
         with:
           ref: 2.x
 
-      - run: git checkout -b release/latest
+      - run: |
+        git checkout -b release/latest
+        git push --set-upstream origin release/latest --force
       
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -53,8 +55,6 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
           npx lerna version --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
-
-      - run: git push --set-upstream origin release/latest --force
         
       - name: Get name & version from package.json
         shell: bash
