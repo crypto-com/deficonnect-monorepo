@@ -38,8 +38,8 @@ jobs:
           ref: 2.x
       - name: Checkout new branch
         run: |
-        git checkout -b release/latest
-        git push --set-upstream origin release/latest --force
+          git checkout -b release/latest
+          git push --set-upstream origin release/latest --force
       
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
