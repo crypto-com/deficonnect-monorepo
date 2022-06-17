@@ -40,7 +40,6 @@ jobs:
       - name: Checkout new branch
         run: |
           git checkout -b release/latest
-          git push --set-upstream origin release/latest --force
           git config advice.addIgnoredFile false
       
       - name: Use Node.js ${{ matrix.node-version }}
