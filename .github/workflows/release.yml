@@ -53,9 +53,9 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
+        run: npx lerna version --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
+        run: git push --set-upstream origin release/latest --force
           
-          npx lerna version --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
-          git log -p -3
 
       # - name: Get name & version from package.json
       #   shell: bash
