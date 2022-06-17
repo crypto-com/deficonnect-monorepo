@@ -57,7 +57,12 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           npx lerna version --no-push --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
-          git push origin release/latest
+
+      - name: Push version changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
+          branch: 'release/latest'
 
       # - name: Get name & version from package.json
       #   shell: bash
