@@ -29,7 +29,7 @@
     "clean": "rm -rf dist && lerna run clean",
     "clean:node_modules": "lerna exec -- rm -rf node_modules",
     "clean:all": "run-s clean clean:node_modules",
-    "new-version": "lerna version --force-publish --force-git-tag --conventional-commits",
+    "new-version": "lerna version --force-publish --force-git-tag --conventional-commits --yes",
     "npm-publish:latest": "lerna exec -- npm publish --access public",
     "npm-publish:local": "lerna exec -- npm publish --access public --registry http://localhost:4873/",
     "npm-publish:next": "lerna exec -- npm publish --access public --tag next",
