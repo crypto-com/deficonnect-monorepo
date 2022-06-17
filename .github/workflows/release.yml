@@ -62,7 +62,7 @@ jobs:
         shell: bash
         run: | 
           echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
-          echo "##[set-output version=version;]$(node -p -e '`${require("./package.json").version}`')"
+          echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
         id: package_json
         
       - name: Print version
