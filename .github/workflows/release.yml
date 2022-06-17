@@ -56,28 +56,28 @@ jobs:
           
           npx lerna version --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
         
-      - name: Get name & version from package.json
-        shell: bash
-        run: | 
-          echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
-          echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
-        id: package_json
+      # - name: Get name & version from package.json
+      #   shell: bash
+      #   run: | 
+      #     echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
+      #     echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
+      #   id: package_json
       
-      - name: Archive Release
-        uses: thedoctor0/zip-release@main
-        with:
-          type: 'zip'
-          filename: 'deficonnect.zip'
-          exclusions: '*.git* /*node_modules/* .editorconfig'
+      # - name: Archive Release
+      #   uses: thedoctor0/zip-release@main
+      #   with:
+      #     type: 'zip'
+      #     filename: 'deficonnect.zip'
+      #     exclusions: '*.git* /*node_modules/* .editorconfig'
       
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          draft: true
-          tag_name: v${{ steps.package_json.outputs.version }}
-          body_path: CHANGELOG.md
-          files: |
-            deficonnect.zip
+      # - name: Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     draft: true
+      #     tag_name: v${{ steps.package_json.outputs.version }}
+      #     body_path: ./CHANGELOG.md
+      #     files: |
+      #       deficonnect.zip
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
