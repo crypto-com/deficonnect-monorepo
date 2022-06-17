@@ -34,11 +34,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
-        # with:
-        #   ref: 2.x
 
       - name: Checkout new branch
         run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
           git checkout -b release/latest
           git push --set-upstream origin release/latest --force
           git config advice.addIgnoredFile false
@@ -48,14 +48,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      
-      - name: Version
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Tag Version and Publish to npm
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor}}@users.noreply.github.com"
-          npx lerna version --no-push --force-publish --force-git-tag  --conventional-commits --conventional-graduate --yes
+          npm run publish:latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
 
       - name: Get name & version from package.json
         shell: bash
