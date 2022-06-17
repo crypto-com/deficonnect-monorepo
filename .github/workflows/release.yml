@@ -64,8 +64,8 @@ jobs:
           echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
         id: package_json
       
-      - name: Generate changelog
-        run: npm run changelog -- --release-as ${{ steps.package_json.outputs.version }}
+      - name: Generate standard version change log
+        run: npx standard-version --release-as ${{ steps.package_json.outputs.version }}
       
       - name: Archive Release
         uses: thedoctor0/zip-release@main
