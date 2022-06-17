@@ -1,4 +1,4 @@
-# DeFiConnect
+# @deficonnect/qrcode-modal
 
 QRCode Modal for deficonnect.
 
