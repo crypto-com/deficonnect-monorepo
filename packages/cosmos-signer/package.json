@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/cosmos-signer",
-  "version": "2.0.0-dev.0",
+  "version": "2.0.0",
   "description": "cosmos-signer for Crypto.com DeFi Wallet Extension",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
@@ -47,7 +47,7 @@
     "@cosmjs/encoding": "^0.28.4",
     "@cosmjs/proto-signing": "^0.28.4",
     "@cosmjs/stargate": "^0.28.4",
-    "@deficonnect/types": "^2.0.0-dev.0",
+    "@deficonnect/types": "^2.0.0",
     "cosmjs-types": "^0.5.0"
   }
 }

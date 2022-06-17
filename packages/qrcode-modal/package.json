@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/qrcode-modal",
-  "version": "2.0.0-dev.0",
+  "version": "2.0.0",
   "description": "qrcode-modal for Crypto.com DeFi Wallet Extension",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
