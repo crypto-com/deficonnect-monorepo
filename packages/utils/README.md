@@ -1,4 +1,4 @@
-# DeFiConnect
+# @deficonnect/utils
 
 utils for deficonnect packages.
 
