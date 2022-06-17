@@ -34,6 +34,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: 2.x
 
       - name: Checkout new branch
         run: |
@@ -55,7 +57,7 @@ jobs:
           git branch
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          npx lerna version --no-push --force-publish --force-git-tag  --conventional-commits --outfile ./CHANGELOG.md --conventional-graduate --yes
+          npx lerna version --no-push --force-publish --force-git-tag  --conventional-commits --no-changelog --outfile ./CHANGELOG.md --conventional-graduate --yes
 
       - name: Get name & version from package.json
         shell: bash
