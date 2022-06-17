@@ -25,4 +25,3 @@ yarn.lock
 
 .rts2_cache_cjs
 *.zip
-/packages/**/CHANGELOG.md
