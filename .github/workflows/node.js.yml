@@ -5,14 +5,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "2.x" ]
-    branches-ignore:
-      - 'releases/*'
+    branches: 
+      - '2.x'
+      - '!releases/*'
 
   pull_request:
-    branches: [ "2.x" ]
-    branches-ignore:
-      - 'releases/*'
+      - '2.x'
+      - '!releases/*'
 
 jobs:
   build:
