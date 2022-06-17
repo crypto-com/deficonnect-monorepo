@@ -75,7 +75,7 @@ jobs:
         with:
           draft: true
           tag_name: v${{ steps.package_json.outputs.version }}
-          body_path: ${{ github.workspace }}-CHANGELOG.md
+          body_path: CHANGELOG.md
           files: |
             deficonnect.zip
 
