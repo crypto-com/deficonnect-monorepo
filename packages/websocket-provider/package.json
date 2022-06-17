@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@deficonnect/connector-client": "^2.0.0-dev.0",
+    "@deficonnect/qrcode-modal": "^2.0.0-dev.0",
     "@deficonnect/types": "^2.0.0-dev.0",
     "@deficonnect/utils": "^2.0.0-dev.0"
   }

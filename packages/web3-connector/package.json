@@ -1,14 +1,14 @@
 {
-  "name": "@deficonnect/qrcode-modal",
+  "name": "@deficonnect/web3-connector",
   "version": "2.0.0-dev.0",
-  "description": "qrcode-modal for Crypto.com DeFi Wallet Extension",
+  "description": "deficonnect web3-connector for Crypto.com DeFi Wallet Extension",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
   "repository": "https://github.com/crypto-com/defi-connector",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "unpkg": "dist/index.umd.js",
-  "source": "src/index.tsx",
+  "source": "src/index.ts",
   "engines": {
     "node": ">=14"
   },
@@ -18,7 +18,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build:pre": "run-s clean",
-    "build:modern": "microbundle -f modern,cjs --jsx",
+    "build:modern": "microbundle -f modern,cjs",
     "build:umd": "webpack",
     "build": "run-s build:pre build:modern build:umd",
     "test": "env TS_NODE_PROJECT=\"tsconfig.cjs.json\" mocha -r ts-node/register ./test/**/*.spec.ts --exit"
@@ -43,8 +43,9 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/utils": "^2.0.0-dev.0",
-    "preact": "^10.7.2",
-    "qrcode": "^1.5.0"
+    "@deficonnect/provider": "^2.0.0-dev.0",
+    "@deficonnect/types": "^2.0.0-dev.0",
+    "@web3-react/abstract-connector": "^6.0.7",
+    "tiny-warning": "^1.0.3"
   }
 }

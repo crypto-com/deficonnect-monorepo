@@ -1,4 +1,6 @@
 import * as queryStringUtils from 'query-string'
+import { IParseURIResult } from '@deficonnect/types'
+import { parseWalletConnectUri } from './session'
 
 export function getQueryString(url: string): string {
   const pathEnd: number | undefined = url.indexOf('?') !== -1 ? url.indexOf('?') : undefined
@@ -49,15 +51,15 @@ export const addUrlParams = (url: string, params: any): string => {
 //   return `${result.protocol}:${result.handshakeTopic}@${result.version}?bridge=${bridge}&key=${result.key}`
 // }
 
-// export const replaceUriProtocol = (uri: string, protocol: string): string => {
-//   const result: IParseURIResult = parseWalletConnectUri(uri)
-//   const bridge = encodeURIComponent(removeAllUrlParams(decodeURIComponent(result.bridge)))
-//   return `${protocol}:${result.handshakeTopic}@${result.version}?bridge=${bridge}&key=${result.key}`
-// }
+export const replaceUriProtocol = (uri: string, protocol: string): string => {
+  const result: IParseURIResult = parseWalletConnectUri(uri)
+  const bridge = encodeURIComponent(removeAllUrlParams(decodeURIComponent(result.bridge)))
+  return `${protocol}:${result.handshakeTopic}@${result.version}?bridge=${bridge}&key=${result.key}`
+}
 
-// export const formatToCWEURI = (uri: string): string => {
-//   return replaceUriProtocol(uri, 'CWE')
-// }
+export const formatToCWEURI = (uri: string): string => {
+  return replaceUriProtocol(uri, 'CWE')
+}
 
 // export const formatToWCURI = (uri: string): string => {
 //   return replaceUriProtocol(uri, 'wc')

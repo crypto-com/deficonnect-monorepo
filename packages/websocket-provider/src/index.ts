@@ -1,7 +1,10 @@
 import { ConnectorClient, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
 import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider, IDeFiConnectSessionAddresses, IDeFiConnectSessionAddress } from '@deficonnect/types'
 import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMethods } from '@deficonnect/utils'
+import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
 import Emitter from 'events'
+
+const ERROR_QRCODE_MODAL_USER_CLOSED = "User close QRCode Modal";
 
 interface RequestArguments {
   readonly method: string
@@ -25,15 +28,19 @@ class ProviderRpcError extends Error {
 export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
   connectorClient: ConnectorClient
   networkConfig: NetworkConfig
+  installExtensionModalProvider: InstallExtensionModalProvider
   isDeficonnectProvider = true
 
   constructor(network: NetworkConfig) {
     super()
     this.networkConfig = network
     this.connectorClient = new ConnectorClient({ dappName: network.appName })
+    this.installExtensionModalProvider = new InstallExtensionModalProvider()
+
     this.connectorClient.on('connect', () => {
       this.emit('chainChanged', this.chainId)
       this.emit('accountsChanged', this.accounts)
+      this.installExtensionModalProvider.close()
     })
     this.connectorClient.on('disconnect', () => {
       this.emit('disconnect', { code: 4900, message: 'disconnect' })
@@ -46,8 +53,13 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     })
     this.connectorClient.on('sessionRequest', (session: IDeFiConnectSession) => {
       const uri = `CWE:${session.handshakeTopic}@${DEFI_CONNECT_VERSION}?bridge=${DEFI_CONNECT_URL}&key=${session.key}&role=extension`
-      console.warn('TODO: on display qrcode', uri)
-      alert(uri)
+      this.installExtensionModalProvider.open({ uri, cb: () => {
+        this.connectorClient.emit(`response-${session.handshakeId}`, {
+          id: session.handshakeId,
+          jsonrpc: '2.0',
+          error: new Error(ERROR_QRCODE_MODAL_USER_CLOSED)
+        })
+      }})
     })
   }
   get chainId() {

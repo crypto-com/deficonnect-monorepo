@@ -1,4 +1,36 @@
 declare module "@deficonnect/types" {
+  export interface IMobileRegistryEntry {
+    name: string;
+    shortName: string;
+    color: string;
+    logo: string;
+    universalLink: string;
+    deepLink: string;
+  }
+  export type IMobileRegistry = IMobileRegistryEntry[];
+  export interface IParseURIResult {
+    protocol: string;
+    handshakeTopic: string;
+    version: number;
+    bridge: string;
+    key: string;
+  }
+
+  export interface IMobileLinkInfo {
+    name: string;
+    href: string;
+  }
+  
+  export interface IRequiredParamsResult {
+    handshakeTopic: string;
+    version: number;
+  }
+
+  export interface IQueryParamsResult {
+    bridge: string;
+    key: string;
+  }
+
   export interface WSMessage {
     type: 'pub' | 'sub' | 'ack'
     payload: string
