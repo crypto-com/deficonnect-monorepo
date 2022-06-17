@@ -55,7 +55,8 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
           npx lerna version --force-publish --force-git-tag --conventional-commits --conventional-graduate --yes
-        
+          git log -p -3
+
       # - name: Get name & version from package.json
       #   shell: bash
       #   run: | 
