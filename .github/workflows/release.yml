@@ -62,8 +62,11 @@ jobs:
         shell: bash
         run: | 
           echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
-          echo "##[set-output name=version;]$(node -p -e '`${require("./package.json").version}`')"
+          echo "##[set-output version=version;]$(node -p -e '`${require("./package.json").version}`')"
         id: package_json
+        
+      - name: Print version
+        run: echo ${{ verison }}
       
       - name: Archive Release
         uses: thedoctor0/zip-release@main
@@ -82,10 +85,10 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           draft: true
-          tag_name: v${{ steps.package_json.outputs.version }}
+          tag_name: v${{ env.version }}
           body_path: ./CHANGELOG.md
           files: |
-            v${{ steps.package_json.outputs.version }}-deficonnect.zip
+            v${{ env.version }}-deficonnect.zip
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
