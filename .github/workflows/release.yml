@@ -55,7 +55,7 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          npx lerna version --no-push --force-publish --no-git-tag-version --conventional-commits --no-changelog --conventional-graduate --yes
+          npx lerna version --no-push --force-publish --force-git-tag  --conventional-commits --conventional-graduate --yes
 
       - name: Get name & version from package.json
         shell: bash
@@ -63,10 +63,7 @@ jobs:
           echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
           echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
         id: package_json
-      
-      - name: Generate standard version change log
-        run: npx standard-version --release-as ${{ steps.package_json.outputs.version }}
-      
+
       - name: Archive Release
         uses: thedoctor0/zip-release@main
         with:
