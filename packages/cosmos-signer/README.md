@@ -1,4 +1,4 @@
-# DeFiConnect
+# @deficonnect/cosmos-signer
 
 this is the cosmos tools, implement [cosmjs](https://github.com/cosmos/cosmjs)'s `OfflineDirectSigner`. 
 
