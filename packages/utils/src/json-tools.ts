@@ -12,3 +12,14 @@ export function safeJsonParse(jsonString: string | null) {
   }
   return res
 }
+
+
+export function safeJsonStringify (data) {
+  let res = ''
+  try {
+    res = JSON.stringify(data ?? '')
+  } catch (e) {
+    // console.trace(e)
+  }
+  return res
+}

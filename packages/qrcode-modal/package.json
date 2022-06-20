@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "unpkg": "dist/index.umd.js",
-  "source": "src/index.ts",
+  "source": "src/index.tsx",
   "engines": {
     "node": ">=14"
   },
@@ -41,5 +41,10 @@
     "ts-node": "9.0.0",
     "webpack": "4.41.5",
     "webpack-cli": "3.3.10"
+  },
+  "dependencies": {
+    "@deficonnect/utils": "^2.0.0-dev.1",
+    "preact": "^10.7.2",
+    "qrcode": "^1.5.0"
   }
 }
