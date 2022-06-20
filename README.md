@@ -32,9 +32,6 @@ npm install "deficonnect"
 
 ### 
 ### Connector 
-
-#### Example
-
 **Used as model**
 
 > if you use `web3-react`, it is easy to integrate:
@@ -87,9 +84,6 @@ const connector = new window.DeFiConnect.DeFiWeb3Connector({
 
 
 ### Provider(EIP-1193)
-
-#### Example
-
 ```typescript
 interface RequestArguments {
  method: string;
