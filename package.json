@@ -30,7 +30,7 @@
     "clean:node_modules": "lerna exec -- rm -rf node_modules",
     "clean:all": "run-s clean clean:node_modules",
     "new-version": "npx lerna version --no-push --force-publish --force-git-tag  --conventional-commits --conventional-graduate --yes",
-    "npm-publish:latest": "npx lerna exec -- npm publish --dry-run",
+    "npm-publish:latest": "npx lerna exec -- npm publish --access public",
     "npm-publish:local": "lerna exec -- npm publish --access public --registry http://localhost:4873/",
     "npm-publish:next": "lerna exec -- npm publish --access public --tag next",
     "check:skip-test": "run-s clean lint build",
