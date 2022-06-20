@@ -48,14 +48,9 @@ jobs:
           
       - run: npm ci
 
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: andy-bin-cn,vern-crypto
-
-      - name: Tag Version and Publish to npm
+      - name: Tag Version
         run: |
-          npm run publish:latest
+          npm run pre-publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
 
@@ -65,6 +60,21 @@ jobs:
           echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
           echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
         id: package_json
+
+      # Pendding and get approval manually
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: andy-bin-cn,vern-crypto
+          minimum-approvals: 1
+          issue-title: "v${{ steps.package_json.outputs.version }} Release approval"
+      
+      # Publish to npm registry
+      - name: Publish to NPM
+        run: |
+          npm run npm-publish:latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
 
       - name: Archive Release
         uses: thedoctor0/zip-release@main
@@ -87,9 +97,18 @@ jobs:
           body_path: ./CHANGELOG.md
           files: |
             v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
+      
+      - run: rm -rf v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
 
-      - name: Create Pull Request
+      - name: Create Pull Request to Main
         uses: peter-evans/create-pull-request@v4
         with:
           base: main
+          branch: release/latest
+      
+      # Sync version back to develop
+      - name: Create Pull Request to Develop
+        uses: peter-evans/create-pull-request@v4
+        with:
+          base: '2.x'
           branch: release/latest
