@@ -31,12 +31,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout new branch
+      - name: Set up git user
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          git checkout -b release/latest
-          git push --set-upstream origin release/latest --force
           git config advice.addIgnoredFile false
       
       - name: Use Node.js ${{ matrix.node-version }}
@@ -61,13 +59,23 @@ jobs:
           echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
         id: package_json
 
+      - name: Set the value
+        run: |
+          echo "pkg_name=${{ steps.package_json.outputs.name }}"
+          echo "pkg_version=${{ steps.package_json.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Checkout new branch
+        run: |
+          git checkout -b release/${{ env.pkg_version }}
+          git push --set-upstream origin release/${{ env.pkg_version }} --force
+
       # Pendding and get approval manually
       - uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
           approvers: andy-bin-cn,vern-crypto
           minimum-approvals: 1
-          issue-title: "v${{ steps.package_json.outputs.version }} Release approval"
+          issue-title: "v${{ env.pkg_version }} Release approval"
       
       # Publish to npm registry
       - name: Publish to NPM
@@ -80,7 +88,7 @@ jobs:
         uses: thedoctor0/zip-release@main
         with:
           type: 'zip'
-          filename: v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
+          filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
   
       - name: Push version changes
@@ -93,18 +101,18 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           draft: true
-          tag_name: v${{ steps.package_json.outputs.version }}
+          tag_name: v${{ env.pkg_version }}
           body_path: ./CHANGELOG.md
           files: |
-            v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
+            v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
       
-      - run: rm -rf v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
+      - run: rm -rf v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
 
       - name: Create Pull Request to Main
         uses: peter-evans/create-pull-request@v4
         with:
           base: main
-          branch: release/latest
+          branch: release/${{ env.pkg_version }}
       
       # Sync version back to develop
       - name: Create Pull Request to Develop
