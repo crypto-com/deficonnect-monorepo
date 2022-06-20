@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/connector-client",
-  "version": "2.0.0-dev.0",
+  "version": "2.0.0-dev.1",
   "description": "connector-client for connect to wallet via websocket",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
@@ -44,8 +44,8 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/types": "^2.0.0-dev.0",
-    "@deficonnect/utils": "^2.0.0-dev.0",
+    "@deficonnect/types": "^2.0.0-dev.1",
+    "@deficonnect/utils": "^2.0.0-dev.1",
     "@walletconnect/iso-crypto": "^1.7.8",
     "@walletconnect/window-metadata": "^1.0.0"
   }
