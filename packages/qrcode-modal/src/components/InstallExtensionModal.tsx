@@ -82,7 +82,7 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
     }
 
     return (
-      <div style={styles.overlay} onClick={this.closeModalClick.bind(this)}>
+      <div className="cryptoconnect-extension-modal" style={styles.overlay} onClick={this.closeModalClick.bind(this)}>
         <div style={styles.container} onClick={this.stopPropagation}>
           <div style={styles.containerLeft}>
             <div style={styles.header}>
