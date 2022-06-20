@@ -32,11 +32,7 @@ const provider = new DeFiConnectProvider({
 })
 ```
 
-### methods for DeFiConnectProvider
-
-this is a eip-1193 compatible provider.
-more detail info: https://eips.ethereum.org/EIPS/eip-1193
-
+### Provider(EIP-1193)
 ```typescript
 interface RequestArguments {
  method: string;
@@ -75,34 +71,19 @@ provider.on('disconnect', (code: number, reason: string) => {
   console.log(code, reason)
 })
 ```
+#### Functions
 
-### methods for Web3
+| Parameters | Description | Type                  | Exmaple                       | Default |
+| ---------- | ----------- | --------------------- | ----------------------------- | ------- |
+| disconnect |             | `() => Promise<void>` | `await provider.disconnect()` | -       |
 
-```typescript
-//  Get Accounts
-const accounts = await web3.eth.getAccounts()
+#### Event
 
-//  Get Chain Id
-const chainId = await web3.eth.chainId()
+| Parameters      | Description | Type                                     | Exmaple | Default |
+| --------------- | ----------- | ---------------------------------------- | ------- | ------- |
+| accountsChanged |             | `(account: string[]) => void`            |         | -       |
+| chainChanged    |             | `(chainId: number) => void`              |         | -       |
+| connect         |             | `() => void`                             |         |         |
+| disconnect      |             | `(code: number, reason: string) => void` |         |         |
 
-//  Get Network Id
-const networkId = await web3.eth.net.getId()
 
-// Send Transaction
-const txHash = await web3.eth.sendTransaction(tx)
-
-// Sign Transaction
-const signedTx = await web3.eth.signTransaction(tx)
-
-// Sign Message
-const signedMessage = await web3.eth.sign(msg)
-
-// Sign Typed Data
-const signedTypedData = await web3.eth.signTypedData(msg)
-```
-
-## release package step
-
-1. change the package.json version, and create PR to master.
-2. approved release on CI control
-3. create a new tag on Github
