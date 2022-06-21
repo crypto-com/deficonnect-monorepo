@@ -71,7 +71,7 @@ jobs:
 
       - name: Set the value
         run: |
-          echo "pkg_name=${{ steps.package_json.outputs.name }}"
+          echo "pkg_name=${{ steps.package_json.outputs.name }}" >> $GITHUB_ENV
           echo "pkg_version=${{ steps.package_json.outputs.version }}" >> $GITHUB_ENV
 
       - name: Checkout new branch
@@ -106,8 +106,13 @@ jobs:
           type: 'zip'
           filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
+
+      - name: Commit version file changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply version file changes
   
-      - name: Push version changes
+      - name: Push version file changes
         uses: ad-m/github-push-action@master
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
