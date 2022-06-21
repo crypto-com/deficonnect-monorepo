@@ -6,7 +6,7 @@ name: Release
 on:
   # Triggers the workflow on push only for the "main" branch
   pull_request:
-    # types: [closed]
+    types: [closed]
     branches:
       - '2.x'
       - 'main'
@@ -19,7 +19,7 @@ on:
 jobs:
   release:
     # Condition
-    # if: github.event.pull_request.merged == true 
+    if: github.event.pull_request.merged == true 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
@@ -36,11 +36,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - run: |
-          echo "${{ github.event.pull_request.head.ref }}"
-          echo "${{ env.GITHUB_REF_NAME }}"
-          git checkout ${{ env.GITHUB_REF_NAME }}
-          git pull
+      - run: git pull
 
       - name: Set up git user
         run: |
@@ -83,18 +79,19 @@ jobs:
           git push --set-upstream origin release/${{ env.pkg_version }} --force
 
       # Pendding and get approval manually
-      # - uses: trstringer/manual-approval@v1
-      #   with:
-      #     secret: ${{ secrets.GITHUB_TOKEN }}
-      #     approvers: andy-bin-cn,vern-crypto
-      #     minimum-approvals: 1
-      #     issue-title: "v${{ env.pkg_version }} Release approval"
+      - uses: trstringer/manual-approval@v1
+        if: ${{ github.base_ref == 'main' }}
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: andy-bin-cn,vern-crypto
+          minimum-approvals: 1
+          issue-title: "v${{ env.pkg_version }} Release approval"
       
       # Publish to npm registry
       - name: Publish to NPM
         run: |
           if [ ${{ github.base_ref }} = main ]; then
-            npx lerna exec -- npm publish --access public --dry-run
+            npx lerna exec -- npm publish --access public
           else 
             npx lerna exec -- npm publish --dry-run
           fi
@@ -135,7 +132,6 @@ jobs:
       
       # Sync version back to develop
       - name: Create Pull Request to Develop
-        if: ${{ github.base_ref == 'main' }}
         uses: peter-evans/create-pull-request@v4
         with:
           base: '2.x'
