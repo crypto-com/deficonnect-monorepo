@@ -34,9 +34,10 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 0
-          ref: ${{ github.ref }}
-          
-      - run: git pull
+
+      - run: |
+          git checkout ${{ GITHUB_REF }}
+          git pull
 
       - name: Set up git user
         run: |
