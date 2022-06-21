@@ -13,4 +13,12 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.base_ref }}"
+      - name: Checkout
+          uses: actions/checkout@master
+          with:
+            fetch-depth: 0
+            ref: ${{ github.base_ref }}
+
+      - run: git log
+          
+
