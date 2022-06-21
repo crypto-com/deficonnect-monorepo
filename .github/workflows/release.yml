@@ -6,7 +6,7 @@ name: Release
 on:
   # Triggers the workflow on push only for the "main" branch
   pull_request:
-    # types: [closed]
+    types: [closed]
     branches:
       - '2.x'
       - 'main'
@@ -19,7 +19,7 @@ on:
 jobs:
   release:
     # Condition
-    # if: github.event.pull_request.merged == true 
+    if: github.event.pull_request.merged == true 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
@@ -35,8 +35,7 @@ jobs:
         with:
           fetch-depth: 0
           # Should check out from base after merge
-          # ref: ${{ github.base_ref }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.base_ref }}
 
       - run: git pull
 
@@ -102,9 +101,6 @@ jobs:
           type: 'zip'
           filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
-
-      # - name: Checkout release branch
-      #   run: git switch -c release/${{ env.pkg_version }}
   
       - name: Push version file changes
         uses: ad-m/github-push-action@master
