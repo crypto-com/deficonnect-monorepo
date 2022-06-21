@@ -6,7 +6,7 @@ name: Release
 on:
   # Triggers the workflow on push only for the "main" branch
   pull_request:
-    types: [closed]
+    # types: [closed]
     branches:
       - '2.x'
       - 'main'
@@ -19,7 +19,7 @@ on:
 jobs:
   release:
     # Condition
-    if: github.event.pull_request.merged == true 
+    # if: github.event.pull_request.merged == true 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
@@ -87,7 +87,7 @@ jobs:
       - name: Publish to NPM
         run: |
           if [ ${{ github.base_ref }} = main ]; then
-            npx lerna exec -- npm publish --access public
+            npx lerna exec -- npm publish --access public --dry-run
           else 
             npx lerna exec -- npm publish --dry-run
           fi
