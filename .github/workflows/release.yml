@@ -34,10 +34,10 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 0
-          ref: ${{ github.ref }}
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - run: |
-          echo "${{ github.ref }}"
+          echo "${{ github.event.pull_request.head.ref }}"
           echo "${{ env.GITHUB_REF_NAME }}"
           git checkout ${{ env.GITHUB_REF_NAME }}
           git pull
@@ -83,12 +83,12 @@ jobs:
           git push --set-upstream origin release/${{ env.pkg_version }} --force
 
       # Pendding and get approval manually
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: andy-bin-cn,vern-crypto
-          minimum-approvals: 1
-          issue-title: "v${{ env.pkg_version }} Release approval"
+      # - uses: trstringer/manual-approval@v1
+      #   with:
+      #     secret: ${{ secrets.GITHUB_TOKEN }}
+      #     approvers: andy-bin-cn,vern-crypto
+      #     minimum-approvals: 1
+      #     issue-title: "v${{ env.pkg_version }} Release approval"
       
       # Publish to npm registry
       - name: Publish to NPM
