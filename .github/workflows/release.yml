@@ -103,8 +103,8 @@ jobs:
           filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
-      - name: Checkout release branch
-        run: git switch -c release/${{ env.pkg_version }}
+      # - name: Checkout release branch
+      #   run: git switch -c release/${{ env.pkg_version }}
   
       - name: Push version file changes
         uses: ad-m/github-push-action@master
