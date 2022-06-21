@@ -135,4 +135,4 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           base: '2.x'
-          branch: release/latest
+          branch: release/${{ env.pkg_version }}

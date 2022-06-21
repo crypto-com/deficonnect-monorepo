@@ -1,0 +1,16 @@
+name: Echo  
+
+on:
+  pull_request:
+    branches:
+      - '2.x'
+      - 'main'
+      - '!releases/*'
+      
+  workflow_dispatch: 
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.base_ref }}"
