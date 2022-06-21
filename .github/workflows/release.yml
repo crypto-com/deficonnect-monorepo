@@ -5,8 +5,10 @@ name: Release
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push only for the "main" branch
-  push:
+  pull_request:
+    types: [closed]
     branches:
+      - '2.x'
       - 'main'
       - '!releases/*'
       
@@ -16,6 +18,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   release:
+    # Condition
+    if: github.event.pull_request.merged == true 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
@@ -27,16 +31,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Checkout new branch
+      - run: git pull
+
+      - name: Set up git user
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
-          git checkout -b release/latest
-          git push --set-upstream origin release/latest --force
           git config advice.addIgnoredFile false
       
       - name: Use Node.js ${{ matrix.node-version }}
@@ -48,16 +53,13 @@ jobs:
           
       - run: npm ci
 
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: andy-bin-cn,vern-crypto
-
-      - name: Tag Version and Publish to npm
+      - name: Tag Version
         run: |
-          npm run publish:latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
+          if [ ${{ github.base_ref }} = main ]; then
+            npm run new-version
+          else
+            npm run new-version -- prerelease
+          fi
 
       - name: Get name & version from package.json
         shell: bash
@@ -66,30 +68,71 @@ jobs:
           echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
         id: package_json
 
+      - name: Set the value
+        run: |
+          echo "pkg_name=${{ steps.package_json.outputs.name }}"
+          echo "pkg_version=${{ steps.package_json.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Checkout new branch
+        run: |
+          git checkout -b release/${{ env.pkg_version }}
+          git push --set-upstream origin release/${{ env.pkg_version }} --force
+
+      # Pendding and get approval manually
+      - uses: trstringer/manual-approval@v1
+        if: ${{ github.base_ref == 'main' }}
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: andy-bin-cn,vern-crypto
+          minimum-approvals: 1
+          issue-title: "v${{ env.pkg_version }} Release approval"
+      
+      # Publish to npm registry
+      - name: Publish to NPM
+        run: |
+          if [ ${{ github.base_ref }} = main ]; then
+            npx lerna exec -- npm publish --access public
+          else 
+            npx lerna exec -- npm publish --dry-run
+          fi
+          
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
+
       - name: Archive Release
         uses: thedoctor0/zip-release@main
         with:
           type: 'zip'
-          filename: v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
+          filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
   
       - name: Push version changes
         uses: ad-m/github-push-action@master
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
-          branch: 'release/latest'
+          branch: 'release/${{ env.pkg_version }}'
       
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
-          tag_name: v${{ steps.package_json.outputs.version }}
+          tag_name: v${{ env.pkg_version }}
           body_path: ./CHANGELOG.md
           files: |
-            v${{ steps.package_json.outputs.version }}-${{ steps.package_json.outputs.name }}.zip
+            v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
+      
+      - run: rm -rf v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
 
-      - name: Create Pull Request
+      - name: Create Pull Request to Main
+        if: ${{ github.base_ref == 'main' }}
         uses: peter-evans/create-pull-request@v4
         with:
           base: main
+          branch: release/${{ env.pkg_version }}
+      
+      # Sync version back to develop
+      - name: Create Pull Request to Develop
+        uses: peter-evans/create-pull-request@v4
+        with:
+          base: '2.x'
           branch: release/latest
