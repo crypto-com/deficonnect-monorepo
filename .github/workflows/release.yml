@@ -84,8 +84,8 @@ jobs:
 
       - name: Checkout release branch
         uses: actions/checkout@v3
-          with:
-            ref: release/${{ env.pkg_version }}
+        with:
+          ref: release/${{ env.pkg_version }}
 
       # Pendding and get approval manually
       - uses: trstringer/manual-approval@v1
