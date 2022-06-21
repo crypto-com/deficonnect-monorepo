@@ -36,7 +36,8 @@ jobs:
           fetch-depth: 0
 
       - run: |
-          git checkout ${{ env.GITHUB_REF }}
+          echo "${{ env.GITHUB_REF_NAME }}"
+          git checkout ${{ env.GITHUB_REF_NAME }}
           git pull
 
       - name: Set up git user
