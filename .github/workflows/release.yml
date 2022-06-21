@@ -75,17 +75,16 @@ jobs:
           echo "pkg_name=${{ steps.package_json.outputs.name }}" >> $GITHUB_ENV
           echo "pkg_version=${{ steps.package_json.outputs.version }}" >> $GITHUB_ENV
 
+      - run: git status
+
+      - name: Checkout release branch
+        run: git switch -c release/${{ env.pkg_version }}
+
       - name: Commit version file changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply version file changes
-          create_branch: true
           branch: release/${{ env.pkg_version }}
-
-      - name: Checkout release branch
-        uses: actions/checkout@v3
-        with:
-          ref: release/${{ env.pkg_version }}
 
       # Pendding and get approval manually
       - uses: trstringer/manual-approval@v1
