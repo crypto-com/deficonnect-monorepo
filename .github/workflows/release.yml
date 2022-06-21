@@ -90,6 +90,8 @@ jobs:
             npx lerna exec -- npm publish --access public
           else 
             npx lerna exec -- npm publish --dry-run
+          fi
+          
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
 
@@ -104,7 +106,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
-          branch: 'release/latest'
+          branch: 'release/${{ env.pkg_version }}'
       
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -118,6 +120,7 @@ jobs:
       - run: rm -rf v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
 
       - name: Create Pull Request to Main
+        if: ${{ github.base_ref == 'main' }}
         uses: peter-evans/create-pull-request@v4
         with:
           base: main
