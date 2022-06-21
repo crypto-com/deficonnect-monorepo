@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 0
 
       - run: |
-          git checkout ${{ GITHUB_REF }}
+          git checkout ${{ env.GITHUB_REF }}
           git pull
 
       - name: Set up git user
