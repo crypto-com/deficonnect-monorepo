@@ -83,7 +83,7 @@ jobs:
           branch: release/${{ env.pkg_version }}
 
       - name: Checkout release branch
-        - uses: actions/checkout@v3
+        uses: actions/checkout@v3
           with:
             ref: release/${{ env.pkg_version }}
 
