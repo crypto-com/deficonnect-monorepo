@@ -71,13 +71,8 @@ jobs:
 
       - name: Set the value
         run: |
-          echo "pkg_name=${{ steps.package_json.outputs.name }}"
+          echo "pkg_name=${{ steps.package_json.outputs.name }}" >> $GITHUB_ENV
           echo "pkg_version=${{ steps.package_json.outputs.version }}" >> $GITHUB_ENV
-
-      - name: Checkout new branch
-        run: |
-          git checkout -b release/${{ env.pkg_version }}
-          git push --set-upstream origin release/${{ env.pkg_version }} --force
 
       # Pendding and get approval manually
       - uses: trstringer/manual-approval@v1
@@ -107,7 +102,7 @@ jobs:
           filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
   
-      - name: Push version changes
+      - name: Push version file changes
         uses: ad-m/github-push-action@master
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
