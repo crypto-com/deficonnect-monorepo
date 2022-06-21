@@ -34,8 +34,10 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 0
+          ref: ${{ github.ref }}
 
       - run: |
+          echo "${{ github.ref }}"
           echo "${{ env.GITHUB_REF_NAME }}"
           git checkout ${{ env.GITHUB_REF_NAME }}
           git pull
