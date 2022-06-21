@@ -34,7 +34,8 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+          # Should check out from base after merge
+          ref: ${{ github.base_ref }}
 
       - run: git pull
 
@@ -135,4 +136,4 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           base: '2.x'
-          branch: release/latest
+          branch: release/${{ env.pkg_version }}
