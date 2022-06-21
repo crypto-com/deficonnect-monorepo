@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/types",
-  "version": "2.0.0-dev.1",
+  "version": "2.0.0-dev.2",
   "description": "types for Crypto.com DeFi Wallet Extension",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
