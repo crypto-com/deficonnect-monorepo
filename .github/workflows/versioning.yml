@@ -65,7 +65,7 @@ jobs:
 
     - name: Create Pull Request to Develop
       uses: repo-sync/pull-request@v2
-        with:
-          source_branch: "release/${{ env.pkg_version }}"
-          destination_branch: ${{ github.base_ref }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        source_branch: "release/${{ env.pkg_version }}"
+        destination_branch: ${{ github.base_ref }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
