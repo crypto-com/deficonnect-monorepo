@@ -52,11 +52,9 @@ jobs:
         github_token: '${{ secrets.GITHUB_TOKEN }}'
         branch: 'release/${{ env.pkg_version }}'
 
-    - name: Checkout Release
-      uses: actions/checkout@master
-      with:
-        fetch-depth: 0
-        ref: release/${{ env.pkg_version }}
+    - run: git remote show origin
+
+    - run: git switch release/${{ env.pkg_version }}
 
     - name: Create Pull Request to Main
       uses: peter-evans/create-pull-request@v4
