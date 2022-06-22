@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@master
       with:
         fetch-depth: 0
-        ref: ${{ github.ref }}
+        ref: ${{ github.base_ref }}
 
     - run: git pull
 
