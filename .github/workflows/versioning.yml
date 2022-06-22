@@ -52,7 +52,7 @@ jobs:
         github_token: '${{ secrets.GITHUB_TOKEN }}'
         branch: 'release/${{ env.pkg_version }}'
 
-    - run: git remote show origin
+    - run: git fetch
 
     - run: git switch release/${{ env.pkg_version }}
 
