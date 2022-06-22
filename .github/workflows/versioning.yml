@@ -29,7 +29,7 @@ jobs:
         node-version: 14.x
         cache: 'npm'
           
-      - run: npm ci
+    - run: npm ci
 
     - name: Tag Version
       run: |
