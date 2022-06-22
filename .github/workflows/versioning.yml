@@ -57,13 +57,15 @@ jobs:
     - run: git switch release/${{ env.pkg_version }}
 
     - name: Create Pull Request to Main
-      uses: peter-evans/create-pull-request@v4
+      uses: repo-sync/pull-request@v2
       with:
-        base: main
-        branch: release/${{ env.pkg_version }}
+        source_branch: "release/${{ env.pkg_version }}"
+        destination_branch: "main"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create Pull Request to Develop
-      uses: peter-evans/create-pull-request@v4
-      with:
-        base: ${{ github.ref }}
-        branch: release/${{ env.pkg_version }}
+      uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "release/${{ env.pkg_version }}"
+          destination_branch: ${{ github.base_ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
