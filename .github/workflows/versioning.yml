@@ -1,9 +1,6 @@
 name: Versioning
 
 on:
-  pull_request:
-    branches: 
-      - '2.x'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -16,7 +13,7 @@ jobs:
       uses: actions/checkout@master
       with:
         fetch-depth: 0
-        ref: ${{ github.base_ref }}
+        ref: ${{ github.ref }}
 
     - run: git pull
 
@@ -59,6 +56,7 @@ jobs:
     - name: Create Pull Request to Main
       uses: repo-sync/pull-request@v2
       with:
+        pr_title: "Release v${{ env.pkg_version }} Versioning and CHANGELOG.md"
         source_branch: "release/${{ env.pkg_version }}"
         destination_branch: "main"
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -66,6 +64,7 @@ jobs:
     - name: Create Pull Request to Develop
       uses: repo-sync/pull-request@v2
       with:
+        pr_title: "Release v${{ env.pkg_version }} Versioning and CHANGELOG.md"
         source_branch: "release/${{ env.pkg_version }}"
-        destination_branch: ${{ github.base_ref }}
+        destination_branch: ${{ github.ref }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
