@@ -9,17 +9,13 @@ on:
       - 'main'
       - '2.x'
       - 'develop'
-      - '!releases/*'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
+    trategy:
       matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [ 14, 16 ]
 
     steps:
     - uses: actions/checkout@v3
