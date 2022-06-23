@@ -118,7 +118,9 @@ export class WebSocketClient extends Emitter {
 
     this.nextSocket.onclose = () => {
       setTimeout(() => {
-        this.nextSocket?.close()
+        if (this.nextSocket?.close) {
+          this.nextSocket.close()
+        }
         this.nextSocket = null
         this.socketCreate()
       }, 10000)

@@ -1,5 +1,5 @@
 
-import {  NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
+import { NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
 import { isDeFiConnectProvider } from '@deficonnect/utils'
 import { WebSocketProvider } from '@deficonnect/websocket-provider'
 
@@ -24,35 +24,44 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     // super()
     this.networkConfig = network
   }
+
   on(event: string, listener: (...args: any[]) => void): this {
     this.eventCallbacks.push({ event, listener })
-    this.deficonnectProvider?.on(event, listener)
+    if (this.deficonnectProvider?.on) {
+      this.deficonnectProvider.on(event, listener)
+    }
     return this
   }
+
   removeListener(event: string, listener: (...args: any[]) => void): this {
     this.eventCallbacks = this.eventCallbacks.filter(e => e.event === event && e.listener === listener)
-    this.deficonnectProvider?.removeListener(event, listener)
+    if (this.deficonnectProvider?.removeListener) {
+      this.deficonnectProvider.removeListener(event, listener)
+    }
     return this
   }
 
   setupProviderEvent() {
     this.eventCallbacks.forEach(e => {
-      this.deficonnectProvider?.on(e.event, e.listener)
+      if (this.deficonnectProvider?.on) {
+        this.deficonnectProvider.on(e.event, e.listener)
+      }
     })
   }
+
   async getProvider(): Promise<IDeFiConnectProvider> {
     async function checkInjectProvider(times = 0): Promise<any> {
       return new Promise((resolve) => {
         function check() {
-          if(isDeFiConnectProvider(window.deficonnectProvider)) {
+          if (isDeFiConnectProvider(window.deficonnectProvider)) {
             resolve(window.deficonnectProvider)
             return
-          } 
-          if(navigator?.userAgent?.includes('DeFiWallet') && window.ethereum) {
+          }
+          if (navigator?.userAgent?.includes('DeFiWallet') && window.ethereum) {
             resolve(window.ethereum)
             return
           }
-          if (times > 0 ) {
+          if (times > 0) {
             setTimeout(async () => {
               --times
               check()
@@ -64,15 +73,15 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
         check()
       })
     }
-    if(!this.deficonnectProvider) {
+    if (!this.deficonnectProvider) {
       const injectProvider = await checkInjectProvider(10)
-      if(injectProvider) {
+      if (injectProvider) {
         this.deficonnectProvider = injectProvider
         this.setupProviderEvent()
       }
     }
-    
-    if(this.deficonnectProvider) {
+
+    if (this.deficonnectProvider) {
       return this.deficonnectProvider
     } else {
       const provider = new WebSocketProvider(this.networkConfig)
@@ -81,21 +90,25 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       return provider
     }
   }
+
   get chainId() {
     return this.deficonnectProvider?.chainId ?? '0x1'
   }
+
   get networkVersion() {
     return this.deficonnectProvider?.networkVersion ?? '1'
   }
+
   get accounts() {
     return this.deficonnectProvider?.accounts ?? []
   }
+
   get chainType(): string {
     return this.deficonnectProvider?.chainType ?? 'eth'
   }
 
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
-    if(network) {
+    if (network) {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
@@ -103,7 +116,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   }
 
   async connect(network?: NetworkConfig): Promise<string[]> {
-    if(network) {
+    if (network) {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
@@ -111,12 +124,13 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   }
 
   async enable(network?: NetworkConfig): Promise<string[]> {
-    if(network) {
+    if (network) {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
     return provider.enable(this.networkConfig)
   }
+
   async close(): Promise<void> {
     const provider = await this.getProvider()
     return provider.close()
@@ -131,4 +145,3 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     return provider.request(args)
   }
 }
-

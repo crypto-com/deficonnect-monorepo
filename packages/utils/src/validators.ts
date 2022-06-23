@@ -29,27 +29,25 @@ export function isCosmosNetworkConfig(object: NetworkConfig): object is CosmosNe
   return object.chainType === 'cosmos'
 }
 
-
-
 export function isJsonRpcRequest(object: any): object is IJsonRpcRequest {
-  return object
-    && typeof object.method !== 'undefined'
-    && typeof object.id !== 'undefined'
-    && typeof object.jsonrpc !== 'undefined'
+  return object &&
+    typeof object.method !== 'undefined' &&
+    typeof object.id !== 'undefined' &&
+    typeof object.jsonrpc !== 'undefined'
 }
 
 export function isJsonRpcResponseSuccess(object: any): object is IJsonRpcResponseSuccess {
-  return object
-    && typeof object.result !== 'undefined'
-    && typeof object.id !== 'undefined'
-    && typeof object.jsonrpc !== 'undefined'
+  return object &&
+    typeof object.result !== 'undefined' &&
+    typeof object.id !== 'undefined' &&
+    typeof object.jsonrpc !== 'undefined'
 }
 
 export function isJsonRpcResponseError(object: any): object is IJsonRpcResponseError {
-  return object
-    && typeof object.error !== 'undefined'
-    && typeof object.id !== 'undefined'
-    && typeof object.jsonrpc !== 'undefined'
+  return object &&
+    typeof object.error !== 'undefined' &&
+    typeof object.id !== 'undefined' &&
+    typeof object.jsonrpc !== 'undefined'
 }
 
 export function isJsonRpcResponse(object: any): object is IJsonRpcResponse {
@@ -59,7 +57,6 @@ export function isJsonRpcResponse(object: any): object is IJsonRpcResponse {
 export function isJsonRpcMessage(object: any): object is IJsonRpcMessage {
   return isJsonRpcRequest(object) || isJsonRpcResponse(object)
 }
-
 
 export function isSilentPayload(request: IJsonRpcRequest): boolean {
   if (request.method.startsWith('dc_')) {
@@ -72,10 +69,10 @@ export function isSilentPayload(request: IJsonRpcRequest): boolean {
 }
 
 export function isDeFiConnectProvider(object: any): object is IDeFiConnectProvider {
-  return object
-    && typeof object.chainId !== 'undefined'
-    && typeof object.networkVersion !== 'undefined'
-    && typeof object.accounts !== 'undefined'
-    && typeof object.connect !== 'undefined'
-    && typeof object.request !== 'undefined'
+  return object &&
+    typeof object.chainId !== 'undefined' &&
+    typeof object.networkVersion !== 'undefined' &&
+    typeof object.accounts !== 'undefined' &&
+    typeof object.connect !== 'undefined' &&
+    typeof object.request !== 'undefined'
 }

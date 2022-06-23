@@ -60,21 +60,21 @@ export const styles: {
     margin: '-80px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   deepLinkHeader: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '20px',
-    marginBottom: '10px'
+    marginBottom: '10px',
   },
   btnWrap: {
     display: 'flex',
     justifyContent: 'center',
     paddingLeft: '15px',
     paddingRight: '15px',
-    paddingBottom: '30px'
+    paddingBottom: '30px',
   },
   containerLeft: {
     display: 'flex',

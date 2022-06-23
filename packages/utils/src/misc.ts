@@ -9,4 +9,3 @@ export function payloadId(): number {
   const extra = Math.floor(Math.random() * Math.pow(10, 3))
   return date + extra
 }
-

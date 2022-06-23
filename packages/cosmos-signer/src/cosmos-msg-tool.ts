@@ -32,7 +32,7 @@ export const transformProtoToJSON = (object: any): any => {
   }
   for (const key in object) {
     const value = object[key]
-    if (typeof value == 'object') {
+    if (typeof value === 'object') {
       result[key] = transformProtoToJSON(value)
       continue
     }
@@ -61,7 +61,7 @@ export const transformJSONtoProto = (object: any): any => {
   }
   for (const key in object) {
     const value = object[key]
-    if (typeof value == 'object') {
+    if (typeof value === 'object') {
       result[key] = transformJSONtoProto(value)
       continue
     }

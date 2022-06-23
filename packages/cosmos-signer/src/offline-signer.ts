@@ -10,6 +10,7 @@ export class OfflineSigner implements OfflineDirectSigner {
   constructor(provider: IDeFiConnectProvider) {
     this.provider = provider
   }
+
   async getAccounts(): Promise<readonly AccountData[]> {
     const result = await this.provider.request({ method: 'cosmos_getAccounts' }) as IDeFiConnectSessionAddress
     return [{
@@ -18,6 +19,7 @@ export class OfflineSigner implements OfflineDirectSigner {
       pubkey: fromBase64(result.pubkey ?? ''),
     }]
   }
+
   async signDirect(signerAddress: string, signDoc: SignDoc): Promise<DirectSignResponse> {
     const accounts = await this.getAccounts()
     const jsonRpcRequestParams = decodeToSignRequestJSON(signerAddress, signDoc)
