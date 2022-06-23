@@ -21,4 +21,4 @@ DeFiConnect is a library that consists of many smaller npm packages within the @
 | [@deficonnect/types](packages/types)                         | types                                                        | [![npm version](https://img.shields.io/npm/v/@deficonnect/types.svg)](https://www.npmjs.com/package/@deficonnect/types) |
 | [@deficonnect/utils](packages/utils)                         | utils                                                        | [![npm version](https://img.shields.io/npm/v/@deficonnect/utils.svg)](https://www.npmjs.com/package/@deficonnect/utils) |
 | [@deficonnect/websocket-provider](packages/websocket-provider) | This provider used in direct connection mode                 | ![npm version](https://img.shields.io/npm/v/@deficonnect/websocket-provider.svg) |
-
+| [@deficonnect/web3-connector](packages/web3-connector) | implement `AbstractConnector` from `web3-react`                 | ![npm version](https://img.shields.io/npm/v/@deficonnect/web3-connector.svg) |
