@@ -1,4 +1,4 @@
-import { h, Component, FunctionComponent } from "preact";
+import { h, Component, FunctionComponent } from 'preact'
 import DeFiLinkIconLight from '../icons/defi-link-icon-light'
 import ConnectStepCameraIcon from '../icons/connect-step-camera-icon'
 import LogoIcon from '../icons/defi-link-icon'
@@ -18,36 +18,46 @@ interface InstallExtensionModalStates {
 }
 
 export class InstallExtensionQRCodeModal extends Component<InstallExtensionModalProps, InstallExtensionModalStates> {
-
   constructor() {
-    super();
+    super()
     this.state = {
       qrUrl: '',
       visible: false,
-      singleLinkHref: ''
-    };
+      singleLinkHref: '',
+    }
   }
+
   onInstallButtonClick() {
     window.open('https://wallet.crypto.com/api/v1/extension/install')
   }
+
   onTermsClick() {
     window.open('https://crypto.com/document/ncw_tnc')
   }
+
   onPrivacyClick() {
     window.open('https://crypto.com/privacy/ncw')
   }
+
   onDownloadClick() {
     window.open('https://bit.ly/3Bk4wzE')
   }
+
   stopPropagation(event: { stopPropagation: () => void }) {
-    event?.stopPropagation()
+    if (event?.stopPropagation) {
+      event.stopPropagation()
+    }
   }
 
-  closeModalClick(){
+  closeModalClick() {
     const { onClose } = this.props
     if (onClose) {
       onClose()
     }
+  }
+
+  closeSingleLinkModal () {
+    this.setState({ visible: false })
   }
 
   render () {
@@ -70,6 +80,7 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
                   href={this.state.singleLinkHref}
                   rel="noopener noreferrer"
                   target="_blank"
+                  onClick={this.closeSingleLinkModal.bind(this)}
                 >
                   Open DeFi Wallet Mobile App
                 </a>
@@ -139,7 +150,6 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
       </div>
     )
   }
-
 }
 
 interface DownloadAppBannerProps {
