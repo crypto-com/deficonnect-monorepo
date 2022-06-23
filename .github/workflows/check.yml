@@ -13,7 +13,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    trategy:
+    strategy:
       matrix:
         node-version: [ 14, 16 ]
 
