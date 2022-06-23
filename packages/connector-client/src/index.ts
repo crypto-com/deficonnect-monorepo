@@ -1,3 +1,4 @@
+/* eslint-disable require-atomic-updates */
 import * as cryptoLib from '@walletconnect/iso-crypto'
 import type { IDeFiConnectSession, IJsonRpcRequest, NetworkConfig, ISocketMessage, WSMessage } from '@deficonnect/types'
 import {
@@ -20,7 +21,7 @@ export const DEFI_CONNECT_URL = 'wss://wallet-connect.crypto.com/api/v2/ncwconne
 export const DEFI_CONNECT_PROTOCOL = 'dc'
 export const DEFI_CONNECT_VERSION = 3
 
-interface ConnectorClientArgs { 
+interface ConnectorClientArgs {
   dappName: string
 }
 
@@ -32,32 +33,32 @@ export class ConnectorClient extends Emitter {
     this.args = args
     this.on('dc_sessionUpdate', (req) => {
       const session = this.getSession()
-      if(!isJsonRpcRequest(req)) {
+      if (!isJsonRpcRequest(req)) {
         return
       }
-      if(!session || !session.connected) {
+      if (!session || !session.connected) {
         return
       }
-      
+
       const sessionParam = req.params[0]
-      if(!sessionParam.approved) {
+      if (!sessionParam.approved) {
         this.deleteSession()
         this.emit('disconnect')
         return
       }
-      if(sessionParam.chainId) {
+      if (sessionParam.chainId) {
         session.chainId = sessionParam.chainId
       }
-      if(sessionParam.chainType) {
+      if (sessionParam.chainType) {
         session.chainType = sessionParam.chainType
       }
-      if(sessionParam.accounts) {
+      if (sessionParam.accounts) {
         session.accounts = sessionParam.accounts
       }
-      if(sessionParam.selectedWalletId) {
+      if (sessionParam.selectedWalletId) {
         session.selectedWalletId = sessionParam.selectedWalletId
       }
-      if(sessionParam.wallets) {
+      if (sessionParam.wallets) {
         session.wallets = sessionParam.wallets
       }
       this.setSession(session)
@@ -76,7 +77,7 @@ export class ConnectorClient extends Emitter {
     }
     const key = convertHexToArrayBuffer(keyString)
     const json = safeJsonParse(wsMessage.payload)
-    if(!json) {
+    if (!json) {
       return
     }
     return cryptoLib.decrypt(json, key)
@@ -84,7 +85,7 @@ export class ConnectorClient extends Emitter {
 
   getDeviceId(): string {
     let deviceId = localStorage.getItem('deficonnect-device-id') ?? ''
-    if(!deviceId) {
+    if (!deviceId) {
       deviceId = uuid()
       localStorage.setItem('deficonnect-device-id', deviceId)
     }
@@ -92,17 +93,21 @@ export class ConnectorClient extends Emitter {
   }
 
   async stop() {
-    this.socketTransport?.close()
+    if (this.socketTransport?.close) {
+      this.socketTransport.close()
+    }
     this.socketTransport = undefined
   }
+
   async connectEagerly() {
     const session = this.getSession()
-    if(session && session.connected) {
+    if (session && session.connected) {
       this.subscribe(session.clientId)
       return session
     }
     return undefined
   }
+
   async connect(network: NetworkConfig) {
     const { chainId, chainType } = network
     const keyBuffer = await cryptoLib.generateKey()
@@ -130,6 +135,7 @@ export class ConnectorClient extends Emitter {
     }
     return this.sessionRequest(session)
   }
+
   async disconnect() {
     await this.sendIgnoreResponse({
       id: payloadId(),
@@ -148,6 +154,7 @@ export class ConnectorClient extends Emitter {
     this.deleteSession()
     this.emit('disconnect')
   }
+
   async sessionRequest(session: IDeFiConnectSession) {
     this.setSession(session)
     this.emit('sessionRequest', session)
@@ -167,7 +174,7 @@ export class ConnectorClient extends Emitter {
           },
         ],
       })
-      if(result) {
+      if (result) {
         session.connected = true
         session.accounts = result.accounts
         session.chainId = result.chainId
@@ -185,12 +192,15 @@ export class ConnectorClient extends Emitter {
       throw error
     }
   }
+
   getSession() {
     return safeJsonParse(localStorage.getItem('deficonnect-session')) as IDeFiConnectSession | null
   }
+
   setSession(session: IDeFiConnectSession) {
     localStorage.setItem('deficonnect-session', JSON.stringify(session))
   }
+
   deleteSession() {
     localStorage.removeItem('deficonnect-session')
   }
@@ -249,21 +259,25 @@ export class ConnectorClient extends Emitter {
       : undefined
     const silent = !signingMethods.includes(rpcReq?.method ?? '')
     const rpcMethod = rpcReq?.method ?? ''
-    this.socketTransport?.send({
-      type: 'pub',
-      payload: JSON.stringify(payload),
-      rpc_id: msg.id,
-      rpc_method: rpcMethod,
-      silent,
-      topic: session.peerId,
-      from: 'dapp',
-      name: session.clientMeta?.name,
-    })
+    if (this.socketTransport?.send) {
+      this.socketTransport.send({
+        type: 'pub',
+        payload: JSON.stringify(payload),
+        rpc_id: msg.id,
+        rpc_method: rpcMethod,
+        silent,
+        topic: session.peerId,
+        from: 'dapp',
+        name: session.clientMeta?.name,
+      })
+    }
   }
 
   async subscribe(topic: string) {
     await this.start()
-    this.socketTransport?.subscribe(topic)
+    if (this.socketTransport?.subscribe) {
+      this.socketTransport.subscribe(topic)
+    }
   }
 
   private async handleJSONRequestEvent(wsMessage: any) {

@@ -2,53 +2,53 @@ import {
   IParseURIResult,
   IRequiredParamsResult,
   IQueryParamsResult,
-} from "@deficonnect/types";
-import { parseQueryString } from "./url-tools";
+} from '@deficonnect/types'
+import { parseQueryString } from './url-tools'
 
 export function parseWalletConnectUri(str: string): IParseURIResult {
-  const pathStart: number = str.indexOf(":");
+  const pathStart: number = str.indexOf(':')
 
-  const pathEnd: number | undefined = str.indexOf("?") !== -1 ? str.indexOf("?") : undefined;
+  const pathEnd: number | undefined = str.indexOf('?') !== -1 ? str.indexOf('?') : undefined
 
-  const protocol: string = str.substring(0, pathStart);
+  const protocol: string = str.substring(0, pathStart)
 
-  const path: string = str.substring(pathStart + 1, pathEnd);
+  const path: string = str.substring(pathStart + 1, pathEnd)
 
   function parseRequiredParams(path: string): IRequiredParamsResult {
-    const separator = "@";
+    const separator = '@'
 
-    const values = path.split(separator);
+    const values = path.split(separator)
 
     const requiredParams = {
       handshakeTopic: values[0],
       version: parseInt(values[1], 10),
-    };
+    }
 
-    return requiredParams;
+    return requiredParams
   }
 
-  const requiredParams: IRequiredParamsResult = parseRequiredParams(path);
+  const requiredParams: IRequiredParamsResult = parseRequiredParams(path)
 
-  const queryString: string = typeof pathEnd !== "undefined" ? str.substr(pathEnd) : "";
+  const queryString: string = typeof pathEnd !== 'undefined' ? str.substr(pathEnd) : ''
 
   function parseQueryParams(queryString: string): IQueryParamsResult {
-    const result = parseQueryString(queryString);
+    const result = parseQueryString(queryString)
 
     const parameters: IQueryParamsResult = {
-      key: result.key || "",
-      bridge: result.bridge || "",
-    };
+      key: result.key || '',
+      bridge: result.bridge || '',
+    }
 
-    return parameters;
+    return parameters
   }
 
-  const queryParams: IQueryParamsResult = parseQueryParams(queryString);
+  const queryParams: IQueryParamsResult = parseQueryParams(queryString)
 
   const result: IParseURIResult = {
     protocol,
     ...requiredParams,
     ...queryParams,
-  };
+  }
 
-  return result;
+  return result
 }

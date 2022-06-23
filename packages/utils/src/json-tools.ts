@@ -13,7 +13,6 @@ export function safeJsonParse(jsonString: string | null) {
   return res
 }
 
-
 export function safeJsonStringify (data) {
   let res = ''
   try {

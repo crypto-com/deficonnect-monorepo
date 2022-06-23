@@ -1,5 +1,4 @@
 
-
 export const signingMethods = [
   'eth_sendTransaction',
   'eth_signTransaction',

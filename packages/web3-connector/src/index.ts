@@ -1,5 +1,5 @@
 import { DeFiConnectProvider } from '@deficonnect/provider'
-import {  NetworkConfig, RpcUrlConfig } from '@deficonnect/types'
+import { NetworkConfig, RpcUrlConfig } from '@deficonnect/types'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { AbstractConnectorArguments, ConnectorUpdate } from '@web3-react/types'
 import warning from 'tiny-warning'
@@ -35,7 +35,7 @@ export interface DeFiConnectorArguments extends AbstractConnectorArguments {
   appName: string
   chainType: string
   chainId: string
-  rpcUrls: RpcUrlConfig,
+  rpcUrls: RpcUrlConfig
 }
 
 export class DeFiWeb3Connector extends AbstractConnector {
@@ -157,6 +157,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
   public close() {
     this.deactivate()
   }
+
   public deactivate() {
     this.provider.close()
   }

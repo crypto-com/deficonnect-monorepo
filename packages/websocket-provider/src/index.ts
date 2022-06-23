@@ -4,7 +4,7 @@ import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMet
 import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
 import Emitter from 'events'
 
-const ERROR_QRCODE_MODAL_USER_CLOSED = "User close QRCode Modal";
+const ERROR_QRCODE_MODAL_USER_CLOSED = 'User close QRCode Modal'
 
 interface RequestArguments {
   readonly method: string
@@ -53,29 +53,36 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     })
     this.connectorClient.on('sessionRequest', (session: IDeFiConnectSession) => {
       const uri = `CWE:${session.handshakeTopic}@${DEFI_CONNECT_VERSION}?bridge=${DEFI_CONNECT_URL}&key=${session.key}&role=extension`
-      this.installExtensionModalProvider.open({ uri, cb: () => {
+      this.installExtensionModalProvider.open({
+ uri,
+cb: () => {
         this.connectorClient.emit(`response-${session.handshakeId}`, {
           id: session.handshakeId,
           jsonrpc: '2.0',
-          error: new Error(ERROR_QRCODE_MODAL_USER_CLOSED)
+          error: new Error(ERROR_QRCODE_MODAL_USER_CLOSED),
         })
-      }})
+      },
+})
     })
   }
+
   get chainId() {
-    if(this.chainType === 'eth') {
+    if (this.chainType === 'eth') {
       return '0x' + Number(this.networkVersion).toString(16)
     } else {
       return this.connectorClient.getSession()?.chainId ?? ''
     }
   }
+
   get networkVersion() {
     return this.connectorClient.getSession()?.chainId ?? '1'
   }
+
   get accounts() {
     const accounts = this.connectorClient.getSession()?.accounts ?? []
     return accounts.map((item) => item.toLocaleLowerCase())
   }
+
   get chainType() {
     return this.connectorClient.getSession()?.chainType ?? 'eth'
   }
@@ -102,8 +109,9 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     await this.connect(network)
     return this.accounts
   }
+
   async close(): Promise<void> {
-    if(this.connected) {
+    if (this.connected) {
       return this.connectorClient.disconnect()
     } else {
       this.connectorClient.deleteSession()
@@ -159,12 +167,12 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       params: args.params as any,
     })
   }
-  
+
   private async handleOtherRequests(args: RequestArguments): Promise<unknown> {
     const chainType = this.connectorClient.getSession()?.chainType
     const chainId = this.networkVersion
     const rpcUrl = this.networkConfig.rpcUrls[chainId]
-    if(chainType == 'eth' && rpcUrl) {
+    if (chainType === 'eth' && rpcUrl) {
       const body = JSON.stringify({
         id: payloadId(),
         jsonrpc: '2.0',
@@ -199,27 +207,28 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       `not support calling ${args.method} for current network: ${chainId}`,
     )
   }
+
   private async cosmos_getAccounts(): Promise<IDeFiConnectSessionAddress> {
     const session = this.connectorClient.getSession()
     const wallet = session?.wallets.find(w => w.id === session?.selectedWalletId)
-    if(!wallet) {
+    if (!wallet) {
       throw new Error('can not find address for special chainId')
     }
     const result = Object.entries(wallet.addresses).find(([, value]) => {
       return this.accounts.includes(value.address)
     })
-    if(!result) {
+    if (!result) {
       throw new Error('can not find address for special chainId')
     }
     return result[1]
   }
+
   private async wallet_getAllAccounts(): Promise<IDeFiConnectSessionAddresses> {
     const session = this.connectorClient.getSession()
     const wallet = session?.wallets.find(w => w.id === session?.selectedWalletId)
-    if(!wallet) {
+    if (!wallet) {
       throw new Error('can not find address for special chainId')
     }
     return wallet.addresses
   }
-  
 }

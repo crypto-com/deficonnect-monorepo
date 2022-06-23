@@ -1,28 +1,28 @@
-import { safeJsonParse, safeJsonStringify } from "./json-tools";
-import { getLocalStorage } from "./browser";
+import { safeJsonParse, safeJsonStringify } from './json-tools'
+import { getLocalStorage } from './browser'
 
 export function setLocal(key: string, data: any): void {
-  const raw = safeJsonStringify(data);
-  const local = getLocalStorage();
+  const raw = safeJsonStringify(data)
+  const local = getLocalStorage()
   if (local) {
-    local.setItem(key, raw);
+    local.setItem(key, raw)
   }
 }
 
 export function getLocal(key: string): any {
-  let data: any = null;
-  let raw: string | null = null;
-  const local = getLocalStorage();
+  let data: any = null
+  let raw: string | null = null
+  const local = getLocalStorage()
   if (local) {
-    raw = local.getItem(key);
+    raw = local.getItem(key)
   }
-  data = raw ? safeJsonParse(raw) : raw;
-  return data;
+  data = raw ? safeJsonParse(raw) : raw
+  return data
 }
 
 export function removeLocal(key: string): void {
-  const local = getLocalStorage();
+  const local = getLocalStorage()
   if (local) {
-    local.removeItem(key);
+    local.removeItem(key)
   }
 }
