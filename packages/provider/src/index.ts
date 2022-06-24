@@ -123,7 +123,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     }
     const provider = await this.getProvider()
     if (!provider.connect) {
-      return provider.request({ method: 'eth_accounts', params: [] }) as any
+      return provider.request({ method: 'eth_requestAccounts', params: [] }) as any
     }
     return provider.connect(this.networkConfig)
   }
