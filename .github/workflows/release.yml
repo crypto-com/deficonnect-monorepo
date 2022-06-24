@@ -1,0 +1,70 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Release
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push only for the "main" branch
+  push:
+    branches:
+      - 'main'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  release:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: Deploy
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+          
+      - run: npm ci
+
+      - name: Get name & version from package.json
+        shell: bash
+        run: | 
+          echo "##[set-output name=name;]$(node -p -e '`${require("./package.json").name}`')"
+          echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
+        id: package_json
+
+      - name: Set the value
+        run: |
+          echo "pkg_name=${{ steps.package_json.outputs.name }}" >> $GITHUB_ENV
+          echo "pkg_version=${{ steps.package_json.outputs.version }}" >> $GITHUB_ENV
+      
+      # Publish to npm registry
+      - name: Publish to NPM
+        run: npx lerna exec -- npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+      
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          tag_name: v${{ env.pkg_version }}
+          body_path: ./CHANGELOG.md
+          files: |
+            v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
+      
+      - run: rm -rf v${{ env.pkg_version }}-${{ env.pkg_name }}.zip

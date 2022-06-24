@@ -1,67 +1,24 @@
-# WalletConnect v1.x.x
+# DeFiConnect Monorepo
 
-Open protocol for connecting Wallets to Dapps - https://walletconnect.org
+<p align="center">
+    <a href="https://lgtm.com/projects/g/crypto-com/deficonnect-monorepo/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/crypto-com/deficonnect-monorepo.svg?logo=lgtm&logoWidth=18"/></a>
+    <a href="https://lgtm.com/projects/g/crypto-com/deficonnect-monorepo/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/crypto-com/deficonnect-monorepo.svg?logo=lgtm&logoWidth=18"/></a>
+    <a href="https://discord.gg/qTs3qW3j"><img alt="Join Discord" src="https://img.shields.io/discord/783264383978569728?logo=discord"/></a>
+</p>
 
 ## Packages
 
-| SDK           | Current Version                                                                                      | Description |
-| ------------- | ---------------------------------------------------------------------------------------------------- | ----------- |
-| @deficonnect/sdk | [![npm version](https://badge.fury.io/js/walletconnect.svg)](https://badge.fury.io/js/walletconnect) | SDK         |
+DeFiConnect is a library that consists of many smaller npm packages within the @deficonnect namespace, a so called monorepo. Here are some of them to get an idea:
 
-| Clients               | Current Version                                                                                                              | Description       |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| @deficonnect/core   | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fcore.svg)](https://badge.fury.io/js/%40walletconnect%2Fcore)     | Core Client       |
-| @deficonnect/client | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fclient.svg)](https://badge.fury.io/js/%40walletconnect%2Fclient) | Isomorphic Client |
 
-| Providers                        | Current Version                                                                                                                                    | Description       |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| @deficonnect/ethereum-provider | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fethereum-provider.svg)](https://badge.fury.io/js/%40walletconnect%2Fethereum-provider) | Ethereum Provider |
-| @deficonnect/truffle-provider  | [![npm version](https://badge.fury.io/js/%40walletconnect%2Ftruffle-provider.svg)](https://badge.fury.io/js/%40walletconnect%2Ftruffle-provider)   | Truffle Provider  |
-| @deficonnect/web3-provider     | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fweb3-provider.svg)](https://badge.fury.io/js/%40walletconnect%2Fweb3-provider)         | Web3 Provider     |
-| @deficonnect/web3-subprovider  | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fweb3-subprovider.svg)](https://badge.fury.io/js/%40walletconnect%2Fweb3-subprovider)   | Web3 Subprovider  |
 
-| Helpers                          | Current Version                                                                                                                                    | Description       |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| @deficonnect/browser-utils     | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fbrowser-utils.svg)](https://badge.fury.io/js/%40walletconnect%2Fbrowser-utils)         | Browser Utilities |
-| @deficonnect/http-connection   | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fhttp-connection.svg)](https://badge.fury.io/js/%40walletconnect%2Fhttp-connection)     | HTTP Connection   |
-| @deficonnect/iso-crypto        | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fiso-crypto.svg)](https://badge.fury.io/js/%40walletconnect%2Fiso-crypto)               | Isomorphic Crypto |
-| @deficonnect/qrcode-modal      | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fqrcode-modal.svg)](https://badge.fury.io/js/%40walletconnect%2Fqrcode-modal)           | QR Code Modal     |
-| @deficonnect/react-native-dapp | [![npm version](https://badge.fury.io/js/%40walletconnect%2Freact-native-dapp.svg)](https://badge.fury.io/js/%40walletconnect%2Freact-native-dapp) | React-Native Dapp |
-| @deficonnect/signer-connection | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fsigner-connection.svg)](https://badge.fury.io/js/%40walletconnect%2Fsigner-connection) | Signer Connection |
-| @deficonnect/socket-transport  | [![npm version](https://badge.fury.io/js/%40walletconnect%2Fsocket-transport.svg)](https://badge.fury.io/js/%40walletconnect%2Fsocket-transport)   | Socket Transport  |
-| @deficonnect/types             | [![npm version](https://badge.fury.io/js/%40walletconnect%2Ftypes.svg)](https://badge.fury.io/js/%40walletconnect%2Ftypes)                         | Typescript Types  |
-| @deficonnect/utils             | [![npm version](https://badge.fury.io/js/%40walletconnect%2Futils.svg)](https://badge.fury.io/js/%40walletconnect%2Futils)                         | Utility Library   |
-
-`## Quick Start`
-
-Find quick start examples for your platform at https://docs.walletconnect.org/quick-start
-
-## Documentation
-
-Read more about WalletConnect protocol and how to use our Clients at https://docs.walletconnect.org
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
-<a href="https://github.com/monacohq/walletconnect-monorepo/graphs/contributors"><img src="https://opencollective.com/walletconnect/contributors.svg?width=890&button=false" /></a>
-
-All contributions are welcome! Feel free to create an Issue or make a PR in this repository
-
-## License
-
-LGPL-3.0
-
-## publish
-Node.js use v14.17.6
-
-```bash
-$ npm run new-version
-```
-
-```bash
-$ npm run build
-```
-
-```bash
-$ npm run npm-publish:latest
-```
+| Package                                                      | Description                                                  | Latest                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [@deficonnect/connector-client](packages/connector-client)   | WebSocket connection manager, providing JSON-RPC calling capability | [![npm version](https://img.shields.io/npm/v/@deficonnect/connector-client.svg)](https://www.npmjs.com/package/@deficonnect/connector-client) |
+| [@deficonnect/cosmos-signer](packages/cosmos-signer)         | Wrap the provider to support the API of the cosmos SDK       | [![npm version](https://img.shields.io/npm/v/@deficonnect/cosmos-signer.svg)](https://www.npmjs.com/package/@deficonnect/cosmos-signer) |
+| [@deficonnect/provider](packages/provider)                   | This package is used to help dapps connect to crypto.com wallet extension. Automatically detect the running environment, and proxy the method call to the provider | [![npm version](https://img.shields.io/npm/v/@deficonnect/provider.svg)](https://www.npmjs.com/package/@deficonnect/provider) |
+| [@deficonnect/qrcode-modal](packages/qrcode-modal)           | Display QR code in direct connection mode                    | [![npm version](https://img.shields.io/npm/v/@deficonnect/qrcode-modal.svg)](https://www.npmjs.com/package/@deficonnect/qrcode-modal) |
+| [@deficonnect/types](packages/types)                         | types                                                        | [![npm version](https://img.shields.io/npm/v/@deficonnect/types.svg)](https://www.npmjs.com/package/@deficonnect/types) |
+| [@deficonnect/utils](packages/utils)                         | utils                                                        | [![npm version](https://img.shields.io/npm/v/@deficonnect/utils.svg)](https://www.npmjs.com/package/@deficonnect/utils) |
+| [@deficonnect/websocket-provider](packages/websocket-provider) | This provider used in direct connection mode                 | ![npm version](https://img.shields.io/npm/v/@deficonnect/websocket-provider.svg) |
+| [@deficonnect/web3-connector](packages/web3-connector) | implement `AbstractConnector` from `web3-react`                 | ![npm version](https://img.shields.io/npm/v/@deficonnect/web3-connector.svg) |

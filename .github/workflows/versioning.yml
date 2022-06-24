@@ -1,0 +1,70 @@
+name: Versioning
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+        ref: ${{ github.ref }}
+
+    - run: git pull
+
+    - name: Set up git user
+      run: |
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor}}@users.noreply.github.com"
+        git config advice.addIgnoredFile false
+      
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.x
+        cache: 'npm'
+          
+    - run: npm ci
+
+    - name: Tag Version
+      run: |
+        npm run new-version
+
+    - name: Get name & version from package.json
+      shell: bash
+      run: echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
+      id: package_json
+
+    - name: Set the value
+      run: echo "pkg_version=${{ steps.package_json.outputs.version }}" >> $GITHUB_ENV
+
+    - name: Push version file changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: '${{ secrets.GITHUB_TOKEN }}'
+        branch: 'release/${{ env.pkg_version }}'
+
+    - run: git fetch
+
+    - run: git switch release/${{ env.pkg_version }}
+
+    - name: Create Pull Request to Main
+      uses: repo-sync/pull-request@v2
+      with:
+        pr_title: "Release v${{ env.pkg_version }} Versioning and CHANGELOG.md"
+        source_branch: "release/${{ env.pkg_version }}"
+        destination_branch: "main"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Pull Request to Develop
+      uses: repo-sync/pull-request@v2
+      with:
+        pr_title: "Release v${{ env.pkg_version }} Versioning and CHANGELOG.md"
+        source_branch: "release/${{ env.pkg_version }}"
+        destination_branch: ${{ github.ref }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}

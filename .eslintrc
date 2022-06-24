@@ -14,14 +14,20 @@
     "no-undef": ["error"],
     "no-var": ["error"],
     "object-curly-spacing": ["error", "always"],
-    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
-    "semi": ["error", "always"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "semi": ["error", "never"],
     "spaced-comment": ["off"],
     "no-prototype-builtins": ["off"],
     "sort-keys": ["off"],
     "space-before-function-paren": ["off"],
     "indent": ["off"],
-    "no-console": ["error", { "allow": ["warn"] }]
+    "no-console": ["error", { "allow": ["warn"] }],
+    "@typescript-eslint/member-delimiter-style": ["error", {
+      "multiline": {
+        "delimiter": "none",
+        "requireLast": true
+      }
+    }]
   },
   "env": {
     "browser": true,
@@ -38,5 +44,8 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["prettier", "@typescript-eslint"]
+  "plugins": ["prettier", "@typescript-eslint"],
+  "globals": {
+    "globalThis": true
+  }
 }
