@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/provider",
-  "version": "2.0.0",
+  "version": "2.0.1-alpha.0",
   "description": "deficonnect provider for Crypto.com DeFi Wallet Extension",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
@@ -43,8 +43,8 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/types": "^2.0.0",
-    "@deficonnect/utils": "^2.0.0",
-    "@deficonnect/websocket-provider": "^2.0.0"
+    "@deficonnect/types": "^2.0.1-alpha.0",
+    "@deficonnect/utils": "^2.0.1-alpha.0",
+    "@deficonnect/websocket-provider": "^2.0.1-alpha.0"
   }
 }
