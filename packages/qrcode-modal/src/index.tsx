@@ -1,4 +1,4 @@
-import { h, render, createRef } from "preact";
+import { h, render, createRef } from 'preact'
 import { formatToCWEURI, isIOS, isAndroid, formatIOSMobile, saveMobileLinkInfo, replaceUriProtocol } from '@deficonnect/utils'
 import { InstallExtensionQRCodeModal } from './components/InstallExtensionModal'
 import QRCode from 'qrcode'
@@ -51,13 +51,15 @@ export class InstallExtensionModalProvider {
     this.render()
   }
 
-  public async open(options: { uri: string, cb: Function }): Promise<void> {
+  public async open(options: { uri: string; cb: Function }): Promise<void> {
     this.closeModalCallback = options.cb
     const CWEURI = formatToCWEURI(options.uri) + '&role=dapp'
     if (isIOS()) {
       const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
-      this.elRef?.current?.setState({ visible: true, singleLinkHref });
+      if (this.elRef?.current?.setState) {
+        this.elRef.current.setState({ visible: true, singleLinkHref })
+      }
       return
     }
     if (isAndroid()) {
@@ -71,14 +73,22 @@ export class InstallExtensionModalProvider {
     }
     try {
       const uri = await new Promise<string>((resolve) => QRCode.toDataURL(CWEURI, (_err, url: string) => resolve(url)))
-      this.elRef?.current?.setState({ visible: true, qrUrl: uri });
+      if (this.elRef?.current?.setState) {
+        this.elRef.current.setState({ visible: true, qrUrl: uri })
+      }
     } catch (error) {
       //
     }
   }
 
+  public openSingleLinkModal(singleLinkHref): void {
+    this.elRef.current.setState({ visible: true, singleLinkHref })
+  }
+
   public close(): void {
-    this.elRef?.current?.setState({ visible: false});
+    if (this.elRef?.current?.setState) {
+      this.elRef.current.setState({ visible: false })
+    }
   }
 
   private onModalClose(): void {
@@ -98,6 +108,6 @@ export class InstallExtensionModalProvider {
         onClose={this.onModalClose.bind(this)}
       />,
       this.root,
-    );
+    )
   }
 }

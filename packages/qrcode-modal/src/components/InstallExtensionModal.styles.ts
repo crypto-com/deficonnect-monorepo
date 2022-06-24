@@ -191,13 +191,15 @@ export const styles: {
       alignSelf: 'stretch',
       justifyContent: 'center',
       marginBottom: '16px',
+      whiteSpace: 'nowrap',
+      transform: 'scale(0.9)',
     },
     text: {
-      fontSize: '10px',
+      fontSize: '12px',
       color: '#5D667B',
     },
     link: {
-      fontSize: '10px',
+      fontSize: '12px',
       color: '#4399F3',
       margin: '0px 4px',
       cursor: 'pointer',

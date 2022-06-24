@@ -1,6 +1,6 @@
 import { ConnectorClient, DEFI_CONNECT_URL, DEFI_CONNECT_VERSION } from '@deficonnect/connector-client'
 import { IDeFiConnectSession, NetworkConfig, IDeFiConnectProvider, IDeFiConnectSessionAddresses, IDeFiConnectSessionAddress } from '@deficonnect/types'
-import { isJsonRpcResponseError, isJsonRpcResponseSuccess, payloadId, signingMethods } from '@deficonnect/utils'
+import { getLocal, isJsonRpcResponseError, isJsonRpcResponseSuccess, isMobile, mobileLinkChoiceKey, payloadId, signingMethods, isIOS } from '@deficonnect/utils'
 import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
 import Emitter from 'events'
 
@@ -46,6 +46,8 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       this.emit('disconnect', { code: 4900, message: 'disconnect' })
       this.emit('chainChanged', this.chainId)
       this.emit('accountsChanged', this.accounts)
+      this.installExtensionModalProvider.close()
+      this.closeSession()
     })
     this.connectorClient.on('sessionUpdate', () => {
       this.emit('chainChanged', this.chainId)
@@ -56,11 +58,7 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
       this.installExtensionModalProvider.open({
  uri,
 cb: () => {
-        this.connectorClient.emit(`response-${session.handshakeId}`, {
-          id: session.handshakeId,
-          jsonrpc: '2.0',
-          error: new Error(ERROR_QRCODE_MODAL_USER_CLOSED),
-        })
+        this.closeSession()
       },
 })
     })
@@ -85,6 +83,18 @@ cb: () => {
 
   get chainType() {
     return this.connectorClient.getSession()?.chainType ?? 'eth'
+  }
+
+  closeSession () {
+    const session = this.connectorClient.getSession()
+    if (!session) {
+      return
+    }
+    this.connectorClient.emit(`response-${session.handshakeId}`, {
+      id: session.handshakeId,
+      jsonrpc: '2.0',
+      error: new Error(ERROR_QRCODE_MODAL_USER_CLOSED),
+    })
   }
 
   async connectEagerly(network: NetworkConfig): Promise<string[]> {
@@ -154,6 +164,16 @@ cb: () => {
         )
     }
     if (signingMethods.includes(args.method)) {
+      if (isMobile()) {
+        const mobileLinkUrl = getLocal(mobileLinkChoiceKey)
+        if (mobileLinkUrl) {
+          if (isIOS()) {
+            this.installExtensionModalProvider.openSingleLinkModal(mobileLinkUrl.href)
+          } else {
+            window.location.href = mobileLinkUrl.href
+          }
+        }
+      }
       return this.sendRpcRequest(args)
     }
     return this.handleOtherRequests(args)

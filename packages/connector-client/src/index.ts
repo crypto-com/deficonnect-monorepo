@@ -31,12 +31,12 @@ export class ConnectorClient extends Emitter {
   constructor(args: ConnectorClientArgs) {
     super()
     this.args = args
-    this.on('dc_sessionUpdate', (req) => {
+    const sessionRequestHandle = (req) => {
       const session = this.getSession()
       if (!isJsonRpcRequest(req)) {
         return
       }
-      if (!session || !session.connected) {
+      if (!session) {
         return
       }
 
@@ -63,7 +63,9 @@ export class ConnectorClient extends Emitter {
       }
       this.setSession(session)
       this.emit('sessionUpdate')
-    })
+    }
+    this.on('wc_sessionUpdate', sessionRequestHandle)
+    this.on('dc_sessionUpdate', sessionRequestHandle)
   }
 
   async decodeJSONRequest(wsMessage: WSMessage) {
@@ -188,6 +190,7 @@ export class ConnectorClient extends Emitter {
       }
       return result
     } catch (error) {
+      this.emit('disconnect')
       this.deleteSession()
       throw error
     }

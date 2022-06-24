@@ -21,7 +21,6 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   private eventCallbacks: EventCallback[] =[]
 
   constructor(network: NetworkConfig) {
-    // super()
     this.networkConfig = network
   }
 
@@ -112,6 +111,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
+    if (!provider.connectEagerly) {
+      return provider.request({ method: 'eth_accounts', params: [] }) as any
+    }
     return provider.connectEagerly(this.networkConfig)
   }
 
@@ -120,6 +122,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
+    if (!provider.connect) {
+      return provider.request({ method: 'eth_requestAccounts', params: [] }) as any
+    }
     return provider.connect(this.networkConfig)
   }
 
@@ -133,7 +138,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
 
   async close(): Promise<void> {
     const provider = await this.getProvider()
-    return provider.close()
+    return provider?.close?.call(provider)
   }
 
   get connected(): boolean {
