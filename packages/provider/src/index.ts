@@ -112,8 +112,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     }
     const provider = await this.getProvider()
     if (!provider.connectEagerly) {
-      const webSocketProvider = new WebSocketProvider(this.networkConfig)
-      return webSocketProvider.connectEagerly(this.networkConfig)
+      return provider.request({ method: 'eth_accounts', params: [] }) as any
     }
     return provider.connectEagerly(this.networkConfig)
   }
@@ -123,6 +122,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
+    if (!provider.connect) {
+      return provider.request({ method: 'eth_accounts', params: [] }) as any
+    }
     return provider.connect(this.networkConfig)
   }
 
