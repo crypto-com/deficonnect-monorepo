@@ -30,8 +30,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
 # [2.0.0](https://github.com/crypto-com/deficonnect-monorepo/compare/v1.1.14...v2.0.0) (2022-06-24)
 
 
