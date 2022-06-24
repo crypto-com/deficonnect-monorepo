@@ -67,7 +67,7 @@ export class DeFiWeb3Connector extends AbstractConnector {
       this.emitDeactivate()
     })
 
-    if (navigator?.userAgent?.includes('DeFiWallet') && !!window.ethereum) {
+    if (typeof navigator !== 'undefined' && navigator?.userAgent?.includes('DeFiWallet') && !!window.ethereum) {
       this._injectConnect = new InjectedConnector({ supportedChainIds: config.supportedChainIds })
     }
   }
