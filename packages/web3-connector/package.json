@@ -1,0 +1,51 @@
+{
+  "name": "@deficonnect/web3-connector",
+  "version": "2.0.1",
+  "description": "deficonnect web3-connector for Crypto.com DeFi Wallet Extension",
+  "author": "DeFi Labs <defilabs@crypto.com>",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/crypto-com/defi-connector",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "unpkg": "dist/index.umd.js",
+  "source": "src/index.ts",
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:pre": "run-s clean",
+    "build:modern": "microbundle -f modern,cjs",
+    "build:umd": "webpack",
+    "build": "run-s build:pre build:modern build:umd",
+    "test": "env TS_NODE_PROJECT=\"tsconfig.cjs.json\" mocha -r ts-node/register ./test/**/*.spec.ts --exit"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.17.10",
+    "@babel/core": "7.17.12",
+    "@babel/node": "7.17.10",
+    "@babel/preset-env": "7.17.10",
+    "@babel/preset-typescript": "7.17.12",
+    "@babel/register": "7.17.7",
+    "@types/chai": "4.2.14",
+    "@types/jest": "22.2.3",
+    "@types/mocha": "8.0.4",
+    "@types/node": "12.12.14",
+    "chai": "4.2.0",
+    "microbundle": "^0.14.2",
+    "mocha": "8.2.1",
+    "npm-run-all": "4.1.5",
+    "ts-node": "9.0.0",
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10"
+  },
+  "dependencies": {
+    "@deficonnect/provider": "^2.0.1",
+    "@deficonnect/types": "^2.0.1",
+    "@web3-react/abstract-connector": "^6.0.7",
+    "tiny-warning": "^1.0.3"
+  }
+}
