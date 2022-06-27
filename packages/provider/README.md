@@ -21,6 +21,8 @@ the global variable is: `DeFiConnectProvider`
 ### constructor
 
 ```javascript
+import { DeFiConnectProvider } from '@deficonnect/provider'
+
 const provider = new DeFiConnectProvider({
   appName: 'your app name'
   chainType: 'eth'
@@ -43,7 +45,7 @@ interface RequestArguments {
 const result = await provider.request(payload: RequestArguments);
 
 // Close provider session
-await provider.disconnect()
+await provider.close()
 ```
 
 - [ethereum RPC methods](./ethereum-rpc.md)
