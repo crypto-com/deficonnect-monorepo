@@ -1,6 +1,10 @@
 name: GPG Commit Test
 
 on:
+  push: 
+    branches:
+      - action-gpg
+
   workflow_dispatch:
 
 jobs:
