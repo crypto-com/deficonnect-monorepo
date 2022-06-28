@@ -3,7 +3,7 @@ name: GPG Commit Test
 on:
   push: 
     branches:
-      - action-gpg
+      - chore/aciton-gpg
 
   workflow_dispatch:
 
