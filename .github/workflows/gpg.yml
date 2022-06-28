@@ -14,7 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: fregante/setup-git-user@v1
+      - run: git config --global user.email "actions@example.com"
+      - run: git config --global user.name "actions"
 
       - name: Import GPG key
         id: import_gpg
@@ -29,5 +30,5 @@ jobs:
         run: |
           echo foo > bar.txt
           git add .
-          git commit -m "This commit is signed!"
+          git commit -S -m "This commit is signed!"
           git push
