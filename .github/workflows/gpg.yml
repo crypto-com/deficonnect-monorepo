@@ -17,6 +17,7 @@ jobs:
       - run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
+          gpg --list-secret-keys --keyid-format=long
 
       - name: Import GPG key
         id: import_gpg
