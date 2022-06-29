@@ -14,8 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - run: git config --global user.email "actions@example.com"
-      - run: git config --global user.name "actions"
+      - run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
 
       - name: Import GPG key
         id: import_gpg
@@ -25,6 +26,8 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           git_user_signingkey: true
           git_commit_gpgsign: true
+          git_committer_name: ${{ github.actor }}
+          git_committer_email: ${{ github.actor}}@users.noreply.github.com
 
       - name: Sign commit and push changes
         run: |
