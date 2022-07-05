@@ -1,5 +1,9 @@
 name: Versioning
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
