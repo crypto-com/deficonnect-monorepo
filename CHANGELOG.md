@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/crypto-com/deficonnect-monorepo/compare/v2.0.1...v2.0.2) (2022-07-05)
+
+
+### Bug Fixes
+
+* use publish:latest to release to npm ([9d03e9a](https://github.com/crypto-com/deficonnect-monorepo/commit/9d03e9a8cfc3ca95204de656c42020aa23f60b61))
+
+
+
+
+
 ## [2.0.1](https://github.com/crypto-com/deficonnect-monorepo/compare/v1.1.14...v2.0.1) (2022-06-24)
 
 
