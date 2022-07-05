@@ -47,7 +47,7 @@ jobs:
       
       # Publish to npm registry
       - name: Publish to NPM
-        run: npx lerna exec -- npm publish --access public
+        run: npm run publish:latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
 
