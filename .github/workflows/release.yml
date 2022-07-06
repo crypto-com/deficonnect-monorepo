@@ -53,13 +53,6 @@ jobs:
         run: npm run publish:latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_TOKEN }}
-
-      - name: Archive Release
-        uses: thedoctor0/zip-release@main
-        with:
-          type: 'zip'
-          filename: v${{ env.pkg_version }}-${{ env.pkg_name }}.zip
-          exclusions: '*.git* /*node_modules/* .editorconfig'
       
       - name: GitHub Release
         uses: softprops/action-gh-release@v1
