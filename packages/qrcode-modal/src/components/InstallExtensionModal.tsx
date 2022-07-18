@@ -32,7 +32,7 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
   }
 
   onTermsClick() {
-    window.open('https://crypto.com/document/ncw_tnc')
+    window.open('https://crypto.com/document/defiwallet_tnc')
   }
 
   onPrivacyClick() {
