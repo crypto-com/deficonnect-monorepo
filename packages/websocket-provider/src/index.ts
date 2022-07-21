@@ -38,6 +38,7 @@ export class WebSocketProvider extends Emitter implements IDeFiConnectProvider {
     this.installExtensionModalProvider = new InstallExtensionModalProvider()
 
     this.connectorClient.on('connect', () => {
+      this.emit('connect', { chainId: this.chainId, accounts: this.accounts })
       this.emit('chainChanged', this.chainId)
       this.emit('accountsChanged', this.accounts)
       this.installExtensionModalProvider.close()

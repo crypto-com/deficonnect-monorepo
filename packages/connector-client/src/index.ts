@@ -46,6 +46,7 @@ export class ConnectorClient extends Emitter {
         this.emit('disconnect')
         return
       }
+      session.connected = true
       if (sessionParam.chainId) {
         session.chainId = sessionParam.chainId
       }

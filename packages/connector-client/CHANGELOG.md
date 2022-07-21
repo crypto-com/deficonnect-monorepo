@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/crypto-com/defi-connector/compare/v2.0.2...v2.0.3) (2022-07-21)
+
+
+### Bug Fixes
+
+* [EIP-1193] add connect event ([62c829f](https://github.com/crypto-com/defi-connector/commit/62c829f5f6f9b29b1ecb37a0219a5be91fb5f676))
+
+
+
+
+
 ## [2.0.2](https://github.com/crypto-com/defi-connector/compare/v2.0.1...v2.0.2) (2022-07-05)
 
 **Note:** Version bump only for package @deficonnect/connector-client
