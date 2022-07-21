@@ -1,6 +1,6 @@
 {
   "name": "@deficonnect/websocket-provider",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "provider for connect to Wallet via websocket",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
@@ -43,9 +43,9 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
-    "@deficonnect/connector-client": "^2.0.2",
-    "@deficonnect/qrcode-modal": "^2.0.2",
-    "@deficonnect/types": "^2.0.2",
-    "@deficonnect/utils": "^2.0.2"
+    "@deficonnect/connector-client": "^2.0.3",
+    "@deficonnect/qrcode-modal": "^2.0.3",
+    "@deficonnect/types": "^2.0.3",
+    "@deficonnect/utils": "^2.0.3"
   }
 }
