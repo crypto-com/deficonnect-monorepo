@@ -114,7 +114,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   }
 
   getDeepLinkUrl(): string {
-    return 'dfw://dapp/detail/'
+    const chainId = this.networkConfig.chainId
+    const rpcUrl = encodeURI(this.networkConfig.rpcUrls[chainId])
+    return `dfw://dapp/detail?dappUrl=${encodeURI(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}`
   }
 
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
@@ -136,7 +138,6 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
-    console.log('this.getProvider', provider)
     if (!provider) {
       this.installExtensionModal.open({ deepLink: this.getDeepLinkUrl() })
       throw new ProviderRpcError(4100, 'wallet not connected')
@@ -152,7 +153,6 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
-    console.log('enable this.getProvider', provider)
     if (!provider) {
       this.installExtensionModal.open({ deepLink: this.getDeepLinkUrl() })
       throw new ProviderRpcError(4100, 'wallet not connected')
