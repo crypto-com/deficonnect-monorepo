@@ -1,6 +1,5 @@
 import { h, Component, FunctionComponent } from 'preact'
 import DeFiLinkIconLight from '../icons/defi-link-icon-light'
-import ConnectStepCameraIcon from '../icons/connect-step-camera-icon'
 import LogoIcon from '../icons/defi-link-icon'
 import FeatureGlobeIcon from '../icons/feature-globe-icon'
 import FeatureLinkIcon from '../icons/feature-link-icon'
@@ -13,7 +12,6 @@ interface InstallExtensionModalProps {
 
 interface InstallExtensionModalStates {
   visible: boolean
-  qrUrl: string
   singleLinkHref: string
 }
 
@@ -21,7 +19,6 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
   constructor() {
     super()
     this.state = {
-      qrUrl: '',
       visible: false,
       singleLinkHref: '',
     }
@@ -118,33 +115,6 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
             <button style={styles.installButton} onClick={this.onInstallButtonClick}>
               Install DeFi Wallet Extension
             </button>
-          </div>
-          <div style={styles.containerRight}>
-            <img style={styles.rightQRcode} src={this.state.qrUrl || ''} alt="qrcode" />
-            <span style={styles.rightTitle}>Scan to Connect</span>
-            <div style={styles.rightStep.container}>
-              <div style={styles.rightStep.desc}>• Open DeFi Wallet Mobile App</div>
-            </div>
-            <div style={styles.rightStep.container}>
-              <div style={styles.rightStep.desc}>• Tap</div>
-              <ConnectStepCameraIcon style={styles.rightStep.camera} />
-              <div style={styles.rightStep.desc}>to switch on the camera</div>
-            </div>
-            <div style={styles.rightStep.container}>
-              <div style={styles.rightStep.desc}>• Scan the QR code above</div>
-            </div>
-            <div style={styles.stretchContainer} />
-            <div style={styles.terms.container}>
-              <div style={styles.terms.text}>Crypto.com DeFi Wallet </div>
-              <div style={styles.terms.link} onClick={this.onTermsClick}>
-                Terms & Conditions
-              </div>
-              <div style={styles.terms.text}>and</div>
-              <div style={styles.terms.link} onClick={this.onPrivacyClick}>
-                Privacy Notice
-              </div>
-            </div>
-            <DownloadAppBanner onDownloadClick={this.onDownloadClick} />
           </div>
         </div>
       </div>

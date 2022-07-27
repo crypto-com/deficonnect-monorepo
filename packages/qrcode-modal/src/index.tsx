@@ -1,16 +1,6 @@
 import { h, render, createRef } from 'preact'
-import { formatToCWEURI, isIOS, isAndroid, formatIOSMobile, saveMobileLinkInfo, replaceUriProtocol } from '@deficonnect/utils'
+import { isIOS, isAndroid, saveMobileLinkInfo } from '@deficonnect/utils'
 import { InstallExtensionQRCodeModal } from './components/InstallExtensionModal'
-import QRCode from 'qrcode'
-
-const iOSRegistryEntry = {
-  name: 'Crypto.com DeFi Wallet',
-  shortName: 'DeFi Wallet',
-  color: 'rgb(17, 153, 250)',
-  logo: './logos/wallet-crypto-defi.png',
-  universalLink: 'https://wallet.crypto.com',
-  deepLink: 'cryptowallet:',
-}
 
 const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
   if (isIOS()) {
@@ -51,11 +41,9 @@ export class InstallExtensionModalProvider {
     this.render()
   }
 
-  public async open(options: { uri: string; cb: Function }): Promise<void> {
-    this.closeModalCallback = options.cb
-    const CWEURI = formatToCWEURI(options.uri) + '&role=dapp'
+  public async open(options: { deepLink: string }): Promise<void> {
+    const singleLinkHref = options.deepLink
     if (isIOS()) {
-      const singleLinkHref = formatIOSMobile(CWEURI, iOSRegistryEntry)
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
       if (this.elRef?.current?.setState) {
         this.elRef.current.setState({ visible: true, singleLinkHref })
@@ -63,18 +51,15 @@ export class InstallExtensionModalProvider {
       return
     }
     if (isAndroid()) {
-      const lowercaseURI = replaceUriProtocol(CWEURI, 'cwe') + '&role=dapp'
       saveMobileLinkInfo({
         name: 'Unknown',
-        href: lowercaseURI, // adnroid side only support lowercase
+        href: singleLinkHref, // adnroid side only support lowercase
       })
-      openDeeplinkOrInstall(lowercaseURI, downloadAppURL)
-      return
+      openDeeplinkOrInstall(singleLinkHref, downloadAppURL)
     }
     try {
-      const uri = await new Promise<string>((resolve) => QRCode.toDataURL(CWEURI, (_err, url: string) => resolve(url)))
       if (this.elRef?.current?.setState) {
-        this.elRef.current.setState({ visible: true, qrUrl: uri })
+        this.elRef.current.setState({ visible: true })
       }
     } catch (error) {
       //

@@ -1,12 +1,26 @@
 
 import { NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
 import { isDeFiConnectProvider } from '@deficonnect/utils'
-import { WebSocketProvider } from '@deficonnect/websocket-provider'
+import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
 
 declare global {
   interface Window {
     ethereum?: any
     deficonnectProvider?: any
+  }
+}
+
+class ProviderRpcError extends Error {
+  code: number
+  message: string
+  constructor(code: number, message: string) {
+    super()
+    this.code = code
+    this.message = message
+  }
+
+  toString() {
+    return `${this.message} (${this.code})`
   }
 }
 
@@ -19,9 +33,11 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   isDeficonnectProvider = true
   deficonnectProvider?: IDeFiConnectProvider
   private eventCallbacks: EventCallback[] =[]
+  installExtensionModal: InstallExtensionModalProvider
 
   constructor(network: NetworkConfig) {
     this.networkConfig = network
+    this.installExtensionModal = new InstallExtensionModalProvider()
   }
 
   on(event: string, listener: (...args: any[]) => void): this {
@@ -48,7 +64,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     })
   }
 
-  async getProvider(): Promise<IDeFiConnectProvider> {
+  async getProvider(): Promise<IDeFiConnectProvider | undefined> {
     async function checkInjectProvider(times = 0): Promise<any> {
       return new Promise((resolve) => {
         function check() {
@@ -64,7 +80,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
             setTimeout(async () => {
               --times
               check()
-            }, 100)
+            }, 50)
             return
           }
           resolve(undefined)
@@ -73,21 +89,12 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       })
     }
     if (!this.deficonnectProvider) {
-      const injectProvider = await checkInjectProvider(10)
-      if (injectProvider) {
-        this.deficonnectProvider = injectProvider
+      this.deficonnectProvider = await checkInjectProvider(10)
+      if (this.deficonnectProvider) {
         this.setupProviderEvent()
       }
     }
-
-    if (this.deficonnectProvider) {
-      return this.deficonnectProvider
-    } else {
-      const provider = new WebSocketProvider(this.networkConfig)
-      this.deficonnectProvider = provider
-      this.setupProviderEvent()
-      return provider
-    }
+    return this.deficonnectProvider
   }
 
   get chainId() {
@@ -106,11 +113,18 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     return this.deficonnectProvider?.chainType ?? 'eth'
   }
 
+  getDeepLinkUrl(): string {
+    return 'dfw://dapp/detail/'
+  }
+
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
     if (network) {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
+    if (!provider) {
+      throw new ProviderRpcError(4100, 'wallet not connected')
+    }
     if (!provider.connectEagerly) {
       return provider.request({ method: 'eth_accounts', params: [] }) as any
     }
@@ -122,6 +136,11 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
+    console.log('this.getProvider', provider)
+    if (!provider) {
+      this.installExtensionModal.open({ deepLink: this.getDeepLinkUrl() })
+      throw new ProviderRpcError(4100, 'wallet not connected')
+    }
     if (!provider.connect) {
       return provider.request({ method: 'eth_requestAccounts', params: [] }) as any
     }
@@ -133,6 +152,11 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.networkConfig = network
     }
     const provider = await this.getProvider()
+    console.log('enable this.getProvider', provider)
+    if (!provider) {
+      this.installExtensionModal.open({ deepLink: this.getDeepLinkUrl() })
+      throw new ProviderRpcError(4100, 'wallet not connected')
+    }
     return provider.enable(this.networkConfig)
   }
 
@@ -147,6 +171,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
 
   async request(args: JsonRpcRequestArguments): Promise<unknown> {
     const provider = await this.getProvider()
+    if (!provider) {
+      throw new ProviderRpcError(4100, 'wallet not connected')
+    }
     return provider.request(args)
   }
 }
