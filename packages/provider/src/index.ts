@@ -116,7 +116,8 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   getDeepLinkUrl(): string {
     const chainId = this.networkConfig.chainId
     const rpcUrl = encodeURI(this.networkConfig.rpcUrls[chainId])
-    return `dfw://dapp/detail?dappUrl=${encodeURI(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}`
+    const deepLink = `dfw://dapp/detail?dappUrl=${encodeURI(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}`
+    return `https://wallet.crypto.com/magic?url=${encodeURI(deepLink)}`
   }
 
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
