@@ -116,9 +116,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
 
   getDeepLinkUrl(): string {
     const chainId = this.networkConfig.chainId
-    const rpcUrl = encodeURI(this.networkConfig.rpcUrls[chainId])
-    const deepLink = `dfw://dapp/detail?dappUrl=${encodeURI(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}`
-    return `https://uniswap-interface-jet.vercel.app/deeplink?url=${encodeURI(deepLink)}&source=deficonnect&version=${version}`
+    const rpcUrl = encodeURIComponent(this.networkConfig.rpcUrls[chainId])
+    const deepLink = `dfw://dapp/detail?dappUrl=${encodeURIComponent(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}`
+    return `https://uniswap-interface-jet.vercel.app/deeplink?url=${encodeURIComponent(deepLink)}&source=deficonnect&version=${version}`
   }
 
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
