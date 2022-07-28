@@ -2,6 +2,7 @@
 import { NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
 import { isDeFiConnectProvider } from '@deficonnect/utils'
 import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
+import { version } from '../package.json'
 
 declare global {
   interface Window {
@@ -117,7 +118,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     const chainId = this.networkConfig.chainId
     const rpcUrl = encodeURI(this.networkConfig.rpcUrls[chainId])
     const deepLink = `dfw://dapp/detail?dappUrl=${encodeURI(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}`
-    return `https://wallet.crypto.com/magic?url=${encodeURI(deepLink)}`
+    return `https://wallet.crypto.com/magic?url=${encodeURI(deepLink)}&source=deficonnect&version=${version}`
   }
 
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
