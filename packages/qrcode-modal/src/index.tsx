@@ -1,6 +1,8 @@
 import { h, render, createRef } from 'preact'
 import { isIOS, isAndroid, saveMobileLinkInfo } from '@deficonnect/utils'
 import { InstallExtensionQRCodeModal } from './components/InstallExtensionModal'
+import { NetworkConfig } from '@deficonnect/types'
+import { version } from '../package.json'
 
 const openDeeplinkOrInstall = (deepLink: string, installURL: string): void => {
   if (isIOS()) {
@@ -41,8 +43,10 @@ export class InstallExtensionModalProvider {
     this.render()
   }
 
-  public async open(options: { deepLink: string }): Promise<void> {
-    const singleLinkHref = options.deepLink
+  public async open(options: { networkConfig: NetworkConfig }): Promise<void> {
+    const chainId = options.networkConfig.chainId
+    const rpcUrl = encodeURIComponent(options.networkConfig.rpcUrls[chainId])
+    const singleLinkHref = `dfw://dapp/detail?dappUrl=${encodeURIComponent(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}&version=${version}&source=deficonnect`
     if (isIOS()) {
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
       if (this.elRef?.current?.setState) {

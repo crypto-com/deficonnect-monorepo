@@ -2,7 +2,6 @@
 import { NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
 import { isDeFiConnectProvider } from '@deficonnect/utils'
 import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
-import { version } from '../package.json'
 
 declare global {
   interface Window {
@@ -114,13 +113,6 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     return this.deficonnectProvider?.chainType ?? 'eth'
   }
 
-  getDeepLinkUrl(): string {
-    const chainId = this.networkConfig.chainId
-    const rpcUrl = encodeURIComponent(this.networkConfig.rpcUrls[chainId])
-    const deepLink = `dfw://dapp/detail?dappUrl=${encodeURIComponent(location.href)}&chainId=${chainId}&rpcUrl=${rpcUrl}`
-    return `https://uniswap-interface-jet.vercel.app/deeplink?url=${encodeURIComponent(deepLink)}&source=deficonnect&version=${version}`
-  }
-
   async connectEagerly(network?: NetworkConfig): Promise<string[]> {
     if (network) {
       this.networkConfig = network
@@ -141,7 +133,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     }
     const provider = await this.getProvider()
     if (!provider) {
-      this.installExtensionModal.open({ deepLink: this.getDeepLinkUrl() })
+      this.installExtensionModal.open({ networkConfig: this.networkConfig })
       throw new ProviderRpcError(4100, 'wallet not connected')
     }
     if (!provider.connect) {
@@ -156,7 +148,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     }
     const provider = await this.getProvider()
     if (!provider) {
-      this.installExtensionModal.open({ deepLink: this.getDeepLinkUrl() })
+      this.installExtensionModal.open({ networkConfig: this.networkConfig })
       throw new ProviderRpcError(4100, 'wallet not connected')
     }
     return provider.enable(this.networkConfig)
