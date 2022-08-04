@@ -136,7 +136,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       this.installExtensionModal.open({ networkConfig: this.networkConfig })
       throw new ProviderRpcError(4100, 'wallet not connected')
     }
-    if (!provider.connect) {
+    if (typeof provider.connect !== 'function') {
       return provider.request({ method: 'eth_requestAccounts', params: [] }) as any
     }
     return provider.connect(this.networkConfig)
@@ -150,6 +150,9 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     if (!provider) {
       this.installExtensionModal.open({ networkConfig: this.networkConfig })
       throw new ProviderRpcError(4100, 'wallet not connected')
+    }
+    if (typeof provider.enable !== 'function') {
+      return provider.request({ method: 'eth_requestAccounts', params: [] }) as any
     }
     return provider.enable(this.networkConfig)
   }
@@ -169,5 +172,33 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
       throw new ProviderRpcError(4100, 'wallet not connected')
     }
     return provider.request(args)
+  }
+
+  /**
+   * @deprecated Use request() method instead.
+   */
+  async sendAsync(payload: any, callback: any) {
+    const provider = await this.getProvider() as any
+    if (!provider) {
+      throw new ProviderRpcError(4100, 'wallet not connected')
+    }
+    if (typeof provider.sendAsync !== 'function') {
+      throw new ProviderRpcError(4100, 'function not support')
+    }
+    return provider.sendAsync(payload, callback)
+  }
+
+  /**
+   * @deprecated Use request() method instead.
+   */
+  async send(payload) {
+    const provider = await this.getProvider() as any
+    if (!provider) {
+      throw new ProviderRpcError(4100, 'wallet not connected')
+    }
+    if (typeof provider.send !== 'function') {
+      throw new ProviderRpcError(4100, 'function not support')
+    }
+    return provider.send(payload)
   }
 }
