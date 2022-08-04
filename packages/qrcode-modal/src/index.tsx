@@ -61,6 +61,9 @@ export class InstallExtensionModalProvider {
         href: singleLinkHref, // adnroid side only support lowercase
       })
       openDeeplinkOrInstall(singleLinkHref, downloadAppURL)
+      if (this.elRef?.current?.setState) {
+        this.elRef.current.setState({ visible: true, singleLinkHref })
+      }
       return
     }
     try {
