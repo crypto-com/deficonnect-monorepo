@@ -44,10 +44,10 @@ export class InstallExtensionModalProvider {
   }
 
   public async open(options: { networkConfig: NetworkConfig }): Promise<void> {
-    // const chainId = options.networkConfig.chainId
-    // const rpcUrl = encodeURIComponent(options.networkConfig.rpcUrls[chainId])
+    const chainId = options.networkConfig.chainId
+    const rpcUrl = encodeURIComponent(options.networkConfig.rpcUrls[chainId])
     const dappUrl = encodeURIComponent(location.href)
-    const singleLinkHref = `dfw://dapp/detail?dappUrl=${dappUrl}&version=${version}&source=deficonnect`
+    const singleLinkHref = `dfw://dapp/detail?dappUrl=${dappUrl}&rpcUrl=${rpcUrl}&chainId=${chainId}&version=${version}&source=deficonnect`
     if (isIOS()) {
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
       if (this.elRef?.current?.setState) {
@@ -60,10 +60,7 @@ export class InstallExtensionModalProvider {
         name: 'Unknown',
         href: singleLinkHref, // adnroid side only support lowercase
       })
-      if (this.elRef?.current?.setState) {
-        this.elRef.current.setState({ visible: true, singleLinkHref })
-      }
-      // openDeeplinkOrInstall(singleLinkHref, downloadAppURL)
+      openDeeplinkOrInstall(singleLinkHref, downloadAppURL)
       return
     }
     try {
