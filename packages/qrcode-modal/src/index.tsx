@@ -44,10 +44,10 @@ export class InstallExtensionModalProvider {
   }
 
   public async open(options: { networkConfig: NetworkConfig }): Promise<void> {
-    // const chainId = options.networkConfig.chainId
-    // const rpcUrl = encodeURIComponent(options.networkConfig.rpcUrls[chainId])
+    const chainId = options.networkConfig.chainId
+    const chainType = options.networkConfig.chainType
     const dappUrl = encodeURIComponent(location.href)
-    const singleLinkHref = `dfw://dapp/detail?dappUrl=${dappUrl}&version=${version}&source=deficonnect`
+    const singleLinkHref = `dfw://dapp/detail?dappUrl=${dappUrl}&chainId=${chainId}&chainType=${chainType}&version=${version}&source=deficonnect`
     if (isIOS()) {
       saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
       if (this.elRef?.current?.setState) {
