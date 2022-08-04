@@ -82,6 +82,8 @@ export class DeFiWeb3Connector extends AbstractConnector {
       account = await this.provider
         .request({ method: 'eth_accounts' })
         .then((sendReturn: any) => parseSendReturn(sendReturn)[0])
+      // dapp browser sometimes will return a white space string, like: '   '
+      account = account.trim()
     } catch (error) {
       if ((error as any).code === 4001) {
         throw new UserRejectedRequestError()
