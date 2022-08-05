@@ -77,24 +77,32 @@ export class DeFiWeb3Connector extends AbstractConnector {
 
   public async activate(): Promise<ConnectorUpdate> {
     // try to activate + get account via eth_accounts
+    console.log('activate window.ethereum:', window.ethereum)
+    console.log('activate')
+    console.error('useragent' + navigator?.userAgent)
+    console.error('useragent DeFiWallet:' + navigator?.userAgent?.includes('DeFiWallet'))
     let account
     try {
+      console.error('activate eth_accounts 1')
       account = await this.provider
         .request({ method: 'eth_accounts' })
         .then((sendReturn: any) => parseSendReturn(sendReturn)[0])
       // dapp browser sometimes will return a white space string, like: '   '
+      console.error('activate eth_accounts result:' + account)
       account = account.trim()
+      console.error('activate eth_accounts result trim:' + account)
     } catch (error) {
       if ((error as any).code === 4001) {
         throw new UserRejectedRequestError()
       }
       warning(false, 'eth_accounts was unsuccessful, falling back to enable')
     }
-
     // if unsuccessful, try enable
     if (!account) {
+      console.error('activate eth_requestAccounts')
       // if enable is successful but doesn't return accounts, fall back to getAccount (not happy i have to do this...)
-      account = await this.provider.connect().then((sendReturn: any) => sendReturn && parseSendReturn(sendReturn)[0])
+      account = await this.provider.connect().then((sendReturn: any) => sendReturn && parseSendReturn(sendReturn)[0]).catch(console.error)
+      console.error('activate eth_requestAccounts result:' + account)
     }
 
     return { provider: this.provider, ...(account ? { account } : {}) }

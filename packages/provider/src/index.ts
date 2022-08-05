@@ -72,7 +72,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
             resolve(window.deficonnectProvider)
             return
           }
-          if (navigator?.userAgent?.includes('DeFiWallet') && window.ethereum) {
+          if (window.ethereum) {
             resolve(window.ethereum)
             return
           }
@@ -119,7 +119,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     }
     const provider = await this.getProvider()
     if (!provider) {
-      throw new ProviderRpcError(4100, 'wallet not connected')
+      throw new ProviderRpcError(4100, 'can not find deficonnect provider')
     }
     if (!provider.connectEagerly) {
       return provider.request({ method: 'eth_accounts', params: [] }) as any
@@ -134,7 +134,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     const provider = await this.getProvider()
     if (!provider) {
       this.installExtensionModal.open({ networkConfig: this.networkConfig })
-      throw new ProviderRpcError(4100, 'wallet not connected')
+      throw new ProviderRpcError(4100, 'can not find deficonnect provider')
     }
     if (typeof provider.connect !== 'function') {
       return provider.request({ method: 'eth_requestAccounts', params: [] }) as any
@@ -149,7 +149,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
     const provider = await this.getProvider()
     if (!provider) {
       this.installExtensionModal.open({ networkConfig: this.networkConfig })
-      throw new ProviderRpcError(4100, 'wallet not connected')
+      throw new ProviderRpcError(4100, 'can not find deficonnect provider')
     }
     if (typeof provider.enable !== 'function') {
       return provider.request({ method: 'eth_requestAccounts', params: [] }) as any
@@ -169,7 +169,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   async request(args: JsonRpcRequestArguments): Promise<unknown> {
     const provider = await this.getProvider()
     if (!provider) {
-      throw new ProviderRpcError(4100, 'wallet not connected')
+      throw new ProviderRpcError(4100, 'can not find deficonnect provider')
     }
     return provider.request(args)
   }
@@ -180,7 +180,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
   async sendAsync(payload: any, callback: any) {
     const provider = await this.getProvider() as any
     if (!provider) {
-      throw new ProviderRpcError(4100, 'wallet not connected')
+      throw new ProviderRpcError(4100, 'can not find deficonnect provider')
     }
     if (typeof provider.sendAsync !== 'function') {
       throw new ProviderRpcError(4100, 'function not support')
