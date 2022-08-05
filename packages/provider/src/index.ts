@@ -72,7 +72,7 @@ export class DeFiConnectProvider implements IDeFiConnectProvider {
             resolve(window.deficonnectProvider)
             return
           }
-          if (window.ethereum) {
+          if (navigator?.userAgent?.includes('DeFiWallet') && window.ethereum) {
             resolve(window.ethereum)
             return
           }
