@@ -5,7 +5,11 @@ export const styles: {
   overlay: CSSProperties
   container: CSSProperties
   deepLinkContainer: CSSProperties
+  closeBtn: CSSProperties
   deepLinkHeader: CSSProperties
+  deepLinkBody: CSSProperties
+  deepLinkTips: CSSProperties
+  linkBtn: CSSProperties
   btnWrap: CSSProperties
   containerLeft: CSSProperties
   header: CSSProperties
@@ -46,25 +50,56 @@ export const styles: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    background: '#ffffff',
+    borderRadius: '8px',
+    position: 'relative'
+  },
+  closeBtn: {
+    position: 'absolute',
+    top: '16px',
+    right: '16px'
   },
   deepLinkHeader: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '20px',
-    marginBottom: '10px',
+    marginTop: '52px',
+    marginBottom: '32px',
+  },
+  deepLinkBody: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '16px',
+  },
+  deepLinkTips: {
+    width: '300px',
+    display: 'block',
+    textAlign: 'center',
+    fontWeight: 500,
+    fontSize: '14px',
+    lineHeight: '20px',
+    margin: '0 auto',
+    color: '#808C99'
+  },
+  linkBtn: {
+    display: 'block',
+    fontWeight: 600,
+    lineHeight: '20px',
+    color: '#1199FA',
+    textAlign: 'center',
+    marginBottom: '24px'
   },
   btnWrap: {
     display: 'flex',
     justifyContent: 'center',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    paddingBottom: '30px',
+    paddingLeft: '24px',
+    paddingRight: '24px',
+    paddingBottom: '24px',
   },
   containerLeft: {
     display: 'flex',
     flexDirection: 'column',
-    marginRight: '40px',
     flexShrink: 1,
     minWidth: '450px',
   },
@@ -120,65 +155,5 @@ export const styles: {
     alignSelf: 'flex-start',
     cursor: 'pointer',
     zIndex: 1001,
-  },
-}
-
-export const BannerStyles: {
-  container: CSSProperties
-  logoIcon: CSSProperties
-  textContainer: CSSProperties
-  title: CSSProperties
-  desc: CSSProperties
-  button: CSSProperties
-} = {
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'stretch',
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    backgroundColor: 'white',
-  },
-  logoIcon: {
-    width: '30px',
-    height: '30px',
-    padding: '5px',
-    backgroundColor: 'white',
-    filter: 'drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.16))',
-    borderRadius: '6px',
-  },
-  textContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    flex: 1,
-  },
-  title: {
-    fontWeight: 600,
-    fontSize: '14px',
-    lineHeight: '150%',
-    color: '#323C52',
-  },
-  desc: {
-    fontWeight: 500,
-    fontSize: '10px',
-    lineHeight: '150%',
-    color: '#7B849B',
-  },
-  button: {
-    width: '75px',
-    height: '34px',
-    background: '#1199FA',
-    border: '0px solid white',
-    borderRadius: '4px',
-    fontWeight: 600,
-    fontSize: '12px',
-    color: '#FFFFFF',
-    marginRight: '12px',
-    cursor: 'pointer',
-    zIndex: 1001,
-    paddingLeft: '4px',
-    paddingRight: '4px',
-    marginLeft: '4px',
   },
 }
