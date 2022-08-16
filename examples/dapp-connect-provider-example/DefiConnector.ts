@@ -71,25 +71,8 @@ export class DeFiConnector extends AbstractConnector {
   }
 
   public async activate(): Promise<ConnectorUpdate> {
-    // try to activate + get account via eth_accounts
-    let account
-    try {
-      account = await this.provider
-        .request({ method: 'eth_accounts' })
-        .then((sendReturn: any) => parseSendReturn(sendReturn)[0])
-    } catch (error) {
-      if ((error as any).code === 4001) {
-        throw new UserRejectedRequestError()
-      }
-      console.error('eth_accounts error', error)
-      console.warn(false, 'eth_accounts was unsuccessful, falling back to enable')
-    }
-
-    // if unsuccessful, try enable
-    if (!account) {
-      // if enable is successful but doesn't return accounts, fall back to getAccount (not happy i have to do this...)
-      account = await this.provider.connect().then((sendReturn: any) => sendReturn && parseSendReturn(sendReturn)[0])
-    }
+    // if enable is successful but doesn't return accounts, fall back to getAccount (not happy i have to do this...)
+    const account = await this.provider.connect().then((sendReturn: any) => sendReturn && parseSendReturn(sendReturn)[0])
 
     return { provider: this.provider, ...(account ? { account } : {}) }
   }
@@ -137,14 +120,6 @@ export class DeFiConnector extends AbstractConnector {
         .then((sendReturn: any) => parseSendReturn(sendReturn)[0])
     } catch {
       console.warn(false, 'eth_accounts was unsuccessful, falling back to enable')
-    }
-
-    if (!account) {
-      try {
-        account = await this.provider.enable().then((sendReturn: any) => parseSendReturn(sendReturn)[0])
-      } catch {
-        console.warn(false, 'enable was unsuccessful, falling back to eth_accounts v2')
-      }
     }
 
     return account

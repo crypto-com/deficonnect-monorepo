@@ -8,7 +8,6 @@ export const styles: {
   deepLinkHeader: CSSProperties
   btnWrap: CSSProperties
   containerLeft: CSSProperties
-  containerRight: CSSProperties
   header: CSSProperties
   headerLogo: CSSProperties
   headerText: CSSProperties
@@ -18,20 +17,6 @@ export const styles: {
   featureIcon: CSSProperties
   featureText: CSSProperties
   installButton: CSSProperties
-  rightQRcode: CSSProperties
-  rightTitle: CSSProperties
-  stretchContainer: CSSProperties
-  terms: {
-    container: CSSProperties
-    text: CSSProperties
-    link: CSSProperties
-  }
-  rightStep: {
-    container: CSSProperties
-    dot: CSSProperties
-    desc: CSSProperties
-    camera: CSSProperties
-  }
 } = {
   overlay: {
     background: 'rgba(12, 12, 15, 0.7)',
@@ -135,75 +120,6 @@ export const styles: {
     alignSelf: 'flex-start',
     cursor: 'pointer',
     zIndex: 1001,
-  },
-  containerRight: {
-    flexShrink: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'stretch',
-    alignItems: 'center',
-    backgroundColor: '#F7F9FA',
-    width: '360px',
-    height: '497px',
-    borderRadius: '16px',
-    overflow: 'hidden',
-  },
-  rightQRcode: {
-    flexGrow: 0,
-    marginTop: '48px',
-    width: '160px',
-    height: '160px',
-    filter: 'drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.16))',
-    borderRadius: '8px',
-  },
-  rightTitle: {
-    fontWeight: 600,
-    fontSize: '22px',
-    color: '#323C52',
-    margin: '32px 0px 8px 0px',
-  },
-  stretchContainer: {
-    display: 'flex',
-    flex: 1,
-    flexGrow: 1,
-  },
-  rightStep: {
-    container: {
-      display: 'flex',
-      flexDirection: 'row',
-      marginTop: '8px',
-      alignSelf: 'flex-start',
-      marginLeft: '46px',
-    },
-    dot: {},
-    desc: {
-      fontSize: '16px',
-      color: '#5D667B',
-    },
-    camera: {
-      margin: '0px 8px',
-    },
-  },
-  terms: {
-    container: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignSelf: 'stretch',
-      justifyContent: 'center',
-      marginBottom: '16px',
-      whiteSpace: 'nowrap',
-      transform: 'scale(0.9)',
-    },
-    text: {
-      fontSize: '12px',
-      color: '#5D667B',
-    },
-    link: {
-      fontSize: '12px',
-      color: '#4399F3',
-      margin: '0px 4px',
-      cursor: 'pointer',
-    },
   },
 }
 

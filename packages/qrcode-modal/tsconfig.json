@@ -5,6 +5,7 @@
     "rootDir": "src",
     "jsx": "react",
     "jsxFactory": "h",
+    "resolveJsonModule" : false
   },
   "include": ["./src/**/*"]
 }

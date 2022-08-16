@@ -43,8 +43,8 @@
     "webpack-cli": "3.3.10"
   },
   "dependencies": {
+    "@deficonnect/qrcode-modal": "^2.0.3",
     "@deficonnect/types": "^2.0.3",
-    "@deficonnect/utils": "^2.0.3",
-    "@deficonnect/websocket-provider": "^2.0.3"
+    "@deficonnect/utils": "^2.0.3"
   }
 }
