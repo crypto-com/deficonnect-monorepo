@@ -140,7 +140,7 @@ declare module "@deficonnect/types" {
 
 
   export interface RpcUrlConfig {
-    [rpcUrl: string]: string
+    [chainId: string]: string
   }
 
   export interface EthCustomNodeConfig {
