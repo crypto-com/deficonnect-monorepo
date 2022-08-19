@@ -24,15 +24,18 @@ the global variable is: `DeFiConnectProvider`
 import { DeFiConnectProvider } from '@deficonnect/provider'
 
 const provider = new DeFiConnectProvider({
-  appName: 'your app name'
-  chainType: 'eth'
-  chainId: '28' // for eth is 1
+  appName: 'your app name',
+  chainType: 'eth', // currently support 'eth' | 'cosmos'
+  chainId: '25', // for eth is 1
   rpcUrls: {
     1: 'https://mainnet.infura.io/v3/INFURA_API_KEY',
-    28: 'https://evm-cronos.crypto.org/',
-  }
+    25: 'https://evm-cronos.crypto.org/',
+  },
 })
 ```
+
+> if you want to support cosmos like chain, please read: [@deficonnect/cosmos-signer](https://github.com/crypto-com/deficonnect-monorepo/tree/develop/packages/cosmos-signer)
+> cosmos support: [docs](https://github.com/crypto-com/deficonnect-monorepo/wiki/Chrome-Extension-Wallet-Integration#cosmos-rpc-api)
 
 ### Provider(EIP-1193)
 ```typescript

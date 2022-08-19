@@ -21,15 +21,18 @@ the global variable is: `DeFiWeb3Connector`
 ```javascript
 const connector = new DeFiWeb3Connector({
   supportedChainIds: [1],
-  appName: 'your app name'
-  chainType: 'eth'
-  chainId: '28' // for eth is 1
+  appName: 'your app name',
+  chainType: 'eth', // only support 'eth' for DeFiWeb3Connector
+  chainId: '25', // for eth is 1
   rpcUrls: {
     1: 'https://mainnet.infura.io/v3/INFURA_API_KEY',
-    28: 'https://evm-cronos.crypto.org/',
-  }
+    25: 'https://evm-cronos.crypto.org/',
+  },
 })
+
 ```
+
+> if you want to support cosmos like chain, please use: [@deficonnect/provider](https://github.com/crypto-com/deficonnect-monorepo/tree/develop/packages/cosmos-signer) directly
 
 ## Usage
 
@@ -43,13 +46,13 @@ import { DeFiWeb3Connector } from '@deficonnect/web3-connector'
 
 const connector = new DeFiWeb3Connector({
   supportedChainIds: [1],
-  appName: 'your app name'
-  chainType: 'eth'
-  chainId: '28' // for eth is 1
+  appName: 'your app name',
+  chainType: 'eth', // only support 'eth' for DeFiWeb3Connector
+  chainId: '25', // for eth is 1
   rpcUrls: {
     1: 'https://mainnet.infura.io/v3/INFURA_API_KEY',
-    28: 'https://evm-cronos.crypto.org/',
-  }
+    25: 'https://evm-cronos.crypto.org/',
+  },
 })
 connector.activate()
 ```
