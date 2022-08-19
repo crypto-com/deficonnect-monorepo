@@ -1,11 +1,12 @@
-import { h, Component, FunctionComponent } from 'preact'
-import DeFiLinkIconLight from '../icons/defi-link-icon-light'
-import ConnectStepCameraIcon from '../icons/connect-step-camera-icon'
+import { h, Component } from 'preact'
 import LogoIcon from '../icons/defi-link-icon'
 import FeatureGlobeIcon from '../icons/feature-globe-icon'
 import FeatureLinkIcon from '../icons/feature-link-icon'
 import FeatureLockIcon from '../icons/feature-lock-icon'
-import { styles, BannerStyles } from './InstallExtensionModal.styles'
+import DeFiLinkIconMobile from '../icons/defi-link-icon-mobile'
+import DeFiMainIconMobile from '../icons/defi-main-icon-mobile'
+import FeatureCloseIcon from '../icons/feature-close-icon'
+import { styles } from './InstallExtensionModal.styles'
 
 interface InstallExtensionModalProps {
   onClose?: Function
@@ -13,7 +14,6 @@ interface InstallExtensionModalProps {
 
 interface InstallExtensionModalStates {
   visible: boolean
-  qrUrl: string
   singleLinkHref: string
 }
 
@@ -21,7 +21,6 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
   constructor() {
     super()
     this.state = {
-      qrUrl: '',
       visible: false,
       singleLinkHref: '',
     }
@@ -29,14 +28,6 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
 
   onInstallButtonClick() {
     window.open('https://wallet.crypto.com/api/v1/extension/install')
-  }
-
-  onTermsClick() {
-    window.open('https://crypto.com/document/ncw_tnc')
-  }
-
-  onPrivacyClick() {
-    window.open('https://crypto.com/privacy/ncw')
   }
 
   onDownloadClick() {
@@ -68,25 +59,31 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
     if (this.state.singleLinkHref) {
       return (
         <div style={styles.overlay} onClick={this.closeModalClick.bind(this)}>
-          <div style={styles.container} onClick={this.stopPropagation}>
-            <div style={styles.deepLinkContainer}>
-              <div style={styles.deepLinkHeader}>
-                <LogoIcon />
-                <div style={styles.headerText}>crypto.com</div>
-              </div>
-              <div style={styles.btnWrap}>
-                <a
-                  style={styles.installButton}
-                  href={this.state.singleLinkHref}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  onClick={this.closeSingleLinkModal.bind(this)}
-                >
-                  Open DeFi Wallet Mobile App
-                </a>
-              </div>
-              <DownloadAppBanner onDownloadClick={this.onDownloadClick} />
+          <div style={styles.deepLinkContainer} onClick={this.stopPropagation}>
+            <div style={styles.closeBtn} onClick={this.closeModalClick.bind(this)}>
+              <FeatureCloseIcon />
             </div>
+            <div style={styles.deepLinkHeader}>
+              <DeFiLinkIconMobile />
+            </div>
+            <div style={styles.deepLinkBody}>
+              <DeFiMainIconMobile />
+            </div>
+            <span style={styles.deepLinkTips}>A non-custodial wallet that gives you access to a full suite of DeFi Wallet services in one place</span>
+            <div style={styles.btnWrap}>
+              <a
+                style={styles.installButton}
+                href={this.state.singleLinkHref}
+                rel="noopener noreferrer"
+                target="_blank"
+                onClick={this.closeSingleLinkModal.bind(this)}
+              >
+                Open DeFi Wallet Mobile App
+              </a>
+            </div>
+            <span style={styles.linkBtn} onClick={this.onDownloadClick}>
+              Download App
+            </span>
           </div>
         </div>
       )
@@ -119,54 +116,8 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
               Install DeFi Wallet Extension
             </button>
           </div>
-          <div style={styles.containerRight}>
-            <img style={styles.rightQRcode} src={this.state.qrUrl || ''} alt="qrcode" />
-            <span style={styles.rightTitle}>Scan to Connect</span>
-            <div style={styles.rightStep.container}>
-              <div style={styles.rightStep.desc}>• Open DeFi Wallet Mobile App</div>
-            </div>
-            <div style={styles.rightStep.container}>
-              <div style={styles.rightStep.desc}>• Tap</div>
-              <ConnectStepCameraIcon style={styles.rightStep.camera} />
-              <div style={styles.rightStep.desc}>to switch on the camera</div>
-            </div>
-            <div style={styles.rightStep.container}>
-              <div style={styles.rightStep.desc}>• Scan the QR code above</div>
-            </div>
-            <div style={styles.stretchContainer} />
-            <div style={styles.terms.container}>
-              <div style={styles.terms.text}>Crypto.com DeFi Wallet </div>
-              <div style={styles.terms.link} onClick={this.onTermsClick}>
-                Terms & Conditions
-              </div>
-              <div style={styles.terms.text}>and</div>
-              <div style={styles.terms.link} onClick={this.onPrivacyClick}>
-                Privacy Notice
-              </div>
-            </div>
-            <DownloadAppBanner onDownloadClick={this.onDownloadClick} />
-          </div>
         </div>
       </div>
     )
   }
-}
-
-interface DownloadAppBannerProps {
-  onDownloadClick: () => void
-}
-const DownloadAppBanner: FunctionComponent<DownloadAppBannerProps> = (props) => {
-  const { onDownloadClick } = props
-  return (
-    <div style={BannerStyles.container}>
-      <DeFiLinkIconLight />
-      <div style={BannerStyles.textContainer}>
-        <div style={BannerStyles.title}>Crypto.com DeFi Wallet</div>
-        <div style={BannerStyles.desc}>Your Keys, Your Crypto.</div>
-      </div>
-      <button style={BannerStyles.button} onClick={onDownloadClick}>
-        Download
-      </button>
-    </div>
-  )
 }
