@@ -87,8 +87,7 @@ export class DeFiConnectBaseProvider extends Emitter {
     return this.connectorClient.sendRequest({ method: 'aptos_disconnect' })
   }
 
-  setResponse(responseString: string) {
-    const response = JSON.parse(responseString)
+  setResponse(response: any) {
     const payload = {
       ...response,
       jsonrpc: '2.0',

@@ -51,7 +51,7 @@ export class ConnectorClient extends Emitter {
       ...msg,
     }
     if (window.deficonnect && window.deficonnect.postMessage) {
-      window.deficonnect.postMessage(JSON.stringify(requestPayload))
+      window.deficonnect.postMessage(requestPayload)
     } else {
       throw new ProviderRpcError(4100, 'provider is not ready')
     }
