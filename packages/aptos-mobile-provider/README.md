@@ -16,5 +16,4 @@ This package is mainly for mobile in app browser usage, now support the [Aptos b
 |------------------|-------------|--------------|---------|---------|
 | updateAccount    |             | `() => void` |         | -       |
 | updateNetwork    |             | `() => void` |         | -       |
-| connect          |             | `() => void` |         |         |
-| mobileDisconnect |             | `() => void` |         |         |
+| mobileDisconnect |             | `() => void` |         | -       |
