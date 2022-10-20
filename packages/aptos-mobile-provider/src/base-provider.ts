@@ -1,22 +1,15 @@
 import Emitter from 'events'
 import { ConnectorClient } from './connect-client'
 import type { MaybeHexString } from 'aptos'
+import { NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
 import type { TransactionPayload, AccountSignature } from 'aptos/src/generated'
+import { isDeFiConnectProvider } from '@deficonnect/utils'
+import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
 
 interface IAccount {
   publicKey: MaybeHexString | undefined
   address: MaybeHexString | undefined
 }
-
-interface AptosNetworkConfig {
-  name: string
-  chainType: 'aptos'
-  chainId: string
-  rpcUrl: string
-  symbol: string
-  explorer?: string
-}
-
 interface IResponse {
   hash: string
   sender?: string
@@ -45,21 +38,68 @@ interface SignMessagePayload {
   message: string // The message to be signed and displayed to the user
   nonce: string // A nonce the dapp should generate
 }
+class ProviderRpcError extends Error {
+  code: number
+  message: string
+  constructor(code: number, message: string) {
+    super()
+    this.code = code
+    this.message = message
+  }
+
+  toString() {
+    return `${this.message} (${this.code})`
+  }
+}
 
 export class DeFiConnectBaseProvider extends Emitter {
   connectorClient: ConnectorClient
   isDeficonnectProvider = true
-
+  installExtensionModal: InstallExtensionModalProvider
+  deficonnectProvider?: DeFiConnectBaseProvider
   constructor() {
     super()
     this.connectorClient = new ConnectorClient()
+    this.installExtensionModal = new InstallExtensionModalProvider()
   }
 
-  async account(): Promise<MaybeHexString> {
+  async getProvider(): Promise<IDeFiConnectProvider | undefined> {
+    async function checkInjectProvider(times = 0): Promise<any> {
+      return new Promise((resolve) => {
+        function check() {
+          if (isDeFiConnectProvider(window.deficonnect)) {
+            resolve(window.deficonnect)
+            return
+          }
+          if (navigator?.userAgent?.includes('DeFiWallet') && window.aptos) {
+            resolve(window.aptos)
+            return
+          }
+          if (times > 0) {
+            setTimeout(async () => {
+              --times
+              check()
+            }, 50)
+            return
+          }
+          resolve(undefined)
+        }
+        check()
+      })
+    }
+    return checkInjectProvider()
+  }
+
+  async account(): Promise<IAccount> {
     return this.connectorClient.sendRequest({ method: 'aptos_account' })
   }
 
-  async connect(network?: AptosNetworkConfig): Promise<IAccount> {
+  async connect(network?: NetworkConfig): Promise<IAccount> {
+    const provider = await this.getProvider()
+    if (!provider) {
+      if (network) this.installExtensionModal.open({ networkConfig: network })
+      throw new ProviderRpcError(4100, 'can not find deficonnect provider')
+    }
     return this.connectorClient.sendRequest({
       method: 'aptos_connect',
       params: [
@@ -77,7 +117,7 @@ export class DeFiConnectBaseProvider extends Emitter {
   async signAndSubmitTransaction(
     transaction: TransactionPayload,
     options?: any,
-  ) {
+  ): Promise<IResponse> {
     return this.connectorClient.sendRequest({
       method: 'aptos_signAndSubmitTransaction',
       params: [
@@ -89,7 +129,7 @@ export class DeFiConnectBaseProvider extends Emitter {
     })
   }
 
-  async signTransaction(transaction: TransactionPayload, options?: any): Promise<IResponse> {
+  async signTransaction(transaction: TransactionPayload, options?: any): Promise<Uint8Array> {
     return this.connectorClient.sendRequest({
       method: 'aptos_signTransaction',
       params: [
