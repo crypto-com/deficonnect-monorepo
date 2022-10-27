@@ -1,24 +1,11 @@
 import Emitter from 'events'
 import { ConnectorClient } from './connect-client'
-import type { MaybeHexString } from 'aptos'
-import { NetworkConfig, IDeFiConnectProvider, JsonRpcRequestArguments } from '@deficonnect/types'
-import type { TransactionPayload, AccountSignature } from 'aptos/src/generated'
-import { isDeFiConnectProvider } from '@deficonnect/utils'
-import { InstallExtensionModalProvider } from '@deficonnect/qrcode-modal'
+import { MaybeHexString, Types, BCS } from 'aptos'
+import { NetworkConfig } from '@deficonnect/types'
 
 interface IAccount {
   publicKey: MaybeHexString | undefined
   address: MaybeHexString | undefined
-}
-interface IResponse {
-  hash: string
-  sender?: string
-  sequence_number?: string
-  max_gas_amount?: string
-  gas_unit_price?: string
-  expiration_timestamp_secs?: string
-  payload?: TransactionPayload
-  signature?: AccountSignature
 }
 interface SignMessageResponse {
   address: string
@@ -38,107 +25,45 @@ interface SignMessagePayload {
   message: string // The message to be signed and displayed to the user
   nonce: string // A nonce the dapp should generate
 }
-class ProviderRpcError extends Error {
-  code: number
-  message: string
-  constructor(code: number, message: string) {
-    super()
-    this.code = code
-    this.message = message
-  }
-
-  toString() {
-    return `${this.message} (${this.code})`
-  }
-}
 
 export class DeFiConnectBaseProvider extends Emitter {
   connectorClient: ConnectorClient
   isDeficonnectProvider = true
-  installExtensionModal: InstallExtensionModalProvider
-  deficonnectProvider?: DeFiConnectBaseProvider
+  connected: boolean
   constructor() {
     super()
     this.connectorClient = new ConnectorClient()
-    this.installExtensionModal = new InstallExtensionModalProvider()
-  }
-
-  async getProvider(): Promise<IDeFiConnectProvider | undefined> {
-    async function checkInjectProvider(times = 0): Promise<any> {
-      return new Promise((resolve) => {
-        function check() {
-          if (isDeFiConnectProvider(window.deficonnect)) {
-            resolve(window.deficonnect)
-            return
-          }
-          if (navigator?.userAgent?.includes('DeFiWallet') && window.aptos) {
-            resolve(window.aptos)
-            return
-          }
-          if (times > 0) {
-            setTimeout(async () => {
-              --times
-              check()
-            }, 50)
-            return
-          }
-          resolve(undefined)
-        }
-        check()
-      })
-    }
-    return checkInjectProvider()
+    this.connected = false
   }
 
   async account(): Promise<IAccount> {
     return this.connectorClient.sendRequest({ method: 'aptos_account' })
   }
 
+  async network(): Promise<string> {
+    return this.connectorClient.sendRequest({ method: 'aptos_network' })
+  }
+
   async connect(network?: NetworkConfig): Promise<IAccount> {
-    const provider = await this.getProvider()
-    if (!provider) {
-      if (network) this.installExtensionModal.open({ networkConfig: network })
-      throw new ProviderRpcError(4100, 'can not find deficonnect provider')
+    try {
+      const res = await this.connectorClient.sendRequest({
+        method: 'aptos_connect',
+        params: [
+          {
+            network,
+          },
+        ],
+      })
+      this.connected = true
+      return res
+    } catch (error) {
+      this.connected = false
+      throw error
     }
-    return this.connectorClient.sendRequest({
-      method: 'aptos_connect',
-      params: [
-        {
-          network,
-        },
-      ],
-    })
   }
 
   async isConnected(): Promise<boolean> {
-    return this.connectorClient.sendRequest({ method: 'aptos_isConnected' })
-  }
-
-  async signAndSubmitTransaction(
-    transaction: TransactionPayload,
-    options?: any,
-  ): Promise<IResponse> {
-    return this.connectorClient.sendRequest({
-      method: 'aptos_signAndSubmitTransaction',
-      params: [
-        {
-            transaction,
-            options,
-        },
-      ],
-    })
-  }
-
-  async signTransaction(transaction: TransactionPayload, options?: any): Promise<Uint8Array> {
-    return this.connectorClient.sendRequest({
-      method: 'aptos_signTransaction',
-      params: [
-        {
-            transaction,
-            options,
-        },
-      ],
-    })
+    return Promise.resolve(this.connected)
   }
 
   async signMessage(msgPayload: SignMessagePayload): Promise<SignMessageResponse> {
@@ -146,7 +71,7 @@ export class DeFiConnectBaseProvider extends Emitter {
       method: 'aptos_signMessage',
       params: [
         {
-            transaction: msgPayload,
+          transaction: msgPayload,
         },
       ],
     })
@@ -156,11 +81,155 @@ export class DeFiConnectBaseProvider extends Emitter {
     return this.connectorClient.sendRequest({ method: 'aptos_disconnect' })
   }
 
+  async getAccount(address: MaybeHexString): Promise<Types.AccountData> {
+    return this.connectorClient.sendRequest({
+      method: 'aptos_getAccount',
+      params: [
+        {
+          address,
+        },
+      ],
+    })
+  }
+
+  async getChainId(): Promise<number> {
+    return this.connectorClient.sendRequest({ method: 'aptos_getChainId' })
+  }
+
+  async getLedgerInfo(): Promise<Types.IndexResponse> {
+    return this.connectorClient.sendRequest({ method: 'aptos_getLedgerInfo' })
+  }
+
+  async getTransactions(query?: {
+    start?: number // The start transaction version of the page. Default is the latest ledger version
+    limit?: number
+  }): Promise<Types.Transaction[]> {
+    return this.connectorClient.sendRequest({
+      method: 'aptos_getTransactions',
+      params: [
+        {
+          query,
+        },
+      ],
+    })
+  }
+
+  async getTransactionByHash(txnHash: string): Promise<Types.Transaction> {
+    return this.connectorClient.sendRequest({
+      method: 'aptos_getTransactionByHash',
+      params: [
+        {
+          txnHash,
+        },
+      ],
+    })
+  }
+
+  async getAccountTransactions(
+    address: MaybeHexString,
+    query?: {
+      start?: number
+      limit?: number
+    },
+  ): Promise<Types.Transaction[]> {
+    return this.connectorClient.sendRequest({
+      method: 'aptos_getAccountTransactions',
+      params: [{ address, query }],
+    })
+  }
+
+  async getAccountResources(
+    address: MaybeHexString,
+    query?: {
+      start?: number
+      limit?: number
+    },
+  ): Promise<Types.MoveResource[]> {
+    return this.connectorClient.sendRequest({
+      method: 'aptos_getAccountResources',
+      params: [{ address, query }],
+    })
+  }
+
+  async createCollection(name: string, description: string, url: string): Promise<string> {
+    return this.connectorClient.sendRequest({
+      method: 'aptos_createCollection',
+      params: [{ name, description, url }],
+    }) // The hash of the transaction submitted to the API
+  }
+
+  async createToken(
+    collectionName: string,
+    name: string,
+    description: string,
+    supply: number,
+    url: string,
+    max?: BCS.AnyNumber,
+    royalty_payee_address?: MaybeHexString,
+    royalty_points_denominator?: number,
+    royalty_points_numerator?: number,
+    property_keys?: string[],
+    property_values?: string[],
+    property_types?: string[],
+  ): Promise<string> {
+    return this.connectorClient.sendRequest({
+      method: 'aptos_createCollection',
+      params: [
+        {
+          collectionName,
+          name,
+          description,
+          supply,
+          url,
+          max,
+          royalty_payee_address,
+          royalty_points_denominator,
+          royalty_points_numerator,
+          property_keys,
+          property_values,
+          property_types,
+        },
+      ],
+    }) // The hash of the transaction submitted to the API
+  }
+
   setResponse(response: any) {
     const payload = {
       ...response,
       jsonrpc: '2.0',
     }
     this.connectorClient.handleJSONRequestEvent(payload)
+  }
+
+  mobileDisconnect() {
+    this.connectorClient.emit('mobileDisconnect')
+  }
+
+  updateAccount() {
+    this.connectorClient.emit('updateAccount')
+  }
+
+  updateNetwork() {
+    this.connectorClient.emit('updateNetwork')
+  }
+
+  onAccountChange(listener: (...args: any[]) => void) {
+    this.connectorClient.on('updateAccount', async () => {
+      const account = await this.account()
+      listener(account)
+    })
+  }
+
+  onNetworkChange(listener: (...args: any[]) => void) {
+    this.connectorClient.on('updateNetwork', async () => {
+      const network = await this.network()
+      listener(network)
+    })
+  }
+
+  onDisconnect(listener: (...args: any[]) => void) {
+    this.connectorClient.on('mobileDisconnect', async () => {
+      listener()
+    })
   }
 }

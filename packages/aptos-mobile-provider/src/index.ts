@@ -1,22 +1,18 @@
 import { DeFiConnectAptosProvider } from './aptos-provider'
-import { DeFiConnectMartainProvider } from './martain-provider'
+import { DeFiConnectMartianProvider } from './martian-provider'
 declare global {
   interface Window {
     aptos: DeFiConnectAptosProvider
-    martian: DeFiConnectMartainProvider
-    pontem: DeFiConnectAptosProvider
-    spika: DeFiConnectAptosProvider
-    deficonnect?: any
+    martian: DeFiConnectMartianProvider
+    deficonnect: any
   }
 }
 
 window.aptos = new DeFiConnectAptosProvider()
-window.martian = new DeFiConnectMartainProvider()
-window.pontem = window.aptos
-window.spika = window.aptos
+window.martian = new DeFiConnectMartianProvider()
 
 window.deficonnect = {
-  AptosProvider: DeFiConnectAptosProvider,
+  aptos: window.aptos,
   connectorClient: window.aptos.connectorClient,
   postMessage: null,
 }
