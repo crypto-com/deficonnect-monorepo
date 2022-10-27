@@ -173,7 +173,7 @@ declare module "@deficonnect/types" {
     appName: string    
     chainType: 'aptos'
     chainId: string
-    rpcUrl: RpcUrlConfig
+    rpcUrls: RpcUrlConfig
     customNode?: EthCustomNodeConfig
   }
   
