@@ -12,10 +12,6 @@ interface IOptions {
 }
 
 export class DeFiConnectMartianProvider extends DeFiConnectBaseProvider {
-  async network(): Promise<string> {
-    return this.connectorClient.sendRequest({ method: 'aptos_network' })
-  }
-
   async generateTransaction(
     sender: MaybeHexString,
     payload: Types.TransactionPayload,

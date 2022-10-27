@@ -78,6 +78,7 @@ export class DeFiConnectBaseProvider extends Emitter {
   }
 
   async disconnect(): Promise<void> {
+    this.connected = false
     return this.connectorClient.sendRequest({ method: 'aptos_disconnect' })
   }
 
@@ -202,6 +203,7 @@ export class DeFiConnectBaseProvider extends Emitter {
   }
 
   mobileDisconnect() {
+    this.connected = false
     this.connectorClient.emit('mobileDisconnect')
   }
 
