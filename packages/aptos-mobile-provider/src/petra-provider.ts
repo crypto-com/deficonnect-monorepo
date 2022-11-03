@@ -1,7 +1,7 @@
 import { Types } from 'aptos'
 import { DeFiConnectBaseProvider } from './base-provider'
 
-export class DeFiConnectAptosProvider extends DeFiConnectBaseProvider {
+export class DeFiConnectPetraProvider extends DeFiConnectBaseProvider {
   async signAndSubmitTransaction(
     transaction: Types.TransactionPayload,
     options?: any,
@@ -26,6 +26,20 @@ export class DeFiConnectAptosProvider extends DeFiConnectBaseProvider {
           options,
         },
       ],
+    })
+  }
+
+  onAccountChange(listener: (...args: any[]) => void) {
+    this.connectorClient.on('updateAccount', async () => {
+      const account = await this.account()
+      listener(account)
+    })
+  }
+
+  onNetworkChange(listener: (...args: any[]) => void) {
+    this.connectorClient.on('updateNetwork', async () => {
+      const network = await this.network()
+      listener({ networkName: network })
     })
   }
 }

@@ -6,6 +6,8 @@ import { NetworkConfig } from '@deficonnect/types'
 interface IAccount {
   publicKey: MaybeHexString | undefined
   address: MaybeHexString | undefined
+  method: 'connected'
+  status: 200
 }
 interface SignMessageResponse {
   address: string
@@ -213,20 +215,6 @@ export class DeFiConnectBaseProvider extends Emitter {
 
   updateNetwork() {
     this.connectorClient.emit('updateNetwork')
-  }
-
-  onAccountChange(listener: (...args: any[]) => void) {
-    this.connectorClient.on('updateAccount', async () => {
-      const account = await this.account()
-      listener(account)
-    })
-  }
-
-  onNetworkChange(listener: (...args: any[]) => void) {
-    this.connectorClient.on('updateNetwork', async () => {
-      const network = await this.network()
-      listener(network)
-    })
   }
 
   onDisconnect(listener: (...args: any[]) => void) {

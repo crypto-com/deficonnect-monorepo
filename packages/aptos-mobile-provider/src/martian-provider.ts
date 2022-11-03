@@ -107,4 +107,18 @@ export class DeFiConnectMartianProvider extends DeFiConnectBaseProvider {
       params,
     })
   }
+
+  onAccountChange(listener: (...args: any[]) => void) {
+    this.connectorClient.on('updateAccount', async () => {
+      const account = await this.account()
+      listener(account.address)
+    })
+  }
+
+  onNetworkChange(listener: (...args: any[]) => void) {
+    this.connectorClient.on('updateNetwork', async () => {
+      const network = await this.network()
+      listener(network)
+    })
+  }
 }

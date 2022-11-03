@@ -1,14 +1,14 @@
-import { DeFiConnectAptosProvider } from './aptos-provider'
+import { DeFiConnectPetraProvider } from './petra-provider'
 import { DeFiConnectMartianProvider } from './martian-provider'
 declare global {
   interface Window {
-    aptos: DeFiConnectAptosProvider
+    aptos: DeFiConnectPetraProvider
     martian: DeFiConnectMartianProvider
     deficonnect: any
   }
 }
 
-window.aptos = new DeFiConnectAptosProvider()
+window.aptos = new DeFiConnectPetraProvider()
 window.martian = new DeFiConnectMartianProvider()
 
 window.deficonnect = {
