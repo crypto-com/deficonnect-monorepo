@@ -42,5 +42,10 @@ jobs:
     - name: Build packages
       run: npm run build
 
+    - run: |
+        echo "::remove-matcher owner=eslint-compact::"
+        echo "::remove-matcher owner=eslint-stylish::"
+        echo "::remove-matcher owner=tsc::"
+
     # - name: Test packages
     #   run: npm run test
