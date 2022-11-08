@@ -10,7 +10,7 @@ This package is mainly for mobile in app browser usage, now support the [Aptos b
 | ---------- | ----------- | --------------------- | ----------------------------- | ------- |
 | disconnect |             | `() => Promise<void>` | `await provider.disconnect()` | -       |
 
-#### Event
+#### Events
 
 | Parameters       | Description | Type         | Exmaple | Default |
 |------------------|-------------|--------------|---------|---------|
