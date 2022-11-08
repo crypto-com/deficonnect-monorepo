@@ -5,7 +5,7 @@ name: Test & Build
 
 on:
   pull_request:
-    branches:
+      branches: 
       - 'main'
       - '2.x'
       - 'develop'
@@ -13,6 +13,7 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -21,24 +22,25 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+    - name: Install dependencies
+      run: npm ci
 
-      - name: Bootstrap monorepo
-        run: npm run bootstrap:monorepo
+    - name: Bootstrap monorepo
+      run: npm run bootstrap:monorepo
 
-      - name: Lint packages
-        run: npm run lint
+    - name: Lint packages
+      run: npm run lint
 
-      - name: Build packages
-        run: npm run build
+    - name: Build packages
+      run: npm run build
+
     # - name: Test packages
     #   run: npm run test
