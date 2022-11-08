@@ -169,8 +169,15 @@ declare module "@deficonnect/types" {
       coinType: number
     }
   }
+  export interface AptosNetworkConfig {
+    appName: string    
+    chainType: 'aptos'
+    chainId: string
+    rpcUrls: RpcUrlConfig
+    customNode?: EthCustomNodeConfig
+  }
   
-  export type NetworkConfig = EthNetworkConfig | CosmosNetworkConfig
+  export type NetworkConfig = EthNetworkConfig | CosmosNetworkConfig | AptosNetworkConfig
 
   interface JsonRpcRequestArguments {
     readonly method: string
