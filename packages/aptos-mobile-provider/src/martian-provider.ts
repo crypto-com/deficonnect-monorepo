@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { MaybeHexString, Types } from 'aptos'
 import { DeFiConnectBaseProvider } from './base-provider'
 

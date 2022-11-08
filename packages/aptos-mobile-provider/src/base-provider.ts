@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Emitter from 'events'
 import { ConnectorClient } from './connect-client'
 import { MaybeHexString, Types, BCS } from 'aptos'

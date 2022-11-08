@@ -4,7 +4,7 @@ import Emitter from 'events'
 
 export interface RequestArguments {
   readonly method: string
-  readonly params?: readonly unknown[] | object
+  readonly params?: readonly unknown[] | Record<string, unknown>
 }
 
 export class ProviderRpcError extends Error {

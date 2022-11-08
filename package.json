@@ -46,8 +46,8 @@
     "url": "git+https://github.com/crypto-com/deficonnect-monorepo.git"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "eslint": "6.2.2",
     "eslint-config-prettier": "6.10.0",
     "eslint-config-standard": "14.1.0",
@@ -60,7 +60,6 @@
     "lerna": "4.0.0",
     "npm-run-all": "4.1.5",
     "prettier": "1.19.1",
-    "ts-node": "9.0.0",
-    "typescript": "^4.8.4"
+    "ts-node": "9.0.0"
   }
 }
