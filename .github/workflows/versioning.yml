@@ -41,7 +41,7 @@ jobs:
 
     - name: Get name & version from package.json
       shell: bash
-      run: echo "##[set-output name=version;]$(node -p -e '`${require("./lerna.json").version}`')"
+      run: echo "version=$(node -p -e '`${require("./lerna.json").version}`')" >> $GITHUB_OUTPUT
       id: package_json
 
     - name: Set the value
