@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import Emitter from 'events'
-import { ConnectorClient } from './connect-client'
+import ConnectorClientInstance, { ConnectorClient } from './connect-client'
 import { MaybeHexString, Types, BCS } from 'aptos'
 import { NetworkConfig } from '@deficonnect/types'
 
@@ -35,7 +35,7 @@ export class DeFiConnectBaseProvider extends Emitter {
   connected: boolean
   constructor() {
     super()
-    this.connectorClient = new ConnectorClient()
+    this.connectorClient = ConnectorClientInstance
     this.connected = false
   }
 
@@ -195,14 +195,6 @@ export class DeFiConnectBaseProvider extends Emitter {
         },
       ],
     }) // The hash of the transaction submitted to the API
-  }
-
-  setResponse(response: any) {
-    const payload = {
-      ...response,
-      jsonrpc: '2.0',
-    }
-    this.connectorClient.handleJSONRequestEvent(payload)
   }
 
   mobileDisconnect() {
