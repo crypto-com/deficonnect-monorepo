@@ -96,7 +96,9 @@ export class DeFiConnectBaseProvider extends Emitter {
     })
   }
 
-  async getChainId(): Promise<number> {
+  async getChainId(): Promise<{
+    chainId: number
+  }> {
     return this.connectorClient.sendRequest({ method: 'aptos_getChainId' })
   }
 
