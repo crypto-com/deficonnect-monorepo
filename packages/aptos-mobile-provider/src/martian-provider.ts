@@ -45,7 +45,7 @@ export class DeFiConnectMartianProvider extends DeFiConnectBaseProvider {
     })
   }
 
-  async submitTransaction(signedTransaction: string): Promise<string> {
+  async submitTransaction(signedTransaction: string): Promise<Types.HexEncodedBytes> {
     const params = [
       {
         transaction: signedTransaction,
@@ -59,7 +59,7 @@ export class DeFiConnectMartianProvider extends DeFiConnectBaseProvider {
 
   async signAndSubmitTransaction(
     transaction: string, // RawTransaction serialized string
-  ): Promise<Types.Transaction> {
+  ): Promise<Types.HexEncodedBytes> {
     const params = [
       {
         transaction,
@@ -68,7 +68,7 @@ export class DeFiConnectMartianProvider extends DeFiConnectBaseProvider {
     return this.connectorClient.sendRequest({
       method: 'aptos_signAndSubmitTransactionMartian',
       params,
-    })
+    }) // txnHash
   }
 
   async generateSignAndSubmitTransaction(
