@@ -2,6 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
+    branches:
+      - 'main'
     paths:
       - 'docs/**'
     # Review gh actions docs if you want to further define triggers, paths, etc
