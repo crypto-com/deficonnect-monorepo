@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdeficonnect_monorepo_docs=self.webpackChunkdeficonnect_monorepo_docs||[]).push([[7899],{4914:o=>{o.exports=JSON.parse('{"label":"facebook","permalink":"/deficonnect-monorepo/blog/tags/facebook","allTagsPath":"/deficonnect-monorepo/blog/tags","count":1}')}}]);

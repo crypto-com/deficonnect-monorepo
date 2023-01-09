@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdeficonnect_monorepo_docs=self.webpackChunkdeficonnect_monorepo_docs||[]).push([[2393],{5913:o=>{o.exports=JSON.parse('{"label":"docusaurus","permalink":"/deficonnect-monorepo/blog/tags/docusaurus","allTagsPath":"/deficonnect-monorepo/blog/tags","count":4}')}}]);

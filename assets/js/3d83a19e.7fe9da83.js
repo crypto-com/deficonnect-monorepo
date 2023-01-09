@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdeficonnect_monorepo_docs=self.webpackChunkdeficonnect_monorepo_docs||[]).push([[2205],{8403:o=>{o.exports=JSON.parse('{"permalink":"/deficonnect-monorepo/blog/tags/hola","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
