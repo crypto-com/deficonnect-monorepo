@@ -38,7 +38,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/crypto-com/deficonnect-monorepo/tree/develop/",
+          editUrl: "https://github.com/crypto-com/deficonnect-monorepo/tree/develop/docs",
           remarkPlugins: [
             [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
           ],
@@ -47,7 +47,7 @@ const config = {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/crypto-com/deficonnect-monorepo/tree/develop/",
+          editUrl: "https://github.com/crypto-com/deficonnect-monorepo/tree/develop/docs",
         },
         pages: {
           remarkPlugins: [require("@docusaurus/remark-plugin-npm2yarn")],
