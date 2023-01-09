@@ -6,6 +6,14 @@
     <a href="https://discord.gg/qTs3qW3j"><img alt="Join Discord" src="https://img.shields.io/discord/783264383978569728?logo=discord"/></a>
 </p>
 
+## upgrade from V1 to V2
+
+> it is very easy to upgrade to V2 version.
+> 
+> no code change. only need change to import `@deficonnect/web3-connector` package
+
+
+
 ## Packages
 
 DeFiConnect is a library that consists of many smaller npm packages within the @deficonnect namespace, a so called monorepo. Here are some of them to get an idea:
