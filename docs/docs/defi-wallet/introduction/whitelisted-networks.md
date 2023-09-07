@@ -9,15 +9,24 @@ DeFi Wallet supports all EVM-compatible L1/L2 networks. Certain networks are whi
 
 ## Main networks
 
-- Aptos
 - Cronos
-- Crypto.com
-- Cosmos
+- Crypto.org
 - Ethereum
+- Bitcoin
+- BNB Smart Chain
+- Polygon
+- Avalanche-C
+- Cosmos
+- Fantom
+- Arbitrum
+- Optimism
+- Gnosis
+- Aptos
 
 ## Test networks
 
-- Aptos Testnet
-- Aptos Devnet
 - Cronos Testnet
-- Cronos Pioneer11
+- Goerli Testnet
+- Scroll Alpha Testnet
+- Aptos Devnet
+- Aptos Testnet
