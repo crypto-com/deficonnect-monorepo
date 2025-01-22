@@ -69,7 +69,7 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
             <div style={styles.deepLinkBody}>
               <DeFiMainIconMobile />
             </div>
-            <span style={styles.deepLinkTips}>A non-custodial wallet that gives you access to a full suite of DeFi Wallet services in one place</span>
+            <span style={styles.deepLinkTips}>A non-custodial wallet that gives you access to a full suite of Onchain Wallet services in one place</span>
             <div style={styles.btnWrap}>
               <a
                 style={styles.installButton}
@@ -78,7 +78,7 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
                 target="_blank"
                 onClick={this.closeSingleLinkModal.bind(this)}
               >
-                Open DeFi Wallet Mobile App
+                Open Onchain App
               </a>
             </div>
             <span style={styles.linkBtn} onClick={this.onDownloadClick}>
@@ -99,21 +99,21 @@ export class InstallExtensionQRCodeModal extends Component<InstallExtensionModal
               <div style={styles.headerTextDivide} />
               <div style={styles.headerText}>WALLET EXTENSION</div>
             </div>
-            <div style={styles.title}>Access DApps on desktop by connecting DeFi Wallet to Wallet Extension</div>
+            <div style={styles.title}>Access DApps on desktop by connecting Onchain Wallet to Wallet Extension</div>
             <div style={styles.feature}>
               <FeatureLinkIcon />
               <div style={styles.featureText}>Stable connection to DApps</div>
             </div>
             <div style={styles.feature}>
               <FeatureLockIcon />
-              <div style={styles.featureText}>Secure signing via DeFi Wallet</div>
+              <div style={styles.featureText}>Secure signing via Onchain Wallet</div>
             </div>
             <div style={styles.feature}>
               <FeatureGlobeIcon />
               <div style={styles.featureText}>Smooth App navigation with DApp connection</div>
             </div>
             <button style={styles.installButton} onClick={this.onInstallButtonClick}>
-              Install DeFi Wallet Extension
+              Install Onchain Extension
             </button>
           </div>
         </div>

@@ -17,7 +17,7 @@ export default function App() {
         supportedChainIds: [1],
         rpc: {
           1: "https://mainnet.infura.io/v3/INFURA_API_KEY",
-          25: "https://evm.cronos.org/", // cronos mainet
+          25: "https://evm.cronos.org/", // cronos evm
         },
         pollingInterval: 15000,
       });

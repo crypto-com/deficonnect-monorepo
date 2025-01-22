@@ -50,7 +50,7 @@ export class InstallExtensionModalProvider {
     const dappUrl = encodeURIComponent(location.href)
     const singleLinkHref = `dfw://dapp/detail?dappUrl=${dappUrl}&chainId=${chainId}&rpcUrl=${rpcUrl}&chainType=${chainType}&version=${version}&source=deficonnect`
     if (isIOS()) {
-      saveMobileLinkInfo({ name: 'Crypto.com DeFi Wallet', href: singleLinkHref })
+      saveMobileLinkInfo({ name: 'Crypto.com Onchain Wallet', href: singleLinkHref })
       if (this.elRef?.current?.setState) {
         this.elRef.current.setState({ visible: true, singleLinkHref })
       }

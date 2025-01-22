@@ -1,7 +1,7 @@
 {
   "name": "@deficonnect/web3-connector",
   "version": "2.0.3",
-  "description": "deficonnect web3-connector for Crypto.com DeFi Wallet Extension",
+  "description": "deficonnect web3-connector for Crypto.com Onchain Extension",
   "author": "DeFi Labs <defilabs@crypto.com>",
   "license": "Apache-2.0",
   "repository": "https://github.com/crypto-com/defi-connector",
