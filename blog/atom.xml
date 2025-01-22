@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crypto-com.github.io/deficonnect-monorepo/blog</id>
-    <title>DeFi Wallet Blog</title>
+    <title>Crypto.com Onchain Blog</title>
     <updated>2021-08-26T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crypto-com.github.io/deficonnect-monorepo/blog"/>
-    <subtitle>DeFi Wallet Blog</subtitle>
+    <subtitle>Crypto.com Onchain Blog</subtitle>
     <icon>https://crypto-com.github.io/deficonnect-monorepo/img/favicon-32x32.png</icon>
     <entry>
         <title type="html"><![CDATA[Welcome]]></title>
