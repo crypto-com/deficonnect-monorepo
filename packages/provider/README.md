@@ -30,9 +30,25 @@ const provider = new DeFiConnectProvider({
   rpcUrls: {
     1: 'https://mainnet.infura.io/v3/INFURA_API_KEY',
     25: 'https://evm-cronos.crypto.org/',
+    138: 'https://rpc.public-0138.defi-oracle.io',
   },
 })
 ```
+
+Chain 138 can be passed the same way as any other EVM-compatible custom network:
+
+```javascript
+const provider = new DeFiConnectProvider({
+  appName: 'chain138 demo',
+  chainType: 'eth',
+  chainId: '138',
+  rpcUrls: {
+    138: 'https://rpc.public-0138.defi-oracle.io',
+  },
+})
+```
+
+Explorer: `https://blockscout.defi-oracle.io`
 
 > if you want to support cosmos like chain, please read: [@deficonnect/cosmos-signer](https://github.com/crypto-com/deficonnect-monorepo/tree/develop/packages/cosmos-signer)
 > cosmos support: [docs](https://github.com/crypto-com/deficonnect-monorepo/wiki/Chrome-Extension-Wallet-Integration#cosmos-rpc-api)
@@ -90,5 +106,4 @@ provider.on('disconnect', (code: number, reason: string) => {
 | chainChanged    |             | `(chainId: number) => void`              |         | -       |
 | connect         |             | `() => void`                             |         |         |
 | disconnect      |             | `(code: number, reason: string) => void` |         |         |
-
 
